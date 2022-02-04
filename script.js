@@ -36,9 +36,9 @@ const personagem = {
 
 const listMonstros = [];
 const listNomeMonstro = ['monst1', 'monst2', 'monst3'];
-function criarMonstro(num) {
+function criarMonstro(qtd) {
     // clearMonstro()
-    for (let i = 0; i < num; i++) {
+    for (let i = 0; i < qtd; i++) {
         let nomeMonstro = random(listNomeMonstro.length - 1, 0);
         let vidaMonstro = random(500, 50);
         let danoMonstro = random(15, 5);
@@ -47,6 +47,7 @@ function criarMonstro(num) {
             nome: listNomeMonstro[nomeMonstro],
             vida: vidaMonstro,
             dano: danoMonstro,
+            id: i
         };
         listMonstros.push(monstro);
     }
