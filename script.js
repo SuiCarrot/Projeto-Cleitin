@@ -10,7 +10,7 @@ const personagem = {
 };
 
 console.log(request.random(10));
-=======
+//=======
 /** @format **/
 
 console.clear();
