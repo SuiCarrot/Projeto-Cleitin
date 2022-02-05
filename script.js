@@ -66,6 +66,7 @@ const personagem = {
     dano: random(6, 4),
 };
 
+
 const elfo = {
     nome: 'Aerin',
     vida: 10,
@@ -111,7 +112,6 @@ for (i = 0; i < dias; i++) {
 }
 
 //teste
-
 while (true) {
     a = prompt(`sdijaidsaijdiaj:`).toUpperCase().replace(' ', '')
     if (a != 'nsains') break;
