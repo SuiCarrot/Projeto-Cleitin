@@ -54,6 +54,11 @@ function mortalKombat(a) {
         personagem.vida = personagem.vida - monstros[a].dano + personagem.defesa;
         monstros[a].vida = monstros[a].vida - personagem.dano;
     } while (personagem.vida > 0 && monstros[a].vida > 0);
+    if (personagem.vida > 0){
+        return true
+    }else {
+        return false
+    }
 }
 
 const monstros = [];
