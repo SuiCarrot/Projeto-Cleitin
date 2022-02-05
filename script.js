@@ -1,4 +1,3 @@
-var prompt = require('prompt-sync')();
 
 // FUNÇÃO PARA RETARDAR A CPU
 function sleep(segundos = 1) {
@@ -120,4 +119,5 @@ while (true) {
         console.log(`Por favor sresopsdinasd com batata.`)
     }
 }
+
 
