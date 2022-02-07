@@ -1,9 +1,6 @@
-const res = require('express/lib/response');
-const { isNum } = require('pdfjs-dist/types/src/shared/util');
-
 var prompt = require('prompt-sync')();
 
-// FUNÇÃO PARA RETARDAR A CPU
+//FUNÇÃO PARA RETARDAR A CPU
 function sleep(segundos = 1) {
     segundos = segundos * 1000;
     let start = new Date().getTime();
@@ -14,7 +11,7 @@ function sleep(segundos = 1) {
     }
 }
 
-// FUNÇÃO PARA RANDOMIZAR
+//FUNÇÃO PARA RANDOMIZAR
 function random(minimo = 0, maximo) {
     let max = Math.floor(maximo);
     let min = Math.ceil(minimo);
@@ -23,7 +20,7 @@ function random(minimo = 0, maximo) {
     return random;
 }
 
-// FUNÇÃO PARA CRIAR MONSTRO
+//FUNÇÃO PARA CRIAR MONSTRO
 function clearMonstro() {
     monstros.splice(0, monstros.length);
 }
@@ -40,8 +37,8 @@ function criarMonstro(qtd, a, b) {
 
     for (let i = 0; i < qtd; i++) {
         let nomeMonstro = random(a, b);
-        let vidaMonstro = random(10, 5);
-        let danoMonstro = random(6, 2);
+        let vidaMonstro = random(5, 10);
+        let danoMonstro = random(2, 6);
 
         let monstro = {
             nome: listNomeMonstro[nomeMonstro],
@@ -71,20 +68,22 @@ function mortalKombat(a) {
 //FUNÇÃO DE PERGUNTAS
 
 const monstros = [];
+let play = false;
+let resp;
+let quebra = true;
 
-// PERSONAGENS
+//PERSONAGENS
 const personagem = {
-    nome: nomePersonagem,
     vida: 10,
     defesa: 3,
-    dano: random(6, 4),
+    dano: random(4, 6),
 };
 
 const elfo = {
     nome: 'Aerin',
     vida: 10,
     defesa: 5,
-    dano: random(6, 4),
+    dano: random(4, 6),
 };
 
 const armas = {
@@ -101,13 +100,8 @@ const armas = {
         personagem.defesa = personagem.defesa - 2;
     },
 };
-
-let play = false;
-let nomePersonagem;
-let resp;
-let quebra = true;
-
 //SCRIPT
+let a = 0;
 do {
     //INICIO DO GAME NA CAVERNA
     console.log(
@@ -115,17 +109,17 @@ do {
     );
     //LAÇO PARA TRAZER OPÇÕES DA CAVERNA
     do {
-        console.log(
-            'Diga o que quer fazer:\n1) Comida\n2) Abrir Mochila\n3) Pegar uma arma\n4) Sair da caverna ',
-        );
-        resp = +prompt();
-        //LAÇO PARA USUÁRIO ENTREGAR O VALOR CRRETO
-        while (resp != isNum || resp < 1 || resp > 4) {
-            console.log('Valor inserido não corresponde: ');
-            resp = +prompt();
-        }
         //LAÇO PARA SAIR DA CAVERNA
         do {
+            console.log(
+                'Diga o que quer fazer:\n1) Comida\n2) Abrir Mochila\n3) Pegar uma arma\n4) Sair da caverna ',
+            );
+            resp = +prompt();
+            //LAÇO PARA USUÁRIO ENTREGAR O VALOR CORRETO
+            while (isNaN(resp) || resp < 1 || resp > 4) {
+                console.log('Valor inserido não corresponde: ');
+                resp = +prompt();
+            }
             //CONDIÇÃO GAME OVER
             if (resp === 1) {
                 console.log('A comida estava envenenada e você morreu');
@@ -133,21 +127,33 @@ do {
                 break;
                 //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
             } else if (resp == 2) {
-                console.log(
-                    `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para o personagem encontrar na cidade de Erast. Assinado como Aerin. Personagem tomado por memorias de batalha, lembra de seu nome: ${(nomePersonagem =
-                        prompt())}`,
-                );
+                if (a == 0) {
+                    console.log(
+                        `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para o personagem encontrar na cidade de Erast. Assinado como Aerin. Personagem tomado por memorias de batalha, lembra de seu nome: `,
+                    );
+                    personagem.nome = prompt(``);
+                    a = 1;
+                    play = true;
+                } else {
+                    console.log(
+                        `Você abre a mochila novamente, e vê os mesmos itens e um papel com o seu nome: ${personagem.nome}.`,
+                    );
+                }
                 //CONDIÇÃO IPORTANTE DE SELEÇÃO DE ARMAS, MAS AINDA NÃO SAI DA CAVERNA
             } else if (resp == 3) {
                 console.log(
                     'Existem 3 armas dispostas:\n1) Espada escudo = + Defesa -Ataque\n2) Machado = ++Ataque -- Defesa\n3) Arco = +Ataque - Defesa',
                 );
+                play = true;
                 resp = +prompt();
-                //LAÇO PARA USUÁRIO ENTREGAR O VALOR CRRETO
-                while (resp != isNum || resp < 1 || resp > 3) {
+                //LAÇO PARA USUÁRIO ENTREGAR O VALOR CORRETO
+                while (isNaN(resp) || resp < 1 || resp > 3) {
                     console.log('Valor inserido não corresponde: ');
                     resp = +prompt();
                 }
+                personagem.defesa = 3;
+                personagem.dano = random(6, 4);
+                //CONDIÇÃO PARA SELECIONAR ARMAS
                 if (resp == 1) {
                     armas.espadaEscudo();
                 } else if (resp == 2) {
@@ -155,12 +161,15 @@ do {
                 } else {
                     armas.arco();
                 }
+                console.log(personagem.dano)
+                console.log(personagem.defesa)
                 //CONDIÇÃO PARA SAIR DA CAVERNA
             } else if (resp == 4) {
                 console.log('Você saiu da caverna');
                 break;
             }
         } while (play);
+        play = false;
         //CONDIÇÃO DE GAME OVER
         if (quebra == true) {
             break;
