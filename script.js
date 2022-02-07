@@ -1,3 +1,7 @@
+const res = require('express/lib/response');
+const { isNum } = require('pdfjs-dist/types/src/shared/util');
+
+var prompt = require('prompt-sync')();
 
 // FUNÇÃO PARA RETARDAR A CPU
 function sleep(segundos = 1) {
@@ -11,7 +15,7 @@ function sleep(segundos = 1) {
 }
 
 // FUNÇÃO PARA RANDOMIZAR
-function random(maximo, minimo = 0) {
+function random(minimo = 0, maximo) {
     let max = Math.floor(maximo);
     let min = Math.ceil(minimo);
     let random = Math.random() * (max - min + 1) + min;
@@ -20,7 +24,11 @@ function random(maximo, minimo = 0) {
 }
 
 // FUNÇÃO PARA CRIAR MONSTRO
+function clearMonstro() {
+    monstros.splice(0, monstros.length);
+}
 function criarMonstro(qtd, a, b) {
+    clearMonstro();
     const listNomeMonstro = [
         'Bahamut',
         'Gárgula',
@@ -31,7 +39,7 @@ function criarMonstro(qtd, a, b) {
     ];
 
     for (let i = 0; i < qtd; i++) {
-        let nomeMonstro = random(b, a);
+        let nomeMonstro = random(a, b);
         let vidaMonstro = random(10, 5);
         let danoMonstro = random(6, 2);
 
@@ -45,32 +53,32 @@ function criarMonstro(qtd, a, b) {
     }
     return monstros;
 }
-function clearMonstro() {
-    monstros.splice(0, monstros.length);
-}
+
 //FUNÇAÕ COMBATE
 function mortalKombat(a) {
     do {
         personagem.vida = personagem.vida - monstros[a].dano + personagem.defesa;
         monstros[a].vida = monstros[a].vida - personagem.dano;
     } while (personagem.vida > 0 && monstros[a].vida > 0);
-    if (personagem.vida > 0){
-        return true
-    }else {
-        return false
+
+    if (personagem.vida > 0) {
+        return true;
+    } else {
+        return false;
     }
 }
+
+//FUNÇÃO DE PERGUNTAS
 
 const monstros = [];
 
 // PERSONAGENS
 const personagem = {
-    nome: '',
+    nome: nomePersonagem,
     vida: 10,
     defesa: 3,
     dano: random(6, 4),
 };
-
 
 const elfo = {
     nome: 'Aerin',
@@ -94,35 +102,104 @@ const armas = {
     },
 };
 
-criarMonstro(2, 0, 2);
-criarMonstro(2, 3, 5);
-console.log(monstros);
+let play = false;
+let nomePersonagem;
+let resp;
+let quebra = true;
 
-//Viagem
-let dias = 5;
-for (i = 0; i < dias; i++) {
-    if (i == 1) {
-    } else if (i == 2) {
+//SCRIPT
+do {
+    //INICIO DO GAME NA CAVERNA
+    console.log(
+        ' Personagem acorda sem memórias em uma pequena caverna. Ao analisar os arredores vê um pequeno acampamento montado. Uma fogueira, agora apenas em brasas, com comida, uma mochila e algumas armas espalhadas pelo acampamento.',
+    );
+    //LAÇO PARA TRAZER OPÇÕES DA CAVERNA
+    do {
+        console.log(
+            'Diga o que quer fazer:\n1) Comida\n2) Abrir Mochila\n3) Pegar uma arma\n4) Sair da caverna ',
+        );
+        resp = +prompt();
+        //LAÇO PARA USUÁRIO ENTREGAR O VALOR CRRETO
+        while (resp != isNum || resp < 1 || resp > 4) {
+            console.log('Valor inserido não corresponde: ');
+            resp = +prompt();
+        }
+        //LAÇO PARA SAIR DA CAVERNA
+        do {
+            //CONDIÇÃO GAME OVER
+            if (resp === 1) {
+                console.log('A comida estava envenenada e você morreu');
+                quebra = true;
+                break;
+                //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
+            } else if (resp == 2) {
+                console.log(
+                    `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para o personagem encontrar na cidade de Erast. Assinado como Aerin. Personagem tomado por memorias de batalha, lembra de seu nome: ${(nomePersonagem =
+                        prompt())}`,
+                );
+                //CONDIÇÃO IPORTANTE DE SELEÇÃO DE ARMAS, MAS AINDA NÃO SAI DA CAVERNA
+            } else if (resp == 3) {
+                console.log(
+                    'Existem 3 armas dispostas:\n1) Espada escudo = + Defesa -Ataque\n2) Machado = ++Ataque -- Defesa\n3) Arco = +Ataque - Defesa',
+                );
+                resp = +prompt();
+                //LAÇO PARA USUÁRIO ENTREGAR O VALOR CRRETO
+                while (resp != isNum || resp < 1 || resp > 3) {
+                    console.log('Valor inserido não corresponde: ');
+                    resp = +prompt();
+                }
+                if (resp == 1) {
+                    armas.espadaEscudo();
+                } else if (resp == 2) {
+                    armas.machado();
+                } else {
+                    armas.arco();
+                }
+                //CONDIÇÃO PARA SAIR DA CAVERNA
+            } else if (resp == 4) {
+                console.log('Você saiu da caverna');
+                break;
+            }
+        } while (play);
+        //CONDIÇÃO DE GAME OVER
+        if (quebra == true) {
+            break;
+        }
+    } while (play);
+    //CONDIÇÃO DE GAME OVER
+    if (quebra == true) {
+        break;
     }
-}
 
-//cidade
-dias = 2;
-for (i = 0; i < dias; i++) {
-    if (i == 1) {
-        criarMonstro();
-        mortalKombat();
-    } else if (i == 2) {
-    }
-}
+    //SAINDO DA CAVERNA 2 CAMINHOS
 
-//teste
-while (true) {
-    a = prompt(`sdijaidsaijdiaj:`).toUpperCase().replace(' ', '')
-    if (a != 'nsains') break;
-    else {
-        console.log(`Por favor sresopsdinasd com batata.`)
-    }
-}
+    //CIDADE
+} while (play);
 
+// //Viagem
+// let dias = 5;
+// for (i = 0; i < dias; i++) {
+//     if (i == 1) {
+//     } else if (i == 2) {
+//     }
+// }
 
+// //cidade
+// dias = 2;
+// for (i = 0; i < dias; i++) {
+//     if (i == 1) {
+//         criarMonstro();
+//         mortalKombat();
+//     } else if (i == 2) {
+//     }
+// }
+
+// // teste
+// while (true) {
+//     a = prompt(`Digite Sim:`).toUpperCase().replace(/\s/g, '');
+//     console.log(a)
+//     if (a === 'SIM') break;
+//     else {
+//         console.log(`Por favor digite Sim.`);
+//     }
+// }
