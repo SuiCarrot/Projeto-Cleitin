@@ -66,7 +66,7 @@ function criarMonstro(qtd, a, b) {
 }
 
 //FUNÇÃO COMBATE
-function mortalKombat(a) {
+function mortalKombat(a=0) {
   do {
     personagens.jogador.vida =
       personagens.jogador.vida - monstros[a].dano + personagens.jogador.defesa;
@@ -74,9 +74,9 @@ function mortalKombat(a) {
   } while (personagens.jogador.vida > 0 && monstros[a].vida > 0);
 
   if (personagens.jogador.vida > 0) {
-    return true;
+    return gameOver = false;
   } else {
-    return false;
+    return gameOver = true;
   }
 }
 
@@ -112,11 +112,14 @@ const equipamentos = {
     personagens.jogador.dano += 2;
     personagens.jogador.defesa -= 2;
   },
+  armadura: function () {    
+    personagens.jogador.defesa += 3;
+  },
 };
 
 let play = true;
 let resp;
-let quebra = false;
+let gameOver = false;
 a = 0;
 
 //SCRIPT
@@ -143,7 +146,7 @@ do {
     //CONDIÇÃO GAME OVER
     if (resp === "COMIDA") {
       console.log("A comida estava envenenada e você morreu");
-      quebra = true;
+      gameOver = true;
       break;
       //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
     } else if (resp == "ABRIRMOCHILA" && a == 0) {
@@ -179,21 +182,41 @@ do {
       play = false
     }
     //CONDIÇÃO DE GAME OVER
-    if (quebra == true) break;
+    if (gameOver == true) break;
   } while (play); ////// Saida da caverna
 
   //CONDIÇÃO DE GAME OVER
-if (quebra == true) break;
+if (gameOver == true) break;
 
 console.log(`Blablablabal cenario bonito, blablabalbla, lembra de dois caminhos, blablablabla, floresta ou montanhas?`)
 resp = prompt(``).toUpperCase().replace(/\s/g, "")
 validacaoString(resposta, "FLORESTA", "MONTANHAS")
+
 //////////////////////////////////////////////Floresta
-/* if (resp == "FLORESTA"){
+if (resp == "FLORESTA"){
     //Viagem
     for (i = 0; i < 3; i++) {
         if (i == 0) {
+            criarMonstro(1,3,6)
+            console.log(`Você encontrou um ${monstros[0].nome}`)
+            mortalKombat()
+            if (gameOver == true){
+                console.console.log(`Você morreu para um ${monstros[0].nome}`);
+                break
+                
+            } else{
+                personagens.jogador.vida = 10
+                console.console.log(`Parabéns você derrotou um ${monstros[0].nome}\nSua vida foi recuperada após a batalha`);                
+            }
+            console.log()
       } else if (i == 1) {
+          let rand = random(1,2)
+          if (rand ==1){
+
+          }else{
+
+          }
+          
         }
    }
 
@@ -201,56 +224,59 @@ validacaoString(resposta, "FLORESTA", "MONTANHAS")
 //////////////////////////////////////////////Montanhas
 if (resp == "MONTANHAS"){
 //Viagem
- 
- for (i = 0; i < 5; i++) {
+/*  dias = 5
+ for (i = 0; i < dias; i++) {
      if (i == 0) {
+         criarMonstro(1, 0, 3)
+         mortalKombat()
    } else if (i == 1) {
+       console.log(`blablabla yggdrasil, fruto proibidio vai te q caminhar mais: sim ou nao`)
+       if (sim){
+           dias++
+           console.log(`sahdhuiasdijaisjdiajsd, fenrir suhaudhuashduha: vai luta ou nao`)
+           if(sim){
+                criarMonstro(1, 0, 3)
+                mortalKombat()
+            
+               console.log(`voce lutou contra o fenrir e conseguiu o fruto proibida da yggdrasil, voce se sente mais forte`)
+           } else{
+
+           }
+       }
      }
-}
+} */
 
 }
 
 //////////////////////////////////////////////Cidade
-if (montanhas){
-
-    if()
-    else()
-    if()
-    else()
-
-}
+if (Cidade){
+    console.log(`Você chega aos portões da cidade de Erast. blablablabla`)
+    do {
+        //personagem na caverna
+        console.log(
+          "Diga o que quer fazer: \nDescansar na ESTALAGEM \nPROCURAR por Aerin \nDESISTIR de procurar por Aerin "
+        );
+        resp = prompt().toUpperCase().replace(/\s/g, "");
+        validacaoString(resp,"ESTALAGEM","PROCURAR","DESISTIR",);
+        if (resp = "ESTALAGEM"){
+            console.log(`Você encontra a estalgem do Cervo Flamejante. A taverna lotada e animada é como música em seus ouvidos, atrás do balcão um meio orc sorridente lhe encara, esperando que você peça algo. Cansado de viagem, lhe resta escolher entre BEBER algo ou subir para a estalgem e DESCANSAR.`)
+            validacaoString(resp, "BEBER", "DESCANSAR")
+            if(resp = "BEBER"){
+                console.log(`Nada melhor depois de uma longa viagem do que beber e comer. Principalmente quando ambos são bons como os de Erast. Enquanto sentava em sua mesa e aproveitava de sua alimentação, você ouviu rumores de um elfo misterioso que comprou uma das casas na cidade alta a pouco tempo, alguns dizem que para fazer experimentos demoníacos.`)
+                console.log(`Após comer e beber, uma bela noite de sono em uma cama de palha lhe aguarda.`)
+            } else{
+                console.log(`Cansado de viagem, você não tem nem vontade de se alimentar e vai direto para seu quarto onde uma cama de palha extremamente confortável lhe aguarda.`)
+            }
+            
+            } else if( )
+        
+        }while(true)
+    }
   
 
   //SAINDO DA CAVERNA 2 CAMINHOS
- */
+
   //CIDADE
 } while (play);
-personagens.jogador.vida = 10;
+/* personagens.jogador.vida = 10; */
 
-// //Viagem
-// let dias = 5;
-// for (i = 0; i < dias; i++) {
-//     if (i == 1) {
-//     } else if (i == 2) {
-//     }
-// }
-
-// //cidade
-// dias = 2;
-// for (i = 0; i < dias; i++) {
-//     if (i == 1) {
-//         criarMonstro();
-//         mortalKombat();
-//     } else if (i == 2) {
-//     }
-// }
-
-// // teste
-// while (true) {
-//     a = prompt(`Digite Sim:`).toUpperCase().replace(/\s/g, '');
-//     console.log(a)
-//     if (a === 'SIM') break;
-//     else {
-//         console.log(`Por favor digite Sim.`);
-//     }
-// }
