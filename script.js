@@ -476,7 +476,5 @@ Esses são seus STATUS atualizados: \n`);
     } while (true);
   }
 
-  //SAINDO DA CAVERNA 2 CAMINHOS
-  //CIDADE
 } while (play);
 /* personagens.jogador.vida = 10; */
