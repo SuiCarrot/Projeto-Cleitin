@@ -1,68 +1,68 @@
-var prompt = require("prompt-sync")();
+var prompt = require('prompt-sync')();
 
 //////////////////////////////////////////////DECLARAÇÃO DAS FUNÇÕES
 // FUNÇÃO PARA RETARDAR A CPU
 function sleep(segundos = 1) {
-  segundos = segundos * 1000;
-  let start = new Date().getTime();
-  for (let i = 0; i < 1e7; i++) {
-    if (new Date().getTime() - start > segundos) {
-      break;
+    segundos = segundos * 1000;
+    let start = new Date().getTime();
+    for (let i = 0; i < 1e7; i++) {
+        if (new Date().getTime() - start > segundos) {
+            break;
+        }
     }
-  }
 }
 
 // FUNÇÃO PARA RANDOMIZAR
 function random(minimo = 0, maximo) {
-  let max = Math.floor(maximo);
-  let min = Math.ceil(minimo);
-  let random = Math.random() * (max - min + 1) + min;
-  random = parseInt(random);
-  return random;
+    let max = Math.floor(maximo);
+    let min = Math.ceil(minimo);
+    let random = Math.random() * (max - min + 1) + min;
+    random = parseInt(random);
+    return random;
 }
 
 //FUNÇÃO DE VALIDAÇÃO DE STRINGS
 function validacaoString(resposta, a, b, c, d) {
-  //Função de validação para prompt numérico
-  while (true) {
-    if (resposta == a || resposta == b || resposta == c || resposta == d) break;
-    else {
-      console.log(`Escolha uma das opçòes: `);
-      resposta = prompt(``).toUpperCase().replace(/\s/g, "");
+    //Função de validação para prompt numérico
+    while (true) {
+        if (resposta == a || resposta == b || resposta == c || resposta == d) break;
+        else {
+            console.log(`Escolha uma das opçòes: `);
+            resposta = prompt(``).toUpperCase().replace(/\s/g, '');
+        }
     }
-  }
-  return (resp = resposta);
+    return (resp = resposta);
 }
 
 // FUNÇÃO PARA CRIAR MONSTRO
 function clearMonstro() {
-  monstros.splice(0);
+    monstros.splice(0);
 }
 function criarMonstro(qtd, a, b) {
-  clearMonstro();
-  const listNomeMonstro = [
-    "Bahamut",
-    "Gárgula",
-    "Besta-fera",
-    "Demônio Ceifador",
-    "Batata Assassina",
-    "Assassino da Colher",
-  ];
+    clearMonstro();
+    const listNomeMonstro = [
+        'Bahamut',
+        'Gárgula',
+        'Besta-fera',
+        'Demônio Ceifador',
+        'Batata Assassina',
+        'Assassino da Colher',
+    ];
 
-  for (let i = 0; i < qtd; i++) {
-    let nomeMonstro = random(a, b);
-    let vidaMonstro = random(5, 10);
-    let danoMonstro = random(2, 4);
+    for (let i = 0; i < qtd; i++) {
+        let nomeMonstro = listNomeMonstro[random(a, b)];
+        let vidaMonstro = random(5, 10);
+        let danoMonstro = random(2, 4);
 
-    let monstro = {
-      nome: listNomeMonstro[nomeMonstro],
-      vida: vidaMonstro,
-      dano: danoMonstro,
-      id: i,
-    };
-    monstros.push(monstro);
-  }
-  return monstros;
+        let monstro = {
+            nome: nomeMonstro,
+            vida: vidaMonstro,
+            dano: danoMonstro,
+            id: i,
+        };
+        monstros.push(monstro);
+    }
+    return monstros;
 }
 
 //FUNÇÃO COMBATE
@@ -86,17 +86,17 @@ const monstros = [];
 
 // PERSONAGENS
 const personagens = {
-  jogador: {
-    vida: 10,
-    defesa: 3,
-    dano: random(4, 6),
-  },
-  aerin: {
-    nome: `Aerin`,
-    vida: 10,
-    defesa: 3,
-    dano: random(4, 6),
-  },
+    jogador: {
+        vida: 10,
+        defesa: 3,
+        dano: random(4, 6),
+    },
+    aerin: {
+        nome: `Aerin`,
+        vida: 10,
+        defesa: 3,
+        dano: random(4, 6),
+    },
 };
 
 const equipamentos = {
@@ -124,24 +124,17 @@ a = 0;
 
 //SCRIPT
 do {
-  //jogar novamente
-  //INICIO DO GAME NA CAVERNA
-  console.log(
-    " Personagem acorda sem memórias em uma pequena caverna. Ao analisar os arredores vê um pequeno acampamento montado. Uma fogueira, agora apenas em brasas, com comida, uma mochila e algumas equipamentos espalhadas pelo acampamento."
-  );
-  //LAÇO PARA TRAZER OPÇÕES DA CAVERNA
-  do {
-    //personagem na caverna
+    //jogar novamente
+    //INICIO DO GAME NA CAVERNA
     console.log(
-      "Diga o que quer fazer: \nComida \nAbrir Mochila\nPegar uma arma\nSair da caverna "
+        '-----------------------------------------------------------------------------------------',
     );
-    resp = prompt().toUpperCase().replace(/\s/g, "");
-    validacaoString(
-      resp,
-      "COMIDA",
-      "ABRIRMOCHILA",
-      "PEGARUMAARMA",
-      "SAIRDACAVERNA"
+    console.log(`Personagem acorda sem memórias em uma pequena caverna...`);
+    sleep(3);
+    console.log(`Ao analisar os arredores vê um pequeno acampamento montado.`);
+    sleep(2);
+    console.log(
+        `Uma fogueira, agora apenas em brasas, com comida, uma mochila e algumas equipamentos espalhadas pelo acampamento.`,
     );
     //CONDIÇÃO GAME OVER
     if (resp === "COMIDA") {
@@ -184,7 +177,14 @@ do {
     }
     //CONDIÇÃO DE GAME OVER
     if (gameOver == true) break;
-  } while (play); ////// Saida da caverna
+    console.log(
+        '-----------------------------------------------------------------------------------------',
+    );
+    console.log(
+        `Blablablabal cenario bonito, blablabalbla, lembra de dois caminhos, blablablabla, floresta ou montanhas?`,
+    );
+    resp = prompt(``).toUpperCase().replace(/\s/g, '');
+    validacaoString(resp, 'FLORESTA', 'MONTANHAS');
 
   //CONDIÇÃO DE GAME OVER
   if (gameOver == true) break;
