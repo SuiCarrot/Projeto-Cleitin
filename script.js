@@ -159,9 +159,8 @@ a = 0;
 
 //SCRIPT
 do {
-
-    console.clear()
-    console.log()
+    console.clear();
+    console.log();
     //jogar novamente
     //INICIO DO GAME NA CAVERNA
     console.log(
@@ -258,12 +257,9 @@ do {
                 ifGameOver(1, 3, 5);
                 statusJogador();
                 resp = prompt(`Press Enter para continuar`);
-                ifGameOver(1, 3, 5);
-                statusJogador();
-                ifGameOver(1, 3, 5);
-                statusJogador();
-                console.log(`GAME OVER ${gameOver}`);
-                resp = prompt(`Press Enter para continuar`);
+                
+                
+                
                 if (gameOver == true) {
                     break;
                 }
