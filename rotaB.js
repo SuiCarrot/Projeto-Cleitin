@@ -331,6 +331,7 @@ Esses são seus STATUS atualizados: \n`)
             }
     
     }
+    console.log(`Você finalmente termina a descida pelas monstanhas se depara com a entrada da cidade de Erast\n`)
 }
-console.log(`Você finalmente termina a descida pelas monstanhas se depara com a entrada da cidade de Erast\n`)
+
 
