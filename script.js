@@ -1,6 +1,6 @@
 var prompt = require('prompt-sync')();
 
-//////////////////////////////////////////////DECLARAÇÃO DAS FUNÇÕES
+/*-------------------------------------------- DECLARAÇÃO DAS FUNÇÕES--------------------------------------------------------------------*/
 // FUNÇÃO PARA RETARDAR A CPU
 function sleep(segundos = 1) {
     segundos = segundos * 1000;
@@ -80,24 +80,40 @@ function mortalKombat(a = 0) {
     }
 }
 
-function ifGameOver(qtd, a, b) {
-    criarMonstro(qtd, a, b);
-    console.log(`Você encontrou um ${monstros[0].nome}`);
-    sleep(1);
-    console.log(`Prepare-se para a batalha`);
-    mortalKombat();
-    sleep(3);
-    if (gameOver == true) {
-        console.console.log(`Você morreu para um ${monstros[0].nome}`);
-    } else {
-        personagens.jogador.vida = 10;
-        console.log(
-            `Parabéns você derrotou um ${monstros[0].nome}\nSua vida foi recuperada após a batalha`,
-        );
-    }
+//FUNÇÃO STATUS DO JOGADOR
+function statusJogador() {
+    console.log(`Status de ${personagens.jogador.nome}:`);
+    console.log();
+    console.log(
+        `\x1b[33mVida\x1b[0m:\t\x1b[32m${personagens.jogador.vida}\x1b[0m\n\x1b[33mDefesa\x1b[0m:\t\x1b[32m${personagens.jogador.defesa}\x1b[0m\n\x1b[33mDano\x1b[0m:\t\x1b[32m${personagens.jogador.dano}\x1b[0m`,
+    );
 }
 
-//////////////////////////////////////////////DECLARAÇÃO DE OBJETOS
+//FUNÇÃO MERGE CRIAÇÃO, BATALHA E CONDIÇÃO
+function ifGameOver(qtd, a, b) {
+    criarMonstro(qtd, a, b);
+    for (let i = 0; i < qtd; i++) {
+        sleep(2);
+        console.log(`Você encontrou um ${monstros[i].nome}`);
+        sleep(5);
+        console.log(`Prepare-se para a batalha`);
+        sleep(5);
+        mortalKombat(i);
+        if (gameOver == true) {
+            console.log(`Você morreu para um ${monstros[i].nome}`);
+            break;
+        } else {
+            console.log(`Parabéns você conseguiu matar ${monstros[i].nome}`);
+        }
+    }
+    sleep(3);
+}
+
+//FUNÇÃO STATUS JOGADOR
+
+/*-----------------------------------------------DECLARAÇÃO DE VARIAVEIS E OBJETOS---------------------------------------------------------*/
+//ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
+const monstros = [];
 
 // PERSONAGENS
 const personagens = {
@@ -132,15 +148,14 @@ const equipamentos = {
     },
 };
 
-//////////////////////////////////////////////DECLARAÇÃO DE VARIAVEIS
 let play = true;
 let resp;
 let gameOver = false;
-let vidaMaxima = 10;
+let vidaMAX = 10;
+personagens.jogador.vida = vidaMAX;
 a = 0;
 
 //ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
-const monstros = [];
 
 //SCRIPT
 do {
@@ -159,57 +174,60 @@ do {
     console.log();
 
     //LAÇO PARA TRAZER OPÇÕES DA CAVERNA
-    //     do {
-    //         //personagem na caverna
-    //         console.log(
-    //             'Diga o que quer fazer: \nComida \nAbrir Mochila\nPegar uma arma\nSair da caverna ',
-    //         );
-    //         console.log();
-    //         resp = prompt().toUpperCase().replace(/\s/g, '');
-    //         validacaoString(resp, 'COMIDA', 'ABRIRMOCHILA', 'PEGARUMAARMA', 'SAIRDACAVERNA');
-    //         //CONDIÇÃO GAME OVER
-    //         if (resp === 'COMIDA') {
-    //             console.log('A comida estava envenenada e você morreu');
-    //             gameOver = true;
-    //             break;
-    //             //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
-    //         } else if (resp == 'ABRIRMOCHILA' && a == 0) {
-    //             console.log(
-    //                 `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para o personagens.jogador encontrar na cidade de Erast. Assinado como Aerin. personagens.jogador tomado por memorias de batalha, lembra de seu nome:`,
-    //             );
-    //             personagens.jogador.nome = prompt();
+    do {
+        //personagem na caverna
+        console.log(
+            'Diga o que quer fazer: \nComida \nAbrir Mochila\nPegar uma arma\nSair da caverna ',
+        );
+        console.log();
+        resp = prompt().toUpperCase().replace(/\s/g, '');
+        validacaoString(resp, 'COMIDA', 'ABRIRMOCHILA', 'PEGARUMAARMA', 'SAIRDACAVERNA');
+        //CONDIÇÃO GAME OVER
+        if (resp === 'COMIDA') {
+            console.log('A comida estava envenenada e você morreu');
+            gameOver = true;
+            break;
+            //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
+        } else if (resp == 'ABRIRMOCHILA' && a == 0) {
+            console.log(
+                `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para o personagens.jogador encontrar na cidade de Erast. Assinado como Aerin. personagens.jogador tomado por memorias de batalha, lembra de seu nome:`,
+            );
+            personagens.jogador.nome = prompt();
+            resp = prompt('Press ENTER para continuar');
+            statusJogador();
 
-    //             a = 1;
-    //         } else if (resp == 'ABRIRMOCHILA' && a == 1) {
-    //             console.log(
-    //                 `Você abre a mochila novamente, e vê os mesmos itens e um papel com o seu nome: ${personagens.jogador.nome}.`,
-    //             );
-    //             //CONDIÇÃO IPORTANTE DE SELEÇÃO DE equipamentos, MAS AINDA NÃO SAI DA CAVERNA
-    //         } else if (resp == 'PEGARUMAARMA') {
-    //             console.log(
-    //                 'Existem 3 equipamentos dispostas:\nEspada escudo = + Defesa -Ataque\nMachado = ++Ataque -- Defesa\nArco = +Ataque - Defesa',
-    //             );
-    //             //LAÇO PARA USUÁRIO ENTREGAR O VALOR C0RRETO
-    //             resp = prompt().toUpperCase().replace(/\s/g, '');
-    //             validacaoString(resp, 'ESPADAESCUDO', 'MACHADO', 'ARCO');
-    //             personagens.jogador.defesa = 3;
-    //             personagens.jogador.dano = random(4, 6);
-    //             if (resp == 'ESPADAESCUDO') {
-    //                 equipamentos.espadaEscudo();
-    //             } else if (resp == 'MACHADO') {
-    //                 equipamentos.machado();
-    //             } else {
-    //                 equipamentos.arco();
-    //             }
-    //             //CONDIÇÃO PARA SAIR DA CAVERNA
-    //         } else if (resp == 'SAIRDACAVERNA') {
-    //             console.log('Você saiu da caverna');
-    //             play = false;
-    //             console.clear();
-    //         }
-    //         //CONDIÇÃO DE GAME OVER
-    //         if (gameOver == true) break;
-    //     } while (play); ////// Saida da caverna
+            a = 1;
+        } else if (resp == 'ABRIRMOCHILA' && a == 1) {
+            console.log(
+                `Você abre a mochila novamente, e vê os mesmos itens e um papel com o seu nome: ${personagens.jogador.nome}.`,
+            );
+            statusJogador();
+            //CONDIÇÃO IPORTANTE DE SELEÇÃO DE equipamentos, MAS AINDA NÃO SAI DA CAVERNA
+        } else if (resp == 'PEGARUMAARMA') {
+            console.log(
+                'Existem 3 equipamentos dispostas:\nEspada escudo = + Defesa -Ataque\nMachado = ++Ataque -- Defesa\nArco = +Ataque - Defesa',
+            );
+            //LAÇO PARA USUÁRIO ENTREGAR O VALOR C0RRETO
+            resp = prompt().toUpperCase().replace(/\s/g, '');
+            validacaoString(resp, 'ESPADAESCUDO', 'MACHADO', 'ARCO');
+
+            if (resp == 'ESPADAESCUDO') {
+                equipamentos.espadaEscudo();
+            } else if (resp == 'MACHADO') {
+                equipamentos.machado();
+            } else {
+                equipamentos.arco();
+            }
+            statusJogador();
+            //CONDIÇÃO PARA SAIR DA CAVERNA
+        } else if (resp == 'SAIRDACAVERNA') {
+            console.log('Você saiu da caverna');
+            play = false;
+            console.clear();
+        }
+        //CONDIÇÃO DE GAME OVER
+        if (gameOver == true) break;
+    } while (play); ////// Saida da caverna
 
     //CONDIÇÃO DE GAME OVER
     if (gameOver == true) break;
@@ -221,8 +239,9 @@ do {
     );
     resp = prompt(``).toUpperCase().replace(/\s/g, '');
     validacaoString(resp, 'FLORESTA', 'MONTANHAS');
+    console.log();
 
-    //////////////////////////////////////////////Floresta
+    /*---------------------------------------------------------FLORESTA--------------------------------------------------------------------*/
     if (resp == 'FLORESTA') {
         //Viagem
         for (i = 0; i < 3; i++) {
@@ -230,23 +249,45 @@ do {
             if (i == 0) {
                 sleep(3);
                 console.log('Seu primeiro dia na floresta, tudo parece calmo.');
+                sleep(5);
+                console.log('Parece que encontramos algo...');
+                resp = prompt(`Press Enter para continuar`);
+                ifGameOver(1, 3, 5);
+                statusJogador();
+                resp = prompt(`Press Enter para continuar`);
+                ifGameOver(1, 3, 5);
+                statusJogador();
+                ifGameOver(1, 3, 5);
+                statusJogador();
+                console.log(`GAME OVER ${gameOver}`);
+                resp = prompt(`Press Enter para continuar`);
+                if (gameOver == true) {
+                    break;
+                }
+            } else if (i == 1) {
+                console.log('Seu segundo dia na floresta, cuidado...');
+                sleep(5);
+                let rand = random(1, 2);
+                if (rand == 1) {
+                    resp = prompt(`Press Enter para continuar`);
+                    ifGameOver(1, 3, 6);
+                    statusJogador();
+                    resp = prompt(`Press Enter para continuar`);
+                    equipamentos.armadura();
+                    statusJogador();
+                    sleep(3);
+                    console.log('Você encontrou uma armadura');
+                } else {
+                    equipamentos.armadura();
+                    statusJogador();
+                    resp = prompt(`Press Enter para continuar`);
+                    sleep(3);
+                    console.log('Você encontrou uma armadura');
+                }
+            } else if (i == 2) {
                 ifGameOver(1, 3, 6);
                 if (gameOver == true) {
                     break;
-                } else if (i == 1) {
-                    let rand = random(1, 2);
-                    if (rand == 1) {
-                        equipamentos.armadura();
-                        console.log('Você encontrou uma armadura');
-                        criarMonstro(1, 3, 6);
-                        console.log(`Você encontrou um ${monstros[0].nome}`);
-                        mortalKombat();
-                    } else {
-                        equipamentos.armadura();
-                        console.log('Você encontrou uma armadura');
-                    }
-                } else if (i == 2) {
-                    console.log('teste');
                 }
             }
         }
@@ -504,8 +545,11 @@ destruir os três ${monstros[0].nome} sozinho. Mesmo sendo vitorioso, ficou prof
             `Você finalmente termina a descida pelas montanhas se depara com a entrada da cidade de Erast\n`,
         );
     }
+    console.log(
+        `Você finalmente termina a descida pelas monstanhas se depara com a entrada da cidade de Erast\n`,
+    );
 
-    //////////////////////////////////////////////Cidade
+    /*-----------------------------------------------------------------CIDADE--------------------------------------------------------------*/
     if (Cidade) {
         console.log(`Você chega aos portões da cidade de Erast. blablablabla`);
         do {
