@@ -54,9 +54,7 @@ de aumentar seu poder, proeficiencia e se alimentar de sua carne`);
             ifGameOver(1, 3, 5)
             if (gameOver == true) {
             console.log();
-            console.log(`GAME OVER - Você morreu para um ${monstros[0].nome}`);
-            break;
-          } else {
+            } else {
             
             console.log();
             console.log(`Parabéns você lutou por uma tarde inteira e derrotou um ${monstros[0].nome}. 
