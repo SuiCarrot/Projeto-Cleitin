@@ -52,7 +52,7 @@ function criarMonstro(qtd, a, b) {
     for (let i = 0; i < qtd; i++) {
         let nomeMonstro = listNomeMonstro[random(a, b)];
         let vidaMonstro = random(5, 10);
-        let danoMonstro = random(2, 4);
+        let danoMonstro = random(3, 6);
 
         let monstro = {
             nome: nomeMonstro,
@@ -97,14 +97,12 @@ function ifGameOver(qtd, a, b) {
     }
 }
 
-//////////////////////////////////////////////DECLARAÇÃO DE VARIAVEIS E OBJETOS
-//ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
-const monstros = [];
+//////////////////////////////////////////////DECLARAÇÃO DE OBJETOS
 
 // PERSONAGENS
 const personagens = {
     jogador: {
-        vida: 10,
+        vida: 0,
         defesa: 3,
         dano: random(4, 6),
     },
@@ -115,7 +113,7 @@ const personagens = {
         dano: random(4, 6),
     },
 };
-
+// EQUIPAMENTOS
 const equipamentos = {
     machado: function () {
         personagens.jogador.dano += 3;
@@ -134,10 +132,15 @@ const equipamentos = {
     },
 };
 
+//////////////////////////////////////////////DECLARAÇÃO DE VARIAVEIS
 let play = true;
 let resp;
 let gameOver = false;
+let vidaMaxima = 10
 a = 0;
+
+//ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
+const monstros = [];
 
 //SCRIPT
 do {
@@ -219,14 +222,6 @@ do {
     resp = prompt(``).toUpperCase().replace(/\s/g, '');
     validacaoString(resp, 'FLORESTA', 'MONTANHAS');
 
-  //CONDIÇÃO DE GAME OVER
-  if (gameOver == true) break;
-
-  console.log(
-    `Blablablabal cenario bonito, blablabalbla, lembra de dois caminhos, blablablabla, floresta ou montanhas?`
-  );
-  resp = prompt(``).toUpperCase().replace(/\s/g, "");
-  validacaoString(resposta, "FLORESTA", "MONTANHAS");
 
   //////////////////////////////////////////////Floresta
   if (resp == 'FLORESTA') {
@@ -509,8 +504,41 @@ Esses são seus STATUS atualizados: \n`);
           );
         }
       }
+      else if(resp = "PROCURAR"){
+        console.log(`Você sai para procurar por Aerin, com as informações do taverneiro você possui duas opções: procurar na CIDADE ALTA ou na CIDADE BAIXA, para qual você vai?`)
+        resp = prompt().toUpperCase().replace(/\s/g, "")
+        validacaoString(resp, "CIDADEBAIXA", "CIDADEALTA")
+        if("CIDADEBAIXA"){
+          console.log(`Você prefere procurar na cidade baixa primeiro.\nConforme você se aproxima do porto, o cheiro de peixe e agua salgada entra mais em suas narinas, atacando os seus sentidos. Uma discussão acalorada lhe faz olhar para o lado e enquanto fazia isso você sente algo sendo tirado de você. Uma criança correndo entre a multidão agora carrega sua algibeira de moedas. Sem pensar muito e talvez por puro reflexo você corre atrás dela entre as vielas até chegar em um beco. Sua algibeira no chão, ainda com as moedas lhe faz ter um pensamento repentino: "Armadilha". Tão rapido quanto você pensa isso, um movimento as suas costas já faz com que você saque sua arma, apenas para encontrar um bandido com uma adaga em punho.`)
+          sleep(3)
+          console.log(`- Parece que hoje é meu dia de sorte, encontrar um cara famoso como você, com uma recompensa alta e ainda com poucos equipamentos?!?! Parece que tirei a sorte grande!`)
+          sleep(4)
+          console.log(`Antes que você consiga falar algo, o ladrão ataca.`)
+          ifGameOver(1,7,7)
+        }
+        else{
+          console.log(`Ignorando a cidade baixa você vai para a região nobre da cidade. Casas cada vez maiores, algumas mansões e até guardas patrulhando algumas regiões. Você nao sabe o porque, mas algo lhe deixa desconfortável aqui, um embruho no estomago, como se tudo lhe deixasse enjoado. Quando você senta em um banco para retomar um ar e se recuperar da tontura uma figura se aproxima de você.`)
+          sleep(5)
+          console.log(`- Graças aos deuses você chegou, está alguns dias atrasado, comecei a ficar preocupado. Venha, vamos a minha casa para conversarmos com um pouco mais de privacidade.`)
+          sleep(6)
+          console.log(`Ao olhar para a figura que fala com você de forma casual você vê um elfo com cabelos avermelhados, trajando uma armadura de couro. Seu rosto genuinamente sorridente apenas potencializa o rosto angular e as orelhas pontudas. Subitamente você o reconhece....`)
+          sleep(10)
+          console.log(`Aerin`)
+          sleep(5)
+          console.log(`Aerin te leva até uma casa relativamente pequena em comparação com as casas a sua volta, mas ainda grande comparada com o resto da cidade. Ao entrarem ele lhe aponta para uma poltrona na sala, ao mesmo tempo que senta em outra diretamente a sua frente.\n-Meu amigo, é realmente muito bom lhe ver novamente, espero que tenha tido uma viagem tranquila - o sorriso em seu rosto se esvai, dando lugar a uma expressão séria - Infelizmente precisarei confirmar algumas coisas com você. Perguntas de rotina você já sabe. Vamos lá.`)
+          sleep(6)
+          console.log(`Quando você era criança e me encontrou na floresta pela primeira vez eu lhe dei um item. Era uma estátua de madeira de um animal, que animal era este?\nURSO\n CORUJA\nVACA.`)
+          resp = prompt().toUpperCase().replace(/\s/g, "")
+          validacaoString(resp,"URSO", "CORUJA", "VACA")
+          if (resp="CORUJA"){
+            console.log(`Aerin sorri levemente\n-Fico comovido por você lembrar, muito bem, próxima pergunta.`)
+            respCorreta++
+          } else {
+            console.log(`O rosto de Aerin segue sério\n-Sinceramente achei que você lembraria, bem, próxima pergunta.`)
+          }
+        }
+      }
     } while (true);
   }
 
 } while (play);
-/* personagens.jogador.vida = 10; */
