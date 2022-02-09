@@ -159,6 +159,9 @@ a = 0;
 
 //SCRIPT
 do {
+
+    console.clear()
+    console.log()
     //jogar novamente
     //INICIO DO GAME NA CAVERNA
     console.log(
