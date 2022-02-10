@@ -301,9 +301,8 @@ do {
         console.clear()
     //PRÓLOGO DA MONTANHA
         console.log(
-      `Você começa sua jornada em busca de si mesmo, assumindo que, encontrar Aerin era o seu destino, mas antes, decide checar os seus STATUS, para mensurar o seu poder e evolução`
+      `\nVocê começa a busca por si mesmo, assumindo que encontrar Aerin era o seu destino, mas antes, decide checar seus STATUS, para mensurar seu poder e evolução\n`
     );
-        console.log();
         prompt(`Digite ENTER para prosseguir...`);
         console.clear();
         console.log();
@@ -312,18 +311,18 @@ do {
         console.log();
         prompt(`Digite ENTER para prosseguir...`);
         console.clear();
-        console.log();
+        
+        console.log(`\nViajar sobre As Montanhas Gélidas é o caminho mais longo, entretanto é mais seguro que as florestas, não há tantos monstros pelo caminho, mas a escassez de animais e alimentos torna a jornada igualmente complicada\n`);
 
-        console.log(`Viajar sobre As Montanhas Gélidas é o caminho mais longo e apesar de ser mais seguro que as florestas, pois não há tantos monstros pelo caminho, a escassez de animais e alimentos torna a jornada igualmente complicada`);
-        console.log();
         prompt(`Digite ENTER para prosseguir...`);
         
     for (i = 0; i < dias; i++) {
         //PRIMEIRO DIA
       if (i == 0) {
+
         console.clear();
-        console.log();
-        console.log(`Logo pela manhã, do primeiro dia de viagem, Você chegou ao pé da montanha e percebeu que precisava estocar alimentos antes de continuar.\n
+
+        console.log(`\nLogo pela manhã do primeiro dia de viagem, Você chegou ao pé da montanha e percebeu que precisava estocar alimentos antes de continuar.\n
 Digite o que deseja procurar: FRUTA, ANIMAL OU MONSTRO\n`);
 
         //PRIMEIRA DECISÃO, PREPARAÇÃO PARA A JORNADA
@@ -331,21 +330,19 @@ Digite o que deseja procurar: FRUTA, ANIMAL OU MONSTRO\n`);
         validacaoString(resp, "FRUTA", "ANIMAL", "MONSTRO");
 
         if (resp === "FRUTA") {
-          console.log();
-          console.log(
-            `Você teve sorte e encontrou rapidamente algumas árvores frutíferas, agora já está alimentado e pronto para continuar com a aventura. Rumo a cidade de Erast`
+            console.log(
+            `\nVocê teve sorte e encontrou rapidamente algumas árvores frutíferas, agora já está alimentado e pronto para continuar com a aventura. Rumo a cidade de Erast`
           );
         } else if (resp === "ANIMAL") {
-          console.log();
-          console.log(`Você encontrou algumas frutas e as recolheu, mas logo avistou um cervo! prontamento o atacou para obter carne e usou sua pele para se proteger do frio que viria no dia seguinte.`);
+            console.log(`\nVocê encontrou algumas frutas e as recolheu, mas logo avistou um cervo! Prontamento o atacou para obter carne e usou sua pele para se proteger do frio, que viria mais tarde.\n`);
           
           console.log(`Confira seus STATUS atualizados`)
           personagens.jogador.defesa += 1;
           statusJogador();
 
         } else if (resp === "MONSTRO") {
-          console.log();
-          console.log(`Você procura por um monstro para treinar com o equipamento recém escolhido, visando aumentar seu poder e se possível, se alimentar`);
+
+          console.log(`\nVocê procura por um monstro para treinar com o equipamento recém escolhido, visando aumentar seu poder e se possível, se alimentar\n`);
           
             //PRIMEIRA BATALHA SE INICIA
             ifGameOver(1, 3, 5)
@@ -353,8 +350,8 @@ Digite o que deseja procurar: FRUTA, ANIMAL OU MONSTRO\n`);
                 break;
             
             } else {
-            console.log();
-            console.log(`Confira seus STATUS atualizados: \n`);
+            
+            console.log(`\nConfira seus STATUS atualizados: \n`);
             personagens.jogador.dano += 1;
             personagens.jogador.vida = vidaMAX;
             statusJogador()
@@ -368,9 +365,9 @@ Digite o que deseja procurar: FRUTA, ANIMAL OU MONSTRO\n`);
 
         //SEGUNDO DIA
          } else if (i == 1) {
+            
             console.clear();
-            console.log();
-            console.log(`Na manhã do segundo dia, você se deparou com um tempo incívelmente frio. Já em cima da montanha, o sol parecia gelado, o terreno era íngreme e irregular e apesar da forte neblina você conseguiu avistar uma caverna.\n
+            console.log(`\nNa manhã do segundo dia, você se deparou com um tempo incívelmente frio, o sol parecia gelado, o terreno era íngreme e irregular. Apesar da forte neblina você conseguiu avistar uma caverna.\n
 Digite o que deseja fazer: "ENTRAR", "CONTINUAR"\n`);
 
         resp = prompt().toUpperCase().replace(/\s/g,"");
@@ -378,79 +375,77 @@ Digite o que deseja fazer: "ENTRAR", "CONTINUAR"\n`);
 
         if (resp === "ENTRAR") {
           
-            console.log();
-          console.log(`Você entrou na caverna se alimentou do que tinha em sua bolsa e preferiu descansar até o amanhecer do próximo dia`);
+          console.log(`\nVocê entrou na caverna se alimentou do que tinha em sua bolsa e preferiu descansar até o amanhecer do próximo dia\n`);
         } 
         
         else if (resp === "CONTINUAR") {
             
             console.log();
-            console.log(`Você se deparou com uma criatura pavorosa, suas únicas opções são lutar ou morrer!`)
+            console.log(`\nVocê se deparou com uma criatura pavorosa, suas únicas opções eram lutar ou morrer!\n`)
             ifGameOver(1, 3, 5);
          
             if (gameOver == true) {
                 break;
 
           } else {
-            console.log();
-            console.log(`Confira seus STATUS atualizados: \n`);
+           
+            console.log(`\nConfira seus STATUS atualizados: \n`);
             personagens.jogador.vida = vidaMAX;
             personagens.jogador.defesa += 1;
             statusJogador()
           
         }
     
-        console.log();
-        console.log(
-          `Você adentrou as entranhas do monstro derrotado, e esperou até o amanhecer\n`
+          console.log(
+          `\nVocê adentrou as entranhas do monstro derrotado, e esperou até o amanhecer\n`
         );
 
         }
-
-        console.log();
+    
         prompt(`Digite ENTER para prosseguir...`);
-        
+        console.clear()
      
         
         //TERCEIRO DIA
       } else if (i == 2) {
+            
             console.clear();
-            console.log();
-            console.log(`Mais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite nesse ponto infernal da aventura. O sol parecia congelado e a pele do cervo já não o aquecia mais`);
-            console.log();
-        prompt(`Digite ENTER para prosseguir...`);
+            console.log(`\nMais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite. O sol parecia congelado e a sensação de morte pairava sobre o ar.\n`);
+            
+            prompt(`Digite ENTER para prosseguir...`);
             console.clear();
-            console.log();
-            console.log(`A tarde chegou e você não aguentava mais caminhar, avistou um amontoado de pedras e..\n
+            
+            console.log(`\nA tarde chegou e você não aguentava mais caminhar, avistou um amontoado de pedras e..\n
 Digite o que deseja fazer: "DESCANSAR", "PERSISTIR"\n`);
 
         resp = prompt().toUpperCase().replace(/\s/g, "");
         validacaoString(resp, "DESCANSAR", "PERSISTIR");
 
         if (resp === "DESCANSAR") {
-            console.log();
+            
             console.log(
-            `Você se deitou sobre a neve se esgueirando entre as pedras. Naquele momento teve a certeza de que se não encontrasse nada no dia seguinte, você morreria de fome`
+            `\nVocê se deitou sobre a neve se esgueirando entre as pedras. Naquele momento teve a certeza de que se não encontrasse nada no dia seguinte, você morreria de fome\n`
           );
 
           //BONÛS DE PERSISTÊNCIA - FACILITA PASSAR PELO DESAFIO
         } else if (resp === "PERSISTIR") {
-            console.log();
-            console.log(`Você continua andando já cambaleando e com os pés dormentes, até encontrar Yggdrasil a árvore divina, com frutas douradas e imbuídas de magia. Ao recostar sobre a árvore é envolvido em uma aura de calor e plenitude, se tornando completamente resistente ao frio. Você acabou de ganhar 5 de vida máxima e 1 de defesa. Esses são seus STATUS atualizados: \n`);
+            
+            console.log(`\nVocê continua andando já cambaleando e com os pés dormentes, até encontrar Yggdrasil a árvore divina, com frutas douradas e imbuídas de magia. Ao recostar sobre a árvore é envolvido em uma aura de calor e plenitude, se tornando completamente resistente ao frio. Você acabou de ganhar 5 de vida máxima e 1 de defesa. Esses são seus STATUS atualizados: \n`);
             vidaMAX+=5
             personagens.jogador.vida=vidaMAX;
             personagens.jogador.defesa += 1;
-          statusJogador()
+            statusJogador()
         }
             console.log();
-        prompt(`Digite ENTER para prosseguir...`);
-            console.clear();
+            prompt(`Digite ENTER para prosseguir...`);
+           
         
 
         //QUARTO DIA
       } else if (i == 3) {
-        console.log();
-        console.log(`Ao alvorecer do quarto dia de jornada, você se deparou com dois monstros vagando livremente, entre as pedras de gelo que se formavam, eles ainda não te viram e você tem a oportunidade de fugir.\n
+
+            console.clear()        
+            console.log(`\nAo alvorecer do quarto dia de jornada, você avista DOIS monstros vagando livremente, entre as imensas pedras de gelo que haviam acima das montanhas, eles ainda não te viram e você tem a oportunidade de fugir.\n
 Digite o que deseja fazer: "LUTAR", "FUGIR" \n`); 
 
         resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -464,53 +459,75 @@ Digite o que deseja fazer: "LUTAR", "FUGIR" \n`);
                 break;
 
              }else {
-                console.log();
-                console.log(`Confira seus STATUS atualizados: \n`);
                 personagens.jogador.vida=vidaMAX
                 personagens.jogador.dano += 2;
+                console.log(`\nVocê acabou de adquirir Mjolnir, a arma lendária das Montanhas Gélidas\n
+Digite "SIM" se deseja equipar: `)
+
+                resp = prompt().toUpperCase().replace(/\s/g, "");
+                validacaoString(resp, "SIM"); 
+                
+                if(resp ==='SIM'){
+                    
+                    personagens.jogador.dano =+2
+                    console.clear()
+                    console.log(`Você equipou a Mjolnir e sente um poder imenso emanando de sua nova arma\n
+Confira seus STATUS atualizados: \n`)
+                    statusJogador()
+                }else{
+                
+                console.log(`\nConfira seus STATUS atualizados: \n`);
                 statusJogador()
-          }
+          }}
 
         } else if (resp === "FUGIR") {
-            console.log();
+            
             console.log(
-            `Você escapou dos monstros e continuou a caminhar, na esperança de encontrar comida`
+            `\nVocê escapou dos monstros e continuou a caminhar, na esperança de encontrar comida`
           );
+            
+            console.log();
+            prompt(`Digite ENTER para prosseguir...`);
+            console.clear();
+
+        
         }
+
         console.log();
         prompt(`Digite ENTER para prosseguir...`);
         console.clear();
 
-        console.log();
-        console.log(`Ao entardecer você finalmente conseguia ver o final da montanha. A cidade de Erast se aproximava a cada passo. Descendo da montanha você encontrou um acampamento com frutas frescas e carne assada na fogueira, ainda acesa.\n
+        
+        console.log(`\nAo entardecer você finalmente conseguia ver o final da montanha. A cidade de Erast se aproximava a cada passo. Descendo da montanha você encontrou um acampamento com frutas frescas e carne assada na fogueira, ainda acesa.\n
 Digite o que deseja fazer: "COMER", "IGNORAR"\n`);
 
         resp = prompt().toUpperCase().replace(/\s/g, "");
         validacaoString(resp, "COMER", "IGNORAR");
 
         if (resp == "COMER") {
-          console.log();
+          
           console.log(
-            `Você não pensou duas vezes, comeu tudo o que havia ali e fugiu antes que alguém chegasse, continuou a descer As Montanhas Gélidas sem olhar para trás.`
+            `\nVocê não pensou duas vezes, comeu tudo o que havia ali e fugiu antes que alguém chegasse, continuou a descer As Montanhas Gélidas sem olhar para trás. Até chegar a noite e descansar.`
           );
         } else if (resp == "IGNORAR") {
-          console.log();
-          console.log(`Você estava fraco devido a fome e desmaiou poucos metros após o acampamento. Encontrado por um grupo de aventureiros, você acorda e percebe que essas, são as primeiras pessoas que você viu desde que acordou na caverna. Eles dividem sua comida, bebida e suas histórias com você.`);
+          
+          console.log(`\nVocê estava fraco devido a fome e desmaiou poucos metros após o acampamento. Encontrado por um grupo de aventureiros, você acorda e percebe que essas, são as primeiras pessoas que você viu desde que acordou na caverna. Eles dividem sua comida, bebida e suas histórias com você.`);
         }
+
         console.log();
         prompt(`Digite ENTER para prosseguir...`);
         console.clear();
         
         //QUINTO DIA DA VIAGEM
       } else if (i == 4) {
-          console.log();
-          console.log(`É um novo dia! Você continua a caminhar e está muito próximo da entrada de Erast. Porém, você ouve o som de gritos por socorro vindos do acampamento da última montanha.`)
           
-        console.log();
+          console.log(`\nÉ um novo dia! Você continua a caminhar e está muito próximo da entrada de Erast. Porém, você ouve o som de gritos pedindo por socorro, vindos do acampamento da última montanha.\n`)
+          
+        
         prompt(`Digite ENTER para prosseguir...`);
         console.clear()
 
-        console.log(`\nVocê se depara com monstros furiosos, exterminando facilmente o grupo de aventureiros, você sabia que a culpa era sua, pois haviam seguido seu cheiro.\n
+        console.log(`\nVocê volta aé o pequeno acampamento e se depara com monstros furiosos, exterminando facilmente o grupo de aventureiros, você sabia que a culpa era sua, pois haviam seguido seu cheiro.\n
 Digite o que deseja fazer: "LUTAR", "FUGIR"\n`);
 
         resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -522,7 +539,7 @@ Digite o que deseja fazer: "LUTAR", "FUGIR"\n`);
             break;
 
           } else {
-            console.log(`Confira seus STATUS atualizados: \n`);
+            console.log(`\nConfira seus STATUS atualizados: \n`);
             personagens.jogador.vida = vidaMAX;
             personagens.jogador.dano += 2;
             personagens.jogador.defesa += 2;
@@ -530,22 +547,33 @@ Digite o que deseja fazer: "LUTAR", "FUGIR"\n`);
           }
 
         } else if (resp == "FUGIR") {
-          console.log();
+          
           console.log(
-            `Você fugia enquanto ouvia os gritos de agonia dos jovens aventureiros, mas seguia sem olhar pra trás`
+            `\nVocê fugia enquanto ouvia os gritos de agonia dos jovens aventureiros, mas seguia sem olhar pra trás, porém, três monstros te alcaçam, e a única coisa que te separava do seu destino era essa batalha\n`
           );
+
+          ifGameOver(3,3,5)        
+          if (gameOver == true) {
+            break;
+
+          } else {
+            console.log(`\nConfira seus STATUS atualizados: \n`);
+            personagens.jogador.vida = vidaMAX;
+            personagens.jogador.dano += 2;
+            personagens.jogador.defesa += 2;
+            statusJogador()
+          
         }
 
-        console.log();
+        console.log()
         prompt(`Digite ENTER para prosseguir...`);
-        console.clear();
-        console.log();
-      }
-    }console.log(
-    `Você finalmente termina a descida pelas Montanhas Gélidas se depara com a entrada da cidade de Erast\n`
-  );
+        console.clear()
+        //FIM DA MONTANHA
+      } 
+      console.log(`\nVocê finalmente chega nas portas de Erast e apesar de ainda não se lembrar quem é, tem a plena consciência do quanto está mais forte e mais preparado para seguir sua jornada!\n`);
+    }
   }
-
+}
     /*-----------------------------------------------------------------CIDADE--------------------------------------------------------------*/
     let Cidade;
     if (Cidade) {
