@@ -589,6 +589,7 @@ do {
   }
     /*-----------------------------------------------------------------CIDADE--------------------------------------------------------------*/
     if (Cidade) {
+      let quebra = false
       let respCorreta = 0;
       console.log(`Você chega aos portões da cidade de Erast. blablablabla`);
       do {
@@ -617,6 +618,7 @@ do {
             );
           }
         } else if ((resp = "PROCURAR")) {
+          while(true){
           console.log(
             `Você sai para procurar por Aerin, com as informações do taverneiro você possui duas opções: procurar na CIDADE ALTA ou na CIDADE BAIXA, para qual você vai?`
           );
@@ -647,6 +649,8 @@ do {
             );
             sleep(10);
             console.log(`Aerin`);
+            break
+          }
             sleep(5);
             console.log(
               `Aerin te leva até uma casa relativamente pequena em comparação com as casas a sua volta, mas ainda grande comparada com o resto da cidade. Ao entrarem ele lhe aponta para uma poltrona na sala, ao mesmo tempo que senta em outra diretamente a sua frente.\n-Meu amigo, é realmente muito bom lhe ver novamente, espero que tenha tido uma viagem tranquila - o sorriso em seu rosto se esvai, dando lugar a uma expressão séria - Infelizmente precisarei confirmar algumas coisas com você. Perguntas de rotina você já sabe. Vamos lá.`
@@ -739,6 +743,7 @@ do {
               );
               sleep(6);
               console.log(`-Bom trabalho, muito bom trabalho. HAHAHAHA....`);
+              quebra = true
               break;
             } else {
               sleep(5);
@@ -749,12 +754,24 @@ do {
               console.log(
                 `-Vá em paz meu amigo. Irei atrás de quem fez isso com você, e juro pelo meu nome que irei vingá-lo. Descanse agora e nos reencontraremos na outra vida....`
               );
-              return (gameOver = true);
+              quebra = true
+              gameOver = true
+              break;
             }
           }
         }
         ///////////////////////////////////////////////////////escolha de desistir aqui
+        if(resp = "DESISTIR"){
+          console.log(`Ao olhar para os grandes portões da cidade e ver toda aquela vida ali dentro subitamente uma idéia passa pela sua cabeça:`)
+          sleep(5)
+          console.log(`Se você não lembra do seu passado, é quase como se você não tivesse um.\n- Nada melhor do que começar uma vida nova em outro lugar - você fala para si mesmo, em um sussurro.`)
+          sleep(4)
+          console.log(`Sem olhar para trás você parte para a próxima cidade, indo para longe de Erast, pronto para iniciar uma nova vida. O que o futuro lhe reserva? Ninguém sabe. Mas isso não irá lhe impedir de tentar...`)
+          quebra = true
+          break;
+        }
       }
+      if (quebra=true) break;
       } while (true);
     }
   }
