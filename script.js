@@ -238,7 +238,7 @@ do {
         '-----------------------------------------------------------------------------------------',
     );
     console.log(
-        `Blablablabal cenario bonito, blablabalbla, lembra de dois caminhos, blablablabla, floresta ou montanhas?`,
+        `Blablablabal cenario bonito, blablabalbla, lembra de dois caminhos, blablablabla, floresta ou montanhas?\n`,
     );
     resp = prompt(``).toUpperCase().replace(/\s/g, '');
     validacaoString(resp, 'FLORESTA', 'MONTANHAS');
@@ -298,34 +298,32 @@ do {
         /*---------------------------------------------------------Montanhas--------------------------------------------------------------------*/
     }else if (resp == `MONTANHAS`) {
     let dias = 5;
-
+        console.clear()
     //PRÓLOGO DA MONTANHA
-    console.log(
-      `Você partiu em sua jornada em busca de si mesmo, e assumiu que encontrar Aerin era o o seu destino, mas antes, decide checar os seus STATUS, para mensurar o seu poder e evolução`
+        console.log(
+      `Você começa sua jornada em busca de si mesmo, assumindo que, encontrar Aerin era o seu destino, mas antes, decide checar os seus STATUS, para mensurar o seu poder e evolução`
     );
-    console.log();
-    prompt(`Digite ENTER para prosseguir...`);
-    console.clear();
-    console.log();
+        console.log();
+        prompt(`Digite ENTER para prosseguir...`);
+        console.clear();
+        console.log();
 
-    statusJogador()
-    console.log();
-    prompt(`Digite ENTER para prosseguir...`);
-    console.clear();
-    console.log();
+        statusJogador()
+        console.log();
+        prompt(`Digite ENTER para prosseguir...`);
+        console.clear();
+        console.log();
 
-    console.log(`Caminhar sobre As Montanhas Gélidas é o caminho mais longo, apesar de ser mais seguro que a Floresta,
-pois não há tantos monstros pelo caminho. Porém, a escassez de animais e alimentos torna a jornada igualmente complicada`);
-    console.log();
-    prompt(`Digite ENTER para prosseguir...`);
-    console.clear();
-    console.log();
-
-
+        console.log(`Viajar sobre As Montanhas Gélidas é o caminho mais longo e apesar de ser mais seguro que as florestas, pois não há tantos monstros pelo caminho, a escassez de animais e alimentos torna a jornada igualmente complicada`);
+        console.log();
+        prompt(`Digite ENTER para prosseguir...`);
+        
     for (i = 0; i < dias; i++) {
         //PRIMEIRO DIA
       if (i == 0) {
-        console.log(`Logo pela manhã, do primeiro dia de viagem, Você chegou ao pé da montanha e percebeu que precisava estocar alimentos antes de continuar.
+        console.clear();
+        console.log();
+        console.log(`Logo pela manhã, do primeiro dia de viagem, Você chegou ao pé da montanha e percebeu que precisava estocar alimentos antes de continuar.\n
 Digite o que deseja procurar: FRUTA, ANIMAL OU MONSTRO\n`);
 
         //PRIMEIRA DECISÃO, PREPARAÇÃO PARA A JORNADA
@@ -365,31 +363,31 @@ Digite o que deseja procurar: FRUTA, ANIMAL OU MONSTRO\n`);
 
         console.log();
         prompt(`Digite ENTER para prosseguir...`);
-        console.clear();
-        console.log();
+       
+        
 
         //SEGUNDO DIA
          } else if (i == 1) {
-             console.log();
-            console.log(`Na manhã do segundo dia, você se deparou com um tempo incívelmente frio. Já em cima da montanha, o sol parecia gelado, o terreno era íngreme e irregular e apesar da forte neblina você conseguiu avistar uma caverna.
+            console.clear();
+            console.log();
+            console.log(`Na manhã do segundo dia, você se deparou com um tempo incívelmente frio. Já em cima da montanha, o sol parecia gelado, o terreno era íngreme e irregular e apesar da forte neblina você conseguiu avistar uma caverna.\n
 Digite o que deseja fazer: "ENTRAR", "CONTINUAR"\n`);
 
-        resp = prompt().toUpperCase().replace(/\s/g, "");
+        resp = prompt().toUpperCase().replace(/\s/g,"");
         validacaoString(resp, "ENTRAR", "CONTINUAR");
 
         if (resp === "ENTRAR") {
-          console.log();
-          console.log(
-            `Você entrou na caverna se alimentou do que tinha em sua bolsa e preferiu descansar até o amanhecer do próximo dia`
-          );
-        } else if (resp === "CONTINUAR") {
-          console.log();
-             console.log(
-            `Você se deparou com uma criatura pavorosa, suas únicas opções são lutar ou morrer!`
-          );
-          ifGameOver(1, 3, 5)
+          
+            console.log();
+          console.log(`Você entrou na caverna se alimentou do que tinha em sua bolsa e preferiu descansar até o amanhecer do próximo dia`);
+        } 
+        
+        else if (resp === "CONTINUAR") {
+            
+            console.log();
+            console.log(`Você se deparou com uma criatura pavorosa, suas únicas opções são lutar ou morrer!`)
+            ifGameOver(1, 3, 5);
          
-           
             if (gameOver == true) {
                 break;
 
@@ -397,27 +395,33 @@ Digite o que deseja fazer: "ENTRAR", "CONTINUAR"\n`);
             console.log();
             console.log(`Confira seus STATUS atualizados: \n`);
             personagens.jogador.vida = vidaMAX;
-            personagens.jogador.dano += 1;
             personagens.jogador.defesa += 1;
             statusJogador()
-          }
+          
         }
+    
+        console.log();
         console.log(
           `Você adentrou as entranhas do monstro derrotado, e esperou até o amanhecer\n`
         );
-        prompt(`Digite ENTER para prosseguir...`);
-        console.clear();
+
+        }
         
+        console.log();
+        prompt(`Digite ENTER para prosseguir...`);
+        
+     
         
         //TERCEIRO DIA
       } else if (i == 2) {
+            console.clear();
             console.log();
-            console.log(`Mais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite nesse ponto infernal da jornada. O sol parecia congelado no pico daquela montanha e a pele do cervo já não o aquecia mais`);
+            console.log(`Mais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite nesse ponto infernal da aventura. O sol parecia congelado e a pele do cervo já não o aquecia mais`);
             console.log();
         prompt(`Digite ENTER para prosseguir...`);
             console.clear();
             console.log();
-            console.log(`A tarde chegou e você não aguentava mais caminhar, avistou um amontoado de pedras e..
+            console.log(`A tarde chegou e você não aguentava mais caminhar, avistou um amontoado de pedras e..\n
 Digite o que deseja fazer: "DESCANSAR", "PERSISTIR"\n`);
 
         resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -426,14 +430,15 @@ Digite o que deseja fazer: "DESCANSAR", "PERSISTIR"\n`);
         if (resp === "DESCANSAR") {
             console.log();
             console.log(
-            `Você se deitou sobre a neve se esgueirando entre as pedras. Naquele momento teve a certeza de que se não encontrasse nada no dia seguinte, você morreria`
+            `Você se deitou sobre a neve se esgueirando entre as pedras. Naquele momento teve a certeza de que se não encontrasse nada no dia seguinte, você morreria de fome`
           );
 
           //BONÛS DE PERSISTÊNCIA - FACILITA PASSAR PELO DESAFIO
         } else if (resp === "PERSISTIR") {
             console.log();
             console.log(`Você continua andando já cambaleando e com os pés dormentes, até encontrar Yggdrasil a árvore divina, com frutas douradas e imbuídas de magia. Ao recostar sobre a árvore é envolvido em uma aura de calor e plenitude, se tornando completamente resistente ao frio. Você acabou de ganhar 5 de vida máxima e 1 de defesa. Esses são seus STATUS atualizados: \n`);
-            personagens.jogador.vida += 5;
+            vidaMAX+=5
+            personagens.jogador.vida=vidaMAX;
             personagens.jogador.defesa += 1;
           statusJogador()
         }
@@ -445,26 +450,24 @@ Digite o que deseja fazer: "DESCANSAR", "PERSISTIR"\n`);
         //QUARTO DIA
       } else if (i == 3) {
         console.log();
-        console.log(`Ao alvorecer do quarto dia de jornada, você se deparou com dois monstros vagando livremente, entre as pedras de gelo que se formavam, eles ainda não te viram e você tem a oportunidade de fugir.
-Digite o que deseja fazer: "LUTAR", "FUGIR" `); 
+        console.log(`Ao alvorecer do quarto dia de jornada, você se deparou com dois monstros vagando livremente, entre as pedras de gelo que se formavam, eles ainda não te viram e você tem a oportunidade de fugir.\n
+Digite o que deseja fazer: "LUTAR", "FUGIR" \n`); 
 
         resp = prompt().toUpperCase().replace(/\s/g, "");
         validacaoString(resp, "LUTAR", "FUGIR");      
 
         if(resp ==="LUTAR" ){
-               ifGameOver(2, 3, 5)
-               console.log(`Você não resiste a uma batalha e parte para o ataque!!!`)
-             
+            console.log(`Você não resiste a uma batalha e parte para o ataque!!!\n`)
+            ifGameOver(2, 3, 5)   
+            
             if (gameOver == true) {
                 break;
 
              }else {
                 console.log();
                 console.log(`Confira seus STATUS atualizados: \n`);
-          
-                vidaMAX+=5
                 personagens.jogador.vida=vidaMAX
-                personagens.jogador.defesa += 2;
+                personagens.jogador.dano += 2;
                 statusJogador()
           }
 
@@ -479,7 +482,7 @@ Digite o que deseja fazer: "LUTAR", "FUGIR" `);
         console.clear();
 
         console.log();
-        console.log(`Ao entardecer você finalmente conseguia ver o final da montanha. A cidade de Erast se aproximava a cada passo. Descendo da montanha você encontrou um acampamento com frutas frescas e carne assada na fogueira, ainda acesa.
+        console.log(`Ao entardecer você finalmente conseguia ver o final da montanha. A cidade de Erast se aproximava a cada passo. Descendo da montanha você encontrou um acampamento com frutas frescas e carne assada na fogueira, ainda acesa.\n
 Digite o que deseja fazer: "COMER", "IGNORAR"\n`);
 
         resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -501,14 +504,20 @@ Digite o que deseja fazer: "COMER", "IGNORAR"\n`);
         //QUINTO DIA DA VIAGEM
       } else if (i == 4) {
           console.log();
-          console.log(`É um novo dia! Você está prestes a adentrar a cidade de Erast. Porém, ao acordar você vê monstros atacando e matando facilmente os aventurareiros que estavam acampados na última montanha. Você sabia que a culpa era sua, pois haviam seguido seu cheiro.
+          console.log(`É um novo dia! Você continua a caminhar e está muito próximo da entrada de Erast. Porém, você ouve o som de gritos por socorro vindos do acampamento da última montanha.`)
+          
+        console.log();
+        prompt(`Digite ENTER para prosseguir...`);
+        console.clear()
+
+        console.log(`\nVocê se depara com monstros furiosos, exterminando facilmente o grupo de aventureiros, você sabia que a culpa era sua, pois haviam seguido seu cheiro.\n
 Digite o que deseja fazer: "LUTAR", "FUGIR"\n`);
 
         resp = prompt().toUpperCase().replace(/\s/g, "");
         validacaoString(resp, "LUTAR", "FUGIR");
         if (resp == "LUTAR") {
 
-          ifGameOver(3,4,4)
+          ifGameOver(3,3,5)
           if (gameOver == true) {
             break;
 
@@ -516,6 +525,7 @@ Digite o que deseja fazer: "LUTAR", "FUGIR"\n`);
             console.log(`Confira seus STATUS atualizados: \n`);
             personagens.jogador.vida = vidaMAX;
             personagens.jogador.dano += 2;
+            personagens.jogador.defesa += 2;
             statusJogador()
           }
 
@@ -537,6 +547,7 @@ Digite o que deseja fazer: "LUTAR", "FUGIR"\n`);
   }
 
     /*-----------------------------------------------------------------CIDADE--------------------------------------------------------------*/
+    let Cidade;
     if (Cidade) {
         console.log(`Você chega aos portões da cidade de Erast. blablablabla`);
         do {
