@@ -406,7 +406,7 @@ Digite o que deseja fazer: "ENTRAR", "CONTINUAR"\n`);
         );
 
         }
-        
+
         console.log();
         prompt(`Digite ENTER para prosseguir...`);
         
@@ -542,7 +542,7 @@ Digite o que deseja fazer: "LUTAR", "FUGIR"\n`);
         console.log();
       }
     }console.log(
-    `Você finalmente termina a descida pelas montanhas se depara com a entrada da cidade de Erast\n`
+    `Você finalmente termina a descida pelas Montanhas Gélidas se depara com a entrada da cidade de Erast\n`
   );
   }
 
