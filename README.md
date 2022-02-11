@@ -20,7 +20,7 @@ Ao sair da caverna, seus olhos demoram alguns segundos para se acostumarem com a
 ##
 
 <div align = "justify">
-Viajar sobre As Montanhas Gélidas é o caminho mais longo, o clima é terrívlemente frio, o sol parece gelado e o terreno é íngreme e irregular.<br>
+Viajar sobre As Montanhas Gélidas é o caminho mais longo, o clima é terrívlemente frio, o sol parece gelado e o terreno é íngreme e irregular.
 Entretanto é mais seguro que as Florestas, pois não há tantos monstros pelo caminho, embora a escassez de animais e alimentos torne a jornada igualmente complicada.
 
   
