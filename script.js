@@ -52,7 +52,7 @@ function criarMonstro(qtd, a, b) {
   for (let i = 0; i < qtd; i++) {
     let nomeMonstro = listNomeMonstro[random(a, b)];
     let vidaMonstro = random(5, 10);
-    let danoMonstro = random(3, 6);
+    let danoMonstro = random(4, 6);
 
     let monstro = {
       nome: nomeMonstro,
@@ -65,9 +65,10 @@ function criarMonstro(qtd, a, b) {
   return monstros;
 }
 
+var gameOver;
 //FUNÇÃO COMBATE
 function mortalKombat(a = 0) {
-  do {
+  do { 
     personagens.jogador.vida =
       personagens.jogador.vida - monstros[a].dano + personagens.jogador.defesa;
     monstros[a].vida = monstros[a].vida - personagens.jogador.dano;
@@ -97,7 +98,7 @@ function ifGameOver(qtd, a, b) {
     console.log(`\nVocê encontrou um ${monstros[i].nome}`);
     sleep(5);
     console.log(`\nPrepare-se para a batalha`);
-    sleep(5);
+    sleep(4);
     mortalKombat(i);
     if (gameOver == true) {
       console.log(`\nVocê morreu para um ${monstros[i].nome}`);
@@ -146,29 +147,32 @@ const equipamentos = {
   },
   arco: function () {
     personagens.jogador.dano += 2;
-    personagens.jogador.defesa -= 2;
+    personagens.jogador.defesa -= 1;
   },
   armadura: function () {
     personagens.jogador.defesa += 3;
   },
 };
 
-let play = true;
-let resp;
-let gameOver = false;
-let vidaMAX = 10;
-personagens.jogador.vida = vidaMAX;
-a = 0;
-let quebra = false;
-let respCorreta = 0;
-let dias=0
+
 
 //ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
 
 //SCRIPT
 do {
+  
+  var play = true;
+  let resp;
+  gameOver = false;
+  let vidaMAX = 10;
+  personagens.jogador.vida = vidaMAX;
+  let a = 0;
+  let quebra = false;
+  let respCorreta = 0;
+  let dias=0
+
   console.clear();
-  console.log();
+  
   //jogar novamente
   //INICIO DO GAME NA CAVERNA
   console.log(
@@ -188,9 +192,10 @@ do {
       `Há uma fogueira, agora apenas em brasas, com \x1b[33mCOMIDA\x1b[0m, aos arredores uma \x1b[33mMOCHILA\x1b[0m e alguns \x1b[33mEQUIPAMENTOS\x1b[0m espalhados. Além é claro, da \x1b[33mSAIDA\x1b[0m da caverna.`
     );
     console.log("O que quer fazer?\n");
+
     resp = prompt().toUpperCase().replace(/\s/g, "");
     console.clear()
-    console.log();
+   
     validacaoString(resp, "COMIDA", "MOCHILA", "EQUIPAMENTOS", "SAIDA");
     //CONDIÇÃO GAME OVER
     if (resp === "COMIDA") {
@@ -201,18 +206,16 @@ do {
       gameOver = true;
       break;
       //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
-    } else if (resp == "MOCHILA" && a == 0) {
+    } else if (resp === "MOCHILA" && a == 0) {
       console.log(
         `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin. Tomado por memorias de quando era criança, você lembra de algo:\nQual o seu nome?\n`
       );
 
       personagens.jogador.nome = prompt();
       continuar();
-      statusJogador();
-      console.log()
-
       a = 1;
-    } else if (resp == "MOCHILA" && a == 1) {
+    
+    } else if (resp === "MOCHILA" && a == 1) {
       console.log(
         `Você abre a mochila novamente, e vê os mesmos itens e um papel com o seu nome: ${personagens.jogador.nome}.`
       );
@@ -259,7 +262,8 @@ do {
     console.log(
       `Ao sair da caverna, seus olhos demoram alguns segundos para se acostumarem com a luz. O sol brilha alto no céu e o som de passaros e animais rasteiros chega aos seus ouvidos. Andando pela pequena trilha que sai da caverna você chega até uma estrada maior, esta logo se divide em dois caminhos. O caminho da esquerda adentra mais na \x1b[33mFLORESTA\x1b[0m que aos poucos vai ficando mais densa com as copas das arvores competindo com os raios de sol pra ver quem vence. A segunda trilha começa a subir as \x1b[33mMONTANHAS\x1b[0m com seus picos nevados e cavernas escuras escondendo perigos. Sem conhecer direito do que é capaz, você decide ir para qual caminho?\n`
     );
-    resp = prompt(``).toUpperCase().replace(/\s/g, "");
+
+    resp = prompt().toUpperCase().replace(/\s/g, "");
     validacaoString(resp, "FLORESTA", "MONTANHAS");
     console.log();
 
@@ -332,12 +336,10 @@ do {
       //PRÓLOGO DA MONTANHA
       sleep(2)
       console.log(
-        `\nVocê começa a busca por si mesmo, assumindo que encontrar Aerin era o seu destino, mas antes, decide checar seus STATUS, para mensurar seu poder e evolução.`
+        `Você começa a jornada em busca de si mesmo, assumindo que encontrar Aerin era o seu destino, mas antes, decide checar seus STATUS, para mensurar seu poder e evolução.\n`
       );
       
-      continuar()
-      console.log();
-
+      sleep(2)
       statusJogador();
             
       continuar()
@@ -353,35 +355,37 @@ do {
         //PRIMEIRO DIA
         if (i == 0) {
           sleep(2)
-          console.log(`\nPela manhã do primeiro dia de viagem, você chegou ao pé da montanha e se deu conta que precisava estocar alimentos antes de continuar. Olhando em volta rapidamente você percebe algumas arvores com \x1b[33mFRUTAS\x1b[0m, além disso você vê rastros de \x1b[33mANIMAIS\x1b[0m e de pequenos \x1b[33mMONTROS\x1b[0m, ambos dariam um belo jantar.\n`);
+          console.log(`Pela manhã do primeiro dia de viagem, você chegou ao pé da montanha e se deu conta que precisava estocar alimentos antes de continuar. Olhando em volta rapidamente você percebe algumas arvores com \x1b[33mFRUTAS\x1b[0m, além disso você vê rastros de \x1b[33mANIMAIS\x1b[0m e de pequenos \x1b[33mMONSTROS\x1b[0m, ambos dariam um belo jantar.\n`);
 
           //PRIMEIRA DECISÃO, PREPARAÇÃO PARA A JORNADA
           resp = prompt().toUpperCase().replace(/\s/g, "");
-          validacaoString(resp, "FRUTA", "ANIMAIS", "MONSTROS");
+          validacaoString(resp, "FRUTAS", "ANIMAIS", "MONSTROS");
           console.clear()
 
           if (resp === "FRUTAS") {
             sleep(1)
             console.log(
-              `\nVocê teve sorte e encontrou rapidamente algumas árvores frutíferas, agora já está alimentado e pronto para continuar com a aventura. Rumo a cidade de Erast`
+              `Você teve sorte e encontrou rapidamente algumas árvores frutíferas, agora já está alimentado e pronto para continuar com a aventura. Rumo a cidade de Erast`
             );
+            continuar()
           } else if (resp === "ANIMAIS") {
             sleep(1)
             console.log(
-              `\nVocê encontrou algumas frutas e as recolheu, mas logo avistou um cervo! Prontamento o atacou para obter carne e usou sua pele para se proteger do frio, que viria mais tarde.\n`
+              `Você encontrou algumas frutas e as recolheu, mas logo avistou um cervo! Prontamento o atacou para obter carne e usou sua pele para se proteger do frio, que viria mais tarde.\n`
             );
 
             console.log(`Confira seus STATUS atualizados`);
             personagens.jogador.defesa += 1;
             statusJogador();
+            continuar()
           } else if (resp === "MONSTROS") {
             sleep(1)
             console.log(
-              `\nVocê procura por um monstro para treinar com o equipamento recém escolhido, visando aumentar seu poder e se possível, se alimentar`
+              `Você procura por um monstro para treinar com o equipamento recém escolhido, visando aumentar seu poder e se possível, se alimentar`
             );
 
             //PRIMEIRA BATALHA SE INICIA
-            ifGameOver(1, 3, 5);
+            ifGameOver(10, 3, 5);
             if (gameOver == true) {
               break;
             } else {
@@ -389,17 +393,16 @@ do {
               personagens.jogador.dano += 1;
               personagens.jogador.vida = vidaMAX;
               statusJogador();
+              continuar()
             }
           }
 
-
-          continuar()
-
+       
           //SEGUNDO DIA
         } else if (i == 1) {
           console.clear();
           sleep(2)
-          console.log(`\nNa manhã do segundo dia, você se deparou com um tempo incívelmente frio, o sol parecia gelado, o terreno era íngreme e irregular. Apesar da forte neblina, você conseguiu avistar uma caverna e pensou em \x1b[33mENTRAR\x1b[0m, mas sabia que uma hora precisaria \x1b[33mCONTINUAR\x1b[0m andando.\n`);
+          console.log(`Na manhã do segundo dia, você se deparou com um tempo incívelmente frio, o sol parecia gelado, o terreno era íngreme e irregular. Apesar da forte neblina, você conseguiu avistar uma caverna e pensou em \x1b[33mENTRAR\x1b[0m, mas sabia que uma hora precisaria \x1b[33mCONTINUAR\x1b[0m andando.\n`);
 
           resp = prompt().toUpperCase().replace(/\s/g, "");
           validacaoString(resp, "ENTRAR", "CONTINUAR");
@@ -438,13 +441,13 @@ do {
           console.clear();
           sleep(2)
           console.log(
-            `\nMais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite. O sol parecia congelado e a sensação de morte pairava sobre o ar.`
+            `Mais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite. O sol parecia congelado e a sensação de morte pairava sobre o ar.\n`
           );
 
           
           
           sleep(2)
-          console.log(`\nA tarde chegou e você não aguentava mais caminhar, avistou um amontoado de pedras e sabia que precisava \x1b[33mDESCANSAR\x1b[0m, mas seu ímpeto de \x1b[33mPERSISTIR\x1b[0m te deixava em dúvida...\n`);
+          console.log(`A tarde chegou e você não aguentava mais caminhar, avistou um amontoado de pedras e sabia que precisava \x1b[33mDESCANSAR\x1b[0m, mas seu ímpeto de \x1b[33mPERSISTIR\x1b[0m te deixava em dúvida...\n`);
 
           resp = prompt().toUpperCase().replace(/\s/g, "");
           validacaoString(resp, "DESCANSAR", "PERSISTIR");
@@ -453,16 +456,16 @@ do {
           if (resp === "DESCANSAR") {
             sleep(1)
             console.log(
-              `\nVocê se deitou sobre a neve se esgueirando entre as pedras. Naquele momento teve a certeza de que se não encontrasse nada no dia seguinte, você morreria de fome`
+              `Você se deitou sobre a neve se esgueirando entre as pedras. Naquele momento teve a certeza de que se não encontrasse nada no dia seguinte, você morreria de fome`
             );
 
             //BONÛS DE PERSISTÊNCIA - FACILITA PASSAR PELO DESAFIO
           } else if (resp === "PERSISTIR") {
             sleep(1)
             console.log(
-              `\nVocê continuava a caminhar, mal conseguia permanecer em linha reta e seus pés estavam dormentes. Até  que você se depara com Yggdrasil, a árvore divina, com frutas douradas e imbuídas de magia. Ao recostar sobre o seu tronco, se encontra envolvido em uma aura de calor e plenitude, se tornando completamente resistente ao frio.\n`)
+              `Você continuava a caminhar, mal conseguia permanecer em linha reta e seus pés estavam dormentes. Até  que você se depara com Yggdrasil, a árvore divina, com frutas douradas e imbuídas de magia. Ao recostar sobre o seu tronco, se encontra envolvido em uma aura de calor e plenitude, se tornando completamente resistente ao frio.\n`)
               sleep(4)
-              console.log(`Você acabou de ganhar 5 de vida máxima e 1 de defesa.\nEsses são seus STATUS atualizados: \n`);
+              console.log(`Você acabou de ganhar 5 de vida máxima e 1 de defesa.\nEsses são seus STATUS atualizados: `);
               vidaMAX += 5;
               personagens.jogador.vida = vidaMAX;
               personagens.jogador.defesa += 1;
@@ -475,7 +478,7 @@ do {
         } else if (i == 3) {
           console.clear();
           sleep(2)
-          console.log(`\nAo alvorecer do quarto dia de jornada, você avista DOIS monstros vagando livremente, entre as imensas pedras de gelo que haviam acima das montanhas. Eles ainda não te viram e você tem a oportunidade de \x1b[33mFUGIR\x1b[0m, apesar de seu instinto te mandar \x1b[33mLUTAR\x1b[0m.\n`);
+          console.log(`Ao alvorecer do quarto dia de jornada, você avista DOIS monstros vagando livremente, entre as imensas pedras de gelo que haviam acima das montanhas. Eles ainda não te viram e você tem a oportunidade de \x1b[33mFUGIR\x1b[0m, apesar de seu instinto te mandar \x1b[33mLUTAR\x1b[0m.\n`);
 
           resp = prompt().toUpperCase().replace(/\s/g, "");
           validacaoString(resp, "LUTAR", "FUGIR");
@@ -507,7 +510,7 @@ do {
                 statusJogador();
               } else if (resp === "IGNORAR") {
                 sleep(1)
-                console.log(`\nConfira seus STATUS atualizados: \n`);
+                console.log(`Confira seus STATUS atualizados: \n`);
                 statusJogador();
               }
             }
@@ -515,13 +518,13 @@ do {
             console.clear()
             sleep(1)
             console.log(
-              `\nVocê escapou dos monstros e continuou a caminhar, na esperança de encontrar comida`
+              `Você escapou dos monstros e continuou a caminhar, na esperança de encontrar comida`
             );
               
           
           }
           
-          sleep(3)
+          sleep(2)
           console.log(`\nAo entardecer você finalmente conseguia ver o final da montanha. A cidade de Erast se aproximava a cada passo. Enquanto descia você avistou um acampamento recém montado, porém vazio, e lá encontrou frutas frescas e carne na fogueira, ainda acesa. Você sabia que precisava \x1b[33mCOMER\x1b[0m, mas talvez \x1b[33mIGNORAR\x1b[0m fosse a melhor opção para evitar conflitos desnecessários.\n`)
 
           resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -537,7 +540,7 @@ do {
             sleep(1)
             console.log(
               `Você estava fraco devido a fome e desmaiou poucos metros após o acampamento. Encontrado por um grupo de aventureiros, você acorda e percebe que essas, são as primeiras pessoas que você viu desde que acordou na caverna.`)
-              sleep(4)
+              sleep(2)
                console.log(`\nEles dividem sua comida, bebida e suas histórias com você.`);
                
           }
@@ -549,13 +552,13 @@ do {
           console.clear()
           sleep(2)
           console.log(
-            `\nÉ um novo dia! Você continua a caminhar e está muito próximo da entrada de Erast. Entretanto, você ouve o som de gritos pedindo por socorro, vindos do acampamento da última montanha.\n`
+            `É um novo dia! Você continua a caminhar e está muito próximo da entrada de Erast. Entretanto, você ouve o som de gritos pedindo por socorro, vindos do acampamento da última montanha.\n`
           );
 
           sleep(3)
           console.log(`Você volta rapidamente para ver o que havia ali e se depara com monstros, exterminando facilmente o grupo de aventureiros, você sabia que a culpa era sua, pois haviam seguido seu cheiro.\n`)
 
-          sleep(4)
+          sleep(5)
           console.log(`A culpa e a raiva te diziam pra \x1b[33mLUTAR\x1b[0m, mas pela quantidade de monstros, \x1b[33mFUGIR\x1b[0m seria o mais sensato.\n`)
 
           resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -575,7 +578,7 @@ do {
           }else if (resp === "FUGIR") {
             sleep(1)
             console.log(
-              `Você fugia enquanto ouvia os gritos de agonia dos jovens aventureiros, mas seguia sem olhar pra trás, porém, três monstros te alcaçam, e a única coisa que te separava do seu destino era essa batalha`
+              `Você fugia enquanto ouvia os gritos de agonia dos jovens aventureiros, mas seguia sem olhar pra trás, porém, três monstros te alcaçam, e você percebe que a única coisa que te separava do seu destino era essa batalha!`
             );
 
             ifGameOver(3, 3, 5);
@@ -587,14 +590,14 @@ do {
               personagens.jogador.dano += 2;
               personagens.jogador.defesa += 2;
               statusJogador();
-            } }
-           continuar() 
-            //FIM DA MONTANHA
-          }
+              continuar() 
+            } 
+          }           //FIM DA MONTANHA
         }
-
       }
-      if (gameOver == true) break;
+    }
+
+  if (gameOver == true) break;
     
     /*-----------------------------------------------------------------CIDADE--------------------------------------------------------------*/
     console.clear()
@@ -796,7 +799,7 @@ do {
     } while (true);
   }
   console.log(
-    `Deseja jogar novamente, \x1b[33mSIM\x1b[0m ou \x1b[33mNAO\x1b[0m?\n`
+    `\nDeseja jogar novamente, \x1b[33mSIM\x1b[0m ou \x1b[33mNAO\x1b[0m?\n`
   );
   resp = prompt().toUpperCase().replace(/\s/g, "");
   validacaoString(resp, "SIM", "NAO");
