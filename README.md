@@ -4,13 +4,13 @@
 <div align = "justify">
 Você acordou sem memórias em uma pequena caverna... Ao analisar os arredores vê um pequeno acampamento montado. Há uma fogueira, agora apenas em brasas, com comida aos arredores uma mochila e alguns equipamentos espalhados. Na mochila há um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin...<br>
 <br>
-Ao sair da caverna, seus olhos demoram alguns segundos para se acostumarem com a luz. Andando pela pequena trilha que sai da caverna você chega até uma estrada maior, esta logo se divide em duas. Sem conhecer direito do que é capaz, você decide ir para qual caminho?
+Ao sair da caverna encontra uma pequena trilha que te leva a uma estrada maior, esta logo se divide em duas. Sem ter conhecimento do que é capaz, você decide ir para qual caminho?
 </div>
 
 ##
 
 <section align = "justify">
- O caminho da esquerda adentra mais na Floresta Amaldiçoada que aos poucos vai ficando mais densa com as copas das arvores competindo com os raios de sol pra ver quem vence.<br>
+ O caminho da esquerda nos leva a Floresta Amaldiçoada, que aos poucos vai ficando mais densa, com as copas das arvores competindo com os raios de sol pra ver quem vence.<br>
  <br>
 <div align = "center">
 <img width = "240px" height = "270px" src = "https://i.pinimg.com/564x/e7/84/21/e78421f4c365bcb0f5f51337eeedec3a.jpg">
@@ -20,7 +20,7 @@ Ao sair da caverna, seus olhos demoram alguns segundos para se acostumarem com a
 ##
 
 <div align = "justify">
-Viajar sobre As Montanhas Gélidas é o caminho mais longo, o clima é terrívlemente frio, o sol parece gelado e o terreno é íngreme e irregular.
+Viajar sobre As Montanhas Gélidas é o caminho mais longo, o clima é terrívlemente frio, o sol parece congelante e o terreno é íngreme e irregular.
 Entretanto é mais seguro que as Florestas, pois não há tantos monstros pelo caminho, embora a escassez de animais e alimentos torne a jornada igualmente complicada.
 
   
