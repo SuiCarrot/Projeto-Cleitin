@@ -155,6 +155,8 @@ let gameOver = false;
 let vidaMAX = 10;
 personagens.jogador.vida = vidaMAX;
 a = 0;
+let quebra = false
+let respCorreta = 0;
 
 //ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
 
@@ -195,8 +197,7 @@ do {
       //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
     } else if (resp == "MOCHILA" && a == 0) {
       console.log(
-        `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para o personagens.jogador encontrar na cidade de Erast. Assinado como Aerin. personagens.jogador tomado por memorias de batalha, lembra de seu nome:`
-      );
+        `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin. Tomado por memorias de quando era criança, você lembra de algo:\nQual o seu nome?`);
       personagens.jogador.nome = prompt();
       resp = prompt("Press ENTER para continuar");
       statusJogador();
@@ -289,11 +290,12 @@ do {
             sleep(3);
             console.log("Você encontrou uma armadura");
           } else {
+            console.log("Você encontrou uma armadura");
             equipamentos.armadura();
             statusJogador();
             resp = prompt(`Press Enter para continuar`);
             sleep(3);
-            console.log("Você encontrou uma armadura");
+
           }
         } else if (i == 2) {
           console.log(
@@ -301,7 +303,7 @@ do {
           );
           console.log("Parece que encontramos algo...");
           resp = prompt(`Press Enter para continuar`);
-          ifGameOver(2, 3, 6);
+          ifGameOver(2, 3, 5);
           if (gameOver == true) {
             break;
           }
@@ -588,9 +590,6 @@ do {
     }
   }
     /*-----------------------------------------------------------------CIDADE--------------------------------------------------------------*/
-    if (Cidade) {
-      let quebra = false
-      let respCorreta = 0;
       console.log(`Você chega aos portões da cidade de Erast. blablablabla`);
       do {
         //personagem na caverna
@@ -773,7 +772,6 @@ do {
       }
       if (quebra=true) break;
       } while (true);
-    }
   }
   console.log(
     `Deseja jogar novamente, \x1b[33mSIM\x1b[0m ou \x1b[33mNAO\x1b[0m?`
