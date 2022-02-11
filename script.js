@@ -374,7 +374,7 @@ do {
               `Você encontrou algumas frutas e as recolheu, mas logo avistou um cervo! Prontamento o atacou para obter carne e usou sua pele para se proteger do frio, que viria mais tarde.\n`
             );
 
-            console.log(`Confira seus STATUS atualizados`);
+            console.log(`Confira seus STATUS atualizados\n`);
             personagens.jogador.defesa += 1;
             statusJogador();
             continuar()
@@ -385,7 +385,7 @@ do {
             );
 
             //PRIMEIRA BATALHA SE INICIA
-            ifGameOver(10, 3, 5);
+            ifGameOver(1, 3, 5);
             if (gameOver == true) {
               break;
             } else {
@@ -441,11 +441,9 @@ do {
           console.clear();
           sleep(2)
           console.log(
-            `Mais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite. O sol parecia congelado e a sensação de morte pairava sobre o ar.\n`
+            `Mais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite. O sol parecia congelado e a sensação de morte pairava no ar.\n`
           );
 
-          
-          
           sleep(2)
           console.log(`A tarde chegou e você não aguentava mais caminhar, avistou um amontoado de pedras e sabia que precisava \x1b[33mDESCANSAR\x1b[0m, mas seu ímpeto de \x1b[33mPERSISTIR\x1b[0m te deixava em dúvida...\n`);
 
@@ -487,7 +485,7 @@ do {
           if (resp === "LUTAR") {
             sleep(1)
             console.log(
-              `\nVocê não resiste a uma batalha e parte para o ataque!!!`
+              `Você não resiste a uma batalha e parte para o ataque!!!`
             );
             ifGameOver(2, 3, 5);
 
@@ -559,7 +557,7 @@ do {
           console.log(`Você volta rapidamente para ver o que havia ali e se depara com monstros, exterminando facilmente o grupo de aventureiros, você sabia que a culpa era sua, pois haviam seguido seu cheiro.\n`)
 
           sleep(5)
-          console.log(`A culpa e a raiva te diziam pra \x1b[33mLUTAR\x1b[0m, mas pela quantidade de monstros, \x1b[33mFUGIR\x1b[0m seria o mais sensato.\n`)
+          console.log(`A culpa e a raiva te diziam pra \x1b[33mLUTAR\x1b[0m, mas pela quantidade de monstros, \x1b[33mFUGIR\x1b[0m seria o mais sensato.`)
 
           resp = prompt().toUpperCase().replace(/\s/g, "");
           validacaoString(resp, "LUTAR", "FUGIR");
@@ -574,6 +572,7 @@ do {
               personagens.jogador.dano += 2;
               personagens.jogador.defesa += 2;
               statusJogador();
+              continuar();
             }  
           }else if (resp === "FUGIR") {
             sleep(1)
