@@ -655,7 +655,7 @@ do {
               );
               continuar()
               console.log(
-                `Ao olhar para a figura que fala com você de forma casual você vê um elfo com cabelos avermelhados, trajando uma armadura de couro. Seu rosto genuinamente sorridente apenas potencializa o rosto angular e as orelhas pontudas. Subitamente você o reconhece....`
+                `Ao olhar para a figura que fala com você de forma casual você vê um elfo com cabelos prateados, trajando uma armadura de couro. Seu rosto genuinamente sorridente apenas potencializa o rosto angular e as orelhas pontudas. Subitamente você o reconhece....`
               );
               sleep(10);
               console.log(`Aerin`);
@@ -796,7 +796,7 @@ do {
     } while (true);
   }
   console.log(
-    `Deseja jogar novamente, \x1b[33mSIM\x1b[0m ou \x1b[33mNAO\x1b[0m?`
+    `Deseja jogar novamente, \x1b[33mSIM\x1b[0m ou \x1b[33mNAO\x1b[0m?\n`
   );
   resp = prompt().toUpperCase().replace(/\s/g, "");
   validacaoString(resp, "SIM", "NAO");
