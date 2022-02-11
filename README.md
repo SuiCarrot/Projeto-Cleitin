@@ -20,7 +20,7 @@ Ao sair da caverna encontra uma pequena trilha que te leva a uma estrada maior, 
 ##
 
 <div align = "justify">
-O caminho da direita nos leva a viajar sobre As Montanhas Gélidas que é o caminho mais longo, com um clima terrívlemente frio, um sol que parece congelante e o terreno íngreme e irregular. Entretanto é mais seguro que as Florestas, pois não há tantos monstros pelo caminho. Embora, a escassez de animais e vegetais, torne a jornada igualmente complicada.
+O caminho da direita nos leva a viajar sobre as Montanhas Gélidas que é o caminho mais longo, com um clima terrívlemente frio, um sol que parece congelante e o terreno íngreme e irregular. Entretanto é mais seguro que as Florestas, pois não há tantos monstros e desafios. Embora, a escassez de animais e vegetais, torne a jornada igualmente complicada.
 
   
 ### O DESAFIO DAS MONTANHAS GÉLIDAS, É A ÚNICA COISA QUE TE SEPARA DO SEU DESTINO, NÃO DESISTA!
