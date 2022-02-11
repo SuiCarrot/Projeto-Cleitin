@@ -332,8 +332,11 @@ do {
       //PRÓLOGO DA MONTANHA
       sleep(2)
       console.log(
-        `\nVocê começa a busca por si mesmo, assumindo que encontrar Aerin era o seu destino, mas antes, decide checar seus STATUS, para mensurar seu poder e evolução.\n`
+        `\nVocê começa a busca por si mesmo, assumindo que encontrar Aerin era o seu destino, mas antes, decide checar seus STATUS, para mensurar seu poder e evolução.`
       );
+      
+      continuar()
+      console.log();
 
       statusJogador();
             
@@ -350,22 +353,22 @@ do {
         //PRIMEIRO DIA
         if (i == 0) {
           sleep(2)
-          console.log(`Pela manhã do primeiro dia de viagem, você chegou ao pé da montanha e se deu conta que precisava estocar alimentos antes de continuar. Olhando em volta rapidamente você percebe algumas arvores com \x1b[33mFRUTAS\x1b[0m, além disso você vê rastros de \x1b[33mANIMAIS\x1b[0m e de pequenos \x1b[33mMONTROS\x1b[0m, ambos dariam um belo jantar.\n`);
+          console.log(`\nPela manhã do primeiro dia de viagem, você chegou ao pé da montanha e se deu conta que precisava estocar alimentos antes de continuar. Olhando em volta rapidamente você percebe algumas arvores com \x1b[33mFRUTAS\x1b[0m, além disso você vê rastros de \x1b[33mANIMAIS\x1b[0m e de pequenos \x1b[33mMONTROS\x1b[0m, ambos dariam um belo jantar.\n`);
 
           //PRIMEIRA DECISÃO, PREPARAÇÃO PARA A JORNADA
           resp = prompt().toUpperCase().replace(/\s/g, "");
-          validacaoString(resp, "FRUTAS", "ANIMAIS", "MONSTROS");
+          validacaoString(resp, "FRUTA", "ANIMAIS", "MONSTROS");
           console.clear()
 
           if (resp === "FRUTAS") {
             sleep(1)
             console.log(
-              `Você teve sorte e encontrou rapidamente algumas árvores frutíferas, agora já está alimentado e pronto para continuar com a aventura. Rumo a cidade de Erast`
+              `\nVocê teve sorte e encontrou rapidamente algumas árvores frutíferas, agora já está alimentado e pronto para continuar com a aventura. Rumo a cidade de Erast`
             );
           } else if (resp === "ANIMAIS") {
             sleep(1)
             console.log(
-              `Você encontrou algumas frutas e as recolheu, mas logo avistou um cervo! Prontamento o atacou para obter carne e usou sua pele para se proteger do frio, que viria mais tarde.\n`
+              `\nVocê encontrou algumas frutas e as recolheu, mas logo avistou um cervo! Prontamento o atacou para obter carne e usou sua pele para se proteger do frio, que viria mais tarde.\n`
             );
 
             console.log(`Confira seus STATUS atualizados`);
@@ -374,7 +377,7 @@ do {
           } else if (resp === "MONSTROS") {
             sleep(1)
             console.log(
-              `Você procura por um monstro para treinar com o equipamento recém escolhido, visando aumentar seu poder e se possível, se alimentar`
+              `\nVocê procura por um monstro para treinar com o equipamento recém escolhido, visando aumentar seu poder e se possível, se alimentar`
             );
 
             //PRIMEIRA BATALHA SE INICIA
@@ -396,7 +399,7 @@ do {
         } else if (i == 1) {
           console.clear();
           sleep(2)
-          console.log(`Na manhã do segundo dia, você se deparou com um tempo incívelmente frio, o sol parecia gelado, o terreno era íngreme e irregular. Apesar da forte neblina, você conseguiu avistar uma caverna e pensou em \x1b[33mENTRAR\x1b[0m, mas sabia que uma hora precisaria \x1b[33mCONTINUAR\x1b[0m andando.\n`);
+          console.log(`\nNa manhã do segundo dia, você se deparou com um tempo incívelmente frio, o sol parecia gelado, o terreno era íngreme e irregular. Apesar da forte neblina, você conseguiu avistar uma caverna e pensou em \x1b[33mENTRAR\x1b[0m, mas sabia que uma hora precisaria \x1b[33mCONTINUAR\x1b[0m andando.\n`);
 
           resp = prompt().toUpperCase().replace(/\s/g, "");
           validacaoString(resp, "ENTRAR", "CONTINUAR");
@@ -435,7 +438,7 @@ do {
           console.clear();
           sleep(2)
           console.log(
-            `Mais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite. O sol parecia congelado e a sensação de morte pairava sobre o ar.`
+            `\nMais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite. O sol parecia congelado e a sensação de morte pairava sobre o ar.`
           );
 
           
@@ -450,14 +453,14 @@ do {
           if (resp === "DESCANSAR") {
             sleep(1)
             console.log(
-              `Você se deitou sobre a neve se esgueirando entre as pedras. Naquele momento teve a certeza de que se não encontrasse nada no dia seguinte, você morreria de fome`
+              `\nVocê se deitou sobre a neve se esgueirando entre as pedras. Naquele momento teve a certeza de que se não encontrasse nada no dia seguinte, você morreria de fome`
             );
 
             //BONÛS DE PERSISTÊNCIA - FACILITA PASSAR PELO DESAFIO
           } else if (resp === "PERSISTIR") {
             sleep(1)
             console.log(
-              `Você continuava a caminhar, mal conseguia permanecer em linha reta e seus pés estavam dormentes. Até  que você se depara com Yggdrasil, a árvore divina, com frutas douradas e imbuídas de magia. Ao recostar sobre o seu tronco, se encontra envolvido em uma aura de calor e plenitude, se tornando completamente resistente ao frio.\n`)
+              `\nVocê continuava a caminhar, mal conseguia permanecer em linha reta e seus pés estavam dormentes. Até  que você se depara com Yggdrasil, a árvore divina, com frutas douradas e imbuídas de magia. Ao recostar sobre o seu tronco, se encontra envolvido em uma aura de calor e plenitude, se tornando completamente resistente ao frio.\n`)
               sleep(4)
               console.log(`Você acabou de ganhar 5 de vida máxima e 1 de defesa.\nEsses são seus STATUS atualizados: \n`);
               vidaMAX += 5;
@@ -472,7 +475,7 @@ do {
         } else if (i == 3) {
           console.clear();
           sleep(2)
-          console.log(`Ao alvorecer do quarto dia de jornada, você avista DOIS monstros vagando livremente, entre as imensas pedras de gelo que haviam acima das montanhas. Eles ainda não te viram e você tem a oportunidade de \x1b[33mFUGIR\x1b[0m, apesar de seu instinto te mandar \x1b[33mLUTAR\x1b[0m.\n`);
+          console.log(`\nAo alvorecer do quarto dia de jornada, você avista DOIS monstros vagando livremente, entre as imensas pedras de gelo que haviam acima das montanhas. Eles ainda não te viram e você tem a oportunidade de \x1b[33mFUGIR\x1b[0m, apesar de seu instinto te mandar \x1b[33mLUTAR\x1b[0m.\n`);
 
           resp = prompt().toUpperCase().replace(/\s/g, "");
           validacaoString(resp, "LUTAR", "FUGIR");
@@ -481,7 +484,7 @@ do {
           if (resp === "LUTAR") {
             sleep(1)
             console.log(
-              `Você não resiste a uma batalha e parte para o ataque!!!`
+              `\nVocê não resiste a uma batalha e parte para o ataque!!!`
             );
             ifGameOver(2, 3, 5);
 
@@ -512,7 +515,7 @@ do {
             console.clear()
             sleep(1)
             console.log(
-              `Você escapou dos monstros e continuou a caminhar, na esperança de encontrar comida`
+              `\nVocê escapou dos monstros e continuou a caminhar, na esperança de encontrar comida`
             );
               
           
@@ -546,7 +549,7 @@ do {
           console.clear()
           sleep(2)
           console.log(
-            `É um novo dia! Você continua a caminhar e está muito próximo da entrada de Erast. Entretanto, você ouve o som de gritos pedindo por socorro, vindos do acampamento da última montanha.\n`
+            `\nÉ um novo dia! Você continua a caminhar e está muito próximo da entrada de Erast. Entretanto, você ouve o som de gritos pedindo por socorro, vindos do acampamento da última montanha.\n`
           );
 
           sleep(3)
@@ -572,7 +575,7 @@ do {
           }else if (resp === "FUGIR") {
             sleep(1)
             console.log(
-              `\nVocê fugia enquanto ouvia os gritos de agonia dos jovens aventureiros, mas seguia sem olhar pra trás, porém, três monstros te alcaçam, e a única coisa que te separava do seu destino era essa batalha`
+              `Você fugia enquanto ouvia os gritos de agonia dos jovens aventureiros, mas seguia sem olhar pra trás, porém, três monstros te alcaçam, e a única coisa que te separava do seu destino era essa batalha`
             );
 
             ifGameOver(3, 3, 5);
