@@ -2,7 +2,7 @@
 ## SuiCarrot - Labu - SirDav1d
 
 <div align = "justify">
-Você acordou sem memórias em uma pequena caverna... Ao analisar os arredores vê um pequeno acampamento montado. Há uma fogueira, agora apenas em brasas, com comida aos arredores uma mochila e alguns equipamentos espalhados. Além é claro, da saída da caverna. <br>Na mochila há um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin...<br>
+Você acordou sem memórias em uma pequena caverna... Ao analisar os arredores vê um pequeno acampamento montado. Há uma fogueira, agora apenas em brasas, com comida aos arredores uma mochila e alguns equipamentos espalhados. Além é claro, da saída da caverna. Na mochila há um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin...<br>
 <br>
 Ao sair da caverna, seus olhos demoram alguns segundos para se acostumarem com a luz. Andando pela pequena trilha que sai da caverna você chega até uma estrada maior, esta logo se divide em duas. Sem conhecer direito do que é capaz, você decide ir para qual caminho?
 </div>
