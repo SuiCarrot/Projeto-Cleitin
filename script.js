@@ -36,8 +36,9 @@ function validacaoString(resposta, a, b, c, d) {
 
 // FUNÇÃO PARA CRIAR MONSTRO
 function clearMonstro() {
-  monstros.splice(0);
+  monstros.splice(0);  
 }
+
 function criarMonstro(qtd, a, b) {
   clearMonstro();
   const listNomeMonstro = [
@@ -83,11 +84,13 @@ function mortalKombat(a = 0) {
 
 //FUNÇÃO STATUS DO JOGADOR
 function statusJogador() {
+  console.log('--------------')
   console.log(`Status de \x1b[31m${personagens.jogador.nome}\x1b[0m:`);
   console.log();
   console.log(
     `\x1b[33mVida\x1b[0m:\t\x1b[32m${personagens.jogador.vida}\x1b[0m\n\x1b[33mDefesa\x1b[0m:\t\x1b[32m${personagens.jogador.defesa}\x1b[0m\n\x1b[33mDano\x1b[0m:\t\x1b[32m${personagens.jogador.dano}\x1b[0m`
   );
+  console.log('--------------')
 }
 
 //FUNÇÃO MERGE CRIAÇÃO, BATALHA E CONDIÇÃO
@@ -95,26 +98,28 @@ function ifGameOver(qtd, a, b) {
   criarMonstro(qtd, a, b);
   for (let i = 0; i < qtd; i++) {
     sleep(2);
-    console.log(`\nVocê encontrou um ${monstros[i].nome}`);
+    console.log(`\nVocê encontrou um \x1b[36m${monstros[i].nome}\x1b[0`);
     sleep(5);
     console.log(`\nPrepare-se para a batalha`);
     sleep(4);
     mortalKombat(i);
     if (gameOver == true) {
-      console.log(`\nVocê morreu para um ${monstros[i].nome}`);
+      console.log(`\nVocê morreu para um \x1b[36m${monstros[i].nome}\x1b[0m`);
       break;
     } else {
-      console.log(`\nParabéns você conseguiu matar ${monstros[i].nome}`);
+      console.log(`\nParabéns você conseguiu matar \x1b[36m${monstros[i].nome}\x1b[0m`);
     }
   }
   sleep(3);
 }
 
 function continuar(){
-resp = prompt(`\nPressione \x1b[36mENTER\x1b[0m para continuar...`);
+resp = prompt(`\nPressione \x1b[33mENTER\x1b[0m para continuar...`);
 console.clear();
+console.log(
+  "-----------------------------------------------------------------------------------------"
+)
 }
-//FUNÇÃO STATUS JOGADOR
 
 /*-----------------------------------------------DECLARAÇÃO DE VARIAVEIS E OBJETOS---------------------------------------------------------*/
 //ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
@@ -182,7 +187,6 @@ do {
   sleep(3);
   console.log(`Ao analisar os arredores vê um pequeno acampamento montado.`);
   sleep(2);
-
   console.log();
 
   //LAÇO PARA TRAZER OPÇÕES DA CAVERNA
@@ -191,10 +195,9 @@ do {
     console.log(
       `Há uma fogueira, agora apenas em brasas, com \x1b[33mCOMIDA\x1b[0m, aos arredores uma \x1b[33mMOCHILA\x1b[0m e alguns \x1b[33mEQUIPAMENTOS\x1b[0m espalhados. Além é claro, da \x1b[33mSAIDA\x1b[0m da caverna.`
     );
-    console.log("O que quer fazer?\n");
+    console.log("O que fazer?");
 
-    resp = prompt().toUpperCase().replace(/\s/g, "");
-    console.clear()
+    resp = prompt().toUpperCase().replace(/\s/g, "");    
    
     validacaoString(resp, "COMIDA", "MOCHILA", "EQUIPAMENTOS", "SAIDA");
     //CONDIÇÃO GAME OVER
@@ -207,8 +210,9 @@ do {
       break;
       //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
     } else if (resp === "MOCHILA" && a == 0) {
+      console.log()
       console.log(
-        `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin. Tomado por memorias de quando era criança, você lembra de algo:\nQual o seu nome?\n`
+        `Na mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin. Tomado por memorias de quando era criança, você lembra de algo:\n\x1b[33mQual o seu nome?\x1b[0m`
       );
 
       personagens.jogador.nome = prompt();
@@ -217,7 +221,7 @@ do {
     
     } else if (resp === "MOCHILA" && a == 1) {
       console.log(
-        `Você abre a mochila novamente, e vê os mesmos itens e um papel com o seu nome: ${personagens.jogador.nome}.`
+        `Você abre a mochila novamente, e vê os mesmos itens e um papel com o seu nome: \x1b[31m${personagens.jogador.nome}\x1b[0m.`
       );
       continuar()
       //CONDIÇÃO IPORTANTE DE SELEÇÃO DE equipamentos, MAS AINDA NÃO SAI DA CAVERNA
@@ -226,7 +230,7 @@ do {
       personagens.jogador.dano = random(4,6);
       personagens.jogador.defesa = 3;
       console.log(
-        "Existem 3 equipamentos dispostas:\n\nEspada escudo = + Defesa -Ataque\n\nMachado = ++Ataque -- Defesa\n\nArco = +Ataque - Defesa\n"
+        "Existem 3 equipamentos dispostas:\n\n\x1b[33mEspada escudo\x1b[0m = + Defesa -Ataque\n\x1b[33mMachado\x1b[0m = ++Ataque -- Defesa\n\x1b[33mArco\x1b[0m = +Ataque - Defesa\n"
       );
       //LAÇO PARA USUÁRIO ENTREGAR O VALOR C0RRETO
       resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -238,8 +242,7 @@ do {
         equipamentos.machado();
       } else {
         equipamentos.arco();
-      }
-      console.clear()
+      }      
       console.log()
       statusJogador();
       console.log()
@@ -286,7 +289,14 @@ do {
           sleep(2);
           console.log("Parece que encontramos algo...");
           continuar()
-          ifGameOver(1, 0, 2);
+          ifGameOver(3, 0, 2);
+          continuar()
+          console.log(monstros)
+          continuar()
+          ifGameOver(3, 0, 2);
+          continuar()
+          console.log(monstros)
+          continuar()
           statusJogador();
           continuar()
 
