@@ -1,5 +1,5 @@
 # PROJETO FINAL BLUE
-## SuiCarrot - Labu - SirDav1d
+## Bruno "SuiCarrot" de Lucca - Victor "LabuPaim" Paim - David "SirDav1d" Diniz
 
 <div align = "justify">
 Você entra na pele de um homem desorientado e com amnésia, que acorda em uma caverna
