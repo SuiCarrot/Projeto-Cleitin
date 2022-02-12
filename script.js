@@ -45,12 +45,12 @@ function criarMonstro(qtd, a, b) {
         'Aranha Gigante',
         'Lechen',
         'Lobo Atroz',
-        `Urso Coruja`,
+        'Urso Coruja',
         'Sleipnir',
-        `Anão Bandido`,
+        'Anão Bandido',
         'Fenrir',
         'Draugr',
-        `Caçador de recompensas`,
+        'Caçador de recompensas',
     ];
 
     for (let i = 0; i < qtd; i++) {
