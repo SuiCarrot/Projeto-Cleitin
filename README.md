@@ -8,7 +8,7 @@ e não tem ideia de seu poder. Após explorar o ambiente você assume que seu de
 
 #
 
-<section style:display block margin:"auto" align = "justify">
+<section align = "justify">
 Floresta Amaldiçoada ou Montanhas Gélidas? Por qual caminho fará sua jornada?<br>
  <br>
 <div align ="center">
