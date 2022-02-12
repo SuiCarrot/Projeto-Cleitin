@@ -234,7 +234,7 @@ do {
             //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
         } else if (resp === 'MOCHILA' && a == 0) {
             console.log(
-                `\nNa mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin. Tomado por memorias de quando era criança, você lembra de algo:\n\x1b[33mQual o seu nome?\x1b[0m`,
+                `\nNa mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin. Tomado por memorias de quando era criança, você lembra de algo:\n\x1b[33mQual o seu nome?\x1b[0m\n`,
             );
 
             personagens.jogador.nome = prompt();
@@ -267,7 +267,7 @@ do {
             }
             console.log();
             statusJogador();
-            console.log();
+            continuar();
             //CONDIÇÃO PARA SAIDA DA CAVERNA
         } else if (resp == 'SAIDA') {
             console.log('\nVocê saiu da caverna');
@@ -287,7 +287,9 @@ do {
         console.log(
             `Ao sair da caverna, seus olhos demoram alguns segundos para se acostumarem com a luz. O sol brilha alto no céu e o som de passaros e animais rasteiros chega aos seus ouvidos. Andando pela pequena trilha que sai da caverna você chega até uma estrada maior, esta logo se divide em dois caminhos.`,
         );
-        sleep(3);
+        continuar()
+
+        sleep(1);
         console.log(
             `O caminho da esquerda adentra mais na \x1b[33mFLORESTA\x1b[0m que aos poucos vai ficando mais densa com as copas das arvores competindo com os raios de sol pra ver quem vence.`,
         );
@@ -360,7 +362,7 @@ do {
             let dias = 5;
             console.clear();
             //PRÓLOGO DA MONTANHA
-            sleep(2);
+            sleep(1);
             console.log(
                 `Você começa a jornada em busca de si mesmo, a trilha que vai em direção a montanha começa sem dificuldades, conforme você avança a temperatura vai caindo, os ventos vão ficando mais gélidos e seu corpo vai começando a sentir. Quando chega ao pé da montanha você começa a entender melhor o seu corpo e suas capacidades.\n`,
             );
@@ -370,12 +372,10 @@ do {
 
             continuar();
 
-            sleep(2);
+            sleep(1);
             console.log(
                 `Viajar sobre As Montanhas Gélidas é o caminho mais longo, entretanto é mais seguro que as florestas, não há tantos monstros pelo caminho, mas a escassez de animais e alimentos torna a jornada igualmente complicada.`,
             );
-
-            continuar();
 
             for (i = 0; i < dias; i++) {
                 //PRIMEIRO DIA
@@ -416,9 +416,8 @@ do {
 
                         //PRIMEIRA BATALHA SE INICIA
                         ifGameOver(1, 4, 7);
-                        if (gameOver == true) {
-                            break;
-                        } else {
+                        if (gameOver == true) break;
+                        
                             console.log(
                                 `\nVocê ganhou 1 de dano, confira seus STATUS atualizados: \n`,
                             );
@@ -426,13 +425,13 @@ do {
                             personagens.jogador.vida = vidaMAX;
                             statusJogador();
                             continuar();
-                        }
+                        
                     }
 
                     //SEGUNDO DIA
                 } else if (i == 1) {
                     console.clear();
-                    sleep(2);
+                    sleep(1);
                     console.log(
                         `Na manhã do segundo dia, você se deparou com um tempo incívelmente frio, o sol parecia gelado, o terreno era íngreme e irregular. Apesar da forte neblina, você conseguiu avistar uma caverna e pensou em \x1b[33mENTRAR\x1b[0m, mas sabia que uma hora precisaria \x1b[33mCONTINUAR\x1b[0m andando.\n`,
                     );
@@ -447,23 +446,22 @@ do {
                             `Você entrou na caverna se alimentou do que tinha em sua bolsa e preferiu descansar até o amanhecer do próximo dia`,
                         );
                     } else if (resp === 'CONTINUAR') {
-                        sleep(1);
+                        sleep(2);
                         console.log(
                             `Você se deparou com uma criatura pavorosa, suas únicas opções eram lutar ou morrer!`,
                         );
                         ifGameOver(1, 4, 7);
 
-                        if (gameOver == true) {
-                            break;
-                        } else {
+                        if (gameOver == true) break;
+                
                             console.log(
                                 `\nVocê ganhou 1 de defesa, confira seus STATUS atualizados: \n`,
                             );
                             personagens.jogador.vida = vidaMAX;
                             personagens.jogador.defesa += 1;
                             statusJogador();
-                        }
-                        sleep(1);
+                        
+                        sleep(2);
                         console.log(
                             `\nVocê adentrou as entranhas do monstro derrotado, e esperou até o amanhecer`,
                         );
@@ -474,7 +472,7 @@ do {
                     //TERCEIRO DIA
                 } else if (i == 2) {
                     console.clear();
-                    sleep(2);
+                    sleep(1);
                     console.log(
                         `Mais um dia se inicia e você já não sabia mais diferenciar manhã, tarde e noite. O sol parecia congelado e a sensação de morte pairava no ar.\n`,
                     );
@@ -500,7 +498,7 @@ do {
                         console.log(
                             `Você continuava a caminhar, mal conseguia permanecer em linha reta e seus pés estavam dormentes. Até  que você se depara com Yggdrasil, a árvore divina, com frutas douradas e imbuídas de magia. Ao recostar sobre o seu tronco, se encontra envolvido em uma aura de calor e plenitude, se tornando completamente resistente ao frio.\n`,
                         );
-                        sleep(4);
+                        sleep(3);
                         console.log(
                             `Você acabou de ganhar 5 de vida máxima e 1 de defesa.\nEsses são seus STATUS atualizados:\n `,
                         );
@@ -531,11 +529,11 @@ do {
                         );
                         ifGameOver(2, 4, 7);
 
-                        if (gameOver == true) {
-                            break;
-                        } else {
+                        if (gameOver == true) break;
+                        
                             personagens.jogador.vida = vidaMAX;
                             equipamentos.mjolnir();
+                            sleep(1)
                             console.log(
                                 `\nVocê acabou de adquirir Mjolnir, a arma lendária das Montanhas Gélidas, agora tem a opção de \x1b[33mEQUIPAR\x1b[0m o novo equipamento, ou apenas \x1b[33mIGNORAR\x1b[0m.\n`,
                             );
@@ -545,7 +543,7 @@ do {
                             console.clear();
 
                             if (resp === 'EQUIPAR') {
-                                sleep(1);
+                                sleep(2);
                                 personagens.jogador.dano += 2;
                                 console.clear();
                                 console.log(
@@ -558,7 +556,7 @@ do {
                                 console.log(`Você continua sua jornada...\n`);
                                 continuar();
                             }
-                        }
+                        
                     } else if (resp === 'FUGIR') {
                         console.clear();
                         sleep(1);
@@ -597,7 +595,7 @@ do {
                     //QUINTO DIA DA VIAGEM
                 } else if (i == 4) {
                     console.clear();
-                    sleep(2);
+                    sleep(1);
                     console.log(
                         `É um novo dia! Você continua a caminhar e está muito próximo da entrada de Erast. Entretanto, você ouve o som de gritos pedindo por socorro, vindos do acampamento da última montanha.\n`,
                     );
@@ -607,7 +605,7 @@ do {
                         `Você volta rapidamente para ver o que havia ali e se depara com monstros, exterminando facilmente o grupo de aventureiros, você sabia que a culpa era sua, pois haviam seguido seu cheiro.\n`,
                     );
 
-                    sleep(5);
+                    sleep(6);
                     console.log(
                         `A culpa e a raiva te diziam pra \x1b[33mLUTAR\x1b[0m, mas pela quantidade de monstros, \x1b[33mFUGIR\x1b[0m seria o mais sensato.\n`,
                     );
@@ -619,7 +617,7 @@ do {
                     if (resp == 'LUTAR') {
                         ifGameOver(3, 4, 7);
                         if (gameOver == true) break;
-                        else {
+                        
                             console.log(
                                 `\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`,
                             );
@@ -628,7 +626,7 @@ do {
                             personagens.jogador.defesa += 2;
                             statusJogador();
                             continuar();
-                        }
+                        
                     } else if (resp === 'FUGIR') {
                         sleep(1);
                         console.log(
@@ -636,9 +634,8 @@ do {
                         );
 
                         ifGameOver(3, 4, 7);
-                        if (gameOver == true) {
-                            break;
-                        } else {
+                        if (gameOver == true) break;
+                        
                             console.log(
                                 `\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`,
                             );
@@ -647,7 +644,7 @@ do {
                             personagens.jogador.defesa += 2;
                             statusJogador();
                             continuar();
-                        }
+                        
                     } //FIM DA MONTANHA
                 }
             }
@@ -657,6 +654,7 @@ do {
 
         /*-----------------------------------------------------------------CIDADE--------------------------------------------------------------*/
         console.clear();
+        sleep(1)
         console.log(
             `\nVocê se aproxima dos grandes muros que protegem a cidade de Erast, os portões de ferro, agora abertos apra permitir a passagem dos aldeões, é vigiado por guardas no chão e nas duas torres da entrada. Com um pouco de apreensão você passa pelo portão, os guardas nem olham para você.`,
         );
@@ -672,6 +670,7 @@ do {
 
         do {
             ///CIDADE TODA
+            sleep(1)
             console.log(
                 '\nApós aproveitar brevemente a cidade você começa a pensar no que fazer. \nvocê encontra uma \x1b[33mESTALAGEM\x1b[0m próxima a praça central, pelos barulhos uma das mais movimentas. Você pode \x1b[33mPROCURAR\x1b[0m por Aerin na cidade. Parando para pensar, você poderia voltar pelo portão e \x1b[33mDESISTIR\x1b[0m de encontrar a pessoa de suas memórias também.\n',
             );
