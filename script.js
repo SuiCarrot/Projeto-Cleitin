@@ -1,6 +1,6 @@
 var prompt = require('prompt-sync')();
 
-/*-----------------------------------------------DECLARAÇÃO DE VARIAVEIS E OBJETOS---------------------------------------------------------*/
+/*=================================================== DECLARAÇÃO DE VARIAVEIS E OBJETOS ===========================================================*/
 //ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
 var gameOver;
 let resp;
@@ -12,28 +12,28 @@ const monstros = [
     {
         nome: 'Aranha Gigante',
         vida: 10,
-        defesa: 2,
+        defesa: 1,
         dano: 5,
         rota: 'floresta',
     },
     {
         nome: 'Lechen',
-        vida: 10,
-        defesa: 2,
-        dano: 5,
+        vida: 14,
+        defesa: 0,
+        dano: 4,
         rota: 'floresta',
     },
     {
         nome: 'Lobo Atroz',
         vida: 10,
         defesa: 2,
-        dano: 5,
+        dano: 4,
         rota: 'floresta',
     },
     {
         nome: 'Urso Coruja',
         vida: 10,
-        defesa: 2,
+        defesa: 3,
         dano: 5,
         rota: 'floresta',
     },
@@ -111,7 +111,7 @@ const equipamentos = {
     },
 };
 
-/*-------------------------------------------- DECLARAÇÃO DAS FUNÇÕES--------------------------------------------------------------------*/
+/*======================================================= DECLARAÇÃO DAS FUNÇÕES ==================================================================*/
 // FUNÇÃO PARA RETARDAR A CPU
 function sleep(segundos = 1) {
     segundos = segundos * 1000;
@@ -406,7 +406,7 @@ do {
                 }
             }
 
-            /*---------------------------------------------------------Montanhas--------------------------------------------------------------------*/
+            /*================================================================= Montanhas ====================================================================*/
         } else if (resp == `MONTANHAS`) {
             let dias = 5;
             console.clear();
@@ -714,7 +714,7 @@ do {
 
         if (gameOver == true) break;
 
-        /*-----------------------------------------------------------------CIDADE--------------------------------------------------------------*/
+        /*=================================================================== CIDADE ===================================================================*/
         console.clear();
         sleep(1);
         console.log(
