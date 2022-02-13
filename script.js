@@ -257,8 +257,12 @@ function mortalKombat(qtd, rota) {
             break;
         }
     }
-    console.log('\nSua vida foi restaurada após a batalha');
-    if (vidaMAX > personagens.jogador.vida) personagens.jogador.vida = vidaMAX;
+    if(gameOver == false){
+        console.log('\nSua vida foi restaurada após a batalha');
+        if (vidaMAX > personagens.jogador.vida) personagens.jogador.vida = vidaMAX;
+
+    }
+    
 }
 
 //FUNÇÃO STATUS DO JOGADOR
