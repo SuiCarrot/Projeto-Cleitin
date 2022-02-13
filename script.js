@@ -1,6 +1,7 @@
 var prompt = require('prompt-sync')();
 
 /*=================================================== DECLARAÇÃO DE VARIAVEIS E OBJETOS ===========================================================*/
+
 //ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
 var gameOver;
 let resp;
@@ -106,7 +107,7 @@ const personagens = {
     jogador: {
         nome: 'Jogador',
         vida: 0,
-        equip: { nome: 'Ataque desarmado', dano: 5, defesa: 3 }
+        equip: { nome: 'Ataque desarmado', dano: 4, defesa: 3 },
     },
     aerin: {
         nome: `Aerin`,
@@ -188,6 +189,7 @@ function mortalKombat(qtd, rota) {
     const monstroLUTA = [];
     let bat;
     let dan;
+    let bater;
     let danoMONSTRO = 0;
     let danoJOGADOR = 0;
 
@@ -200,53 +202,57 @@ function mortalKombat(qtd, rota) {
     for (let i = 0; i < qtd; i++) {
         bat = random(0, monstroLUTA.length - 1);
         sleep(2);
-        console.log(`\nVocê encontrou um \x1b[36m${monstroLUTA[bat].nome}\x1b[0m`);
+        console.log(`\nVocê encontrou um \x1b[31m${monstroLUTA[bat].nome}\x1b[0m`);
         sleep(3);
         console.log(`\nPrepare-se para a batalha`);
         sleep(4);
 
         while (personagens.jogador.vida > 0 && monstroLUTA[bat].vida > 0) {
             dan = random(0, monstroLUTA[bat].dano.length - 1);
+            bater = random(personagens.jogador.equip.dano - 1, personagens.jogador.equip.dano + 2)
 
+            if (bater > monstroLUTA[bat].defesa) {
+                danoJOGADOR = bater - monstroLUTA[bat].defesa;
+                monstroLUTA[bat].vida -=
+                    bater - monstroLUTA[bat].defesa;
+                console.log(
+                    `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip.nome}\x1b[0m e tirou \x1b[32m${danoJOGADOR}\x1b[0m de dano`,
+                );
+            } else {
+                danoJOGADOR = 0;
+                console.log(
+                    `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip.nome}\x1b[0m e tirou \x1b[32m${danoJOGADOR}\x1b[0m de dano`,
+                );
+            }
             if (monstroLUTA[bat].dano[dan].dano > personagens.jogador.equip.defesa) {
                 danoMONSTRO =
                     monstroLUTA[bat].dano[dan].dano - personagens.jogador.equip.defesa;
                 personagens.jogador.vida -=
                     monstroLUTA[bat].dano[dan].dano - personagens.jogador.equip.defesa;
-
-                danoJOGADOR = personagens.jogador.equip.dano - monstroLUTA[bat].defesa;
-                monstroLUTA[bat].vida -=
-                    personagens.jogador.equip.dano - monstroLUTA[bat].defesa;
-
                 console.log(
-                    `Você usou \x1b[33m${personagens.jogador.equip.nome}\x1b[0m e tirou \x1b[32m${danoJOGADOR}\x1b[0m de dano`,
-                );
-                console.log(
-                    `\x1b[36m${monstroLUTA[bat].nome}\x1b[0m usou \x1b[33m${monstroLUTA[bat].dano[dan].nome}\x1b[0m e tirou \x1b[31m${danoMONSTRO}\x1b[0m de dano`,
+                    `\x1b[31m${monstroLUTA[bat].nome}\x1b[0m usou \x1b[31m${monstroLUTA[bat].dano[dan].nome}\x1b[0m e tirou \x1b[31m${danoMONSTRO}\x1b[0m de dano`,
                 );
             } else {
                 danoMONSTRO = 0;
-                monstroLUTA[bat].vida -=
-                    personagens.jogador.equip.dano - monstroLUTA[bat].defesa;
                 console.log(
-                    `Você usou \x1b[33m${personagens.jogador.equip.nome}\x1b[0m e tirou \x1b[32m${danoJOGADOR}\x1b[0m de dano`,
-                );
-                console.log(
-                    `\x1b[36m${monstroLUTA[bat].nome}\x1b[0m usou \x1b[33m${monstroLUTA[bat].dano[dan].nome}\x1b[0m e tirou \x1b[31m${danoMONSTRO}\x1b[0m de dano`,
+                    `\x1b[31m${monstroLUTA[bat].nome}\x1b[0m usou \x1b[31m${monstroLUTA[bat].dano[dan].nome}\x1b[0m e tirou \x1b[31m${danoMONSTRO}\x1b[0m de dano`,
                 );
             }
+
             sleep(3);
             console.log(
-                `Sua vida atual: \x1b[31m${personagens.jogador.vida}\x1b[0m:\nVida do monstro: \x1b[31m${monstroLUTA[bat].vida}\x1b[0m\n`,
+                `Sua vida atual: \x1b[33m${personagens.jogador.vida}\x1b[0m:\nVida do monstro: \x1b[33m${monstroLUTA[bat].vida}\x1b[0m\n`,
             );
         }
         if (personagens.jogador.vida > 0) {
             console.log(
-                `Parabéns você conseguiu matar \x1b[36m${monstroLUTA[bat].nome}\x1b[0m`,
+                `Parabéns \x1b[32m${personagens.jogador.nome}\x1b[0m, você conseguiu matar \x1b[31m${monstroLUTA[bat].nome}\x1b[0m`,
             );
             gameOver = false;
         } else {
-            console.log(`Você morreu para um \x1b[36m${monstroLUTA[bat].nome}\x1b[0m`);
+            console.log(
+                `\x1b[32m${personagens.jogador.nome}\x1b[0m morreu para um \x1b[31m${monstroLUTA[bat].nome}\x1b[0m`,
+            );
             gameOver = true;
             break;
         }
@@ -258,10 +264,10 @@ function mortalKombat(qtd, rota) {
 //FUNÇÃO STATUS DO JOGADOR
 function statusJogador() {
     console.log('--------------');
-    console.log(`Status de \x1b[31m${personagens.jogador.nome}\x1b[0m:`);
+    console.log(`Status de \x1b[32m${personagens.jogador.nome}\x1b[0m:`);
     console.log();
     console.log(
-        `\x1b[33mVida\x1b[0m:\t\x1b[32m${personagens.jogador.vida}\x1b[0m\n\x1b[33mDefesa\x1b[0m:\t\x1b[32m${personagens.jogador.defesa}\x1b[0m\n\x1b[33mDano\x1b[0m:\t\x1b[32m${personagens.jogador.dano}\x1b[0m`,
+        `\x1b[33mVida\x1b[0m:\t\x1b[32m${personagens.jogador.vida}\x1b[0m\n\x1b[33mDefesa\x1b[0m:\t\x1b[32m${personagens.jogador.equip.defesa}\x1b[0m\n\x1b[33mDano\x1b[0m:\t\x1b[32m${personagens.jogador.equip.dano}\x1b[0m`,
     );
     console.log('--------------');
 }
