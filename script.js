@@ -15,7 +15,7 @@ const monstros = [
         vida: 10,
         defesa: 1,
         dano: [
-            { nome: 'garra', dano: 5 },
+            { nome: 'teia', dano: 5 },
             { nome: 'mordida', dano: 3 },
         ],
         rota: 'floresta',
@@ -25,8 +25,8 @@ const monstros = [
         vida: 14,
         defesa: 0,
         dano: [
-            { nome: 'garra', dano: 5 },
-            { nome: 'mordida', dano: 3 },
+            { nome: 'pancada', dano: 5 },
+            { nome: 'armadilha de raízes', dano: 3 },
         ],
         rota: 'floresta',
     },
@@ -35,7 +35,7 @@ const monstros = [
         vida: 10,
         defesa: 2,
         dano: [
-            { nome: 'garra', dano: 5 },
+            { nome: 'garras', dano: 5 },
             { nome: 'mordida', dano: 3 },
         ],
         rota: 'floresta',
@@ -45,8 +45,8 @@ const monstros = [
         vida: 10,
         defesa: 3,
         dano: [
-            { nome: 'garra', dano: 5 },
-            { nome: 'mordida', dano: 3 },
+            { nome: 'garras', dano: 5 },
+            { nome: 'bico', dano: 3 },
         ],
         rota: 'floresta',
     },
@@ -55,7 +55,7 @@ const monstros = [
         vida: 10,
         defesa: 2,
         ddano: [
-            { nome: 'garra', dano: 5 },
+            { nome: 'cascos', dano: 5 },
             { nome: 'mordida', dano: 3 },
         ],
         rota: 'montanhas',
@@ -65,8 +65,8 @@ const monstros = [
         vida: 10,
         defesa: 2,
         dano: [
-            { nome: 'garra', dano: 5 },
-            { nome: 'mordida', dano: 3 },
+            { nome: 'espada curta', dano: 5 },
+            { nome: 'tiro de besta', dano: 3 },
         ],
         rota: 'montanhas',
     },
@@ -75,7 +75,7 @@ const monstros = [
         vida: 10,
         defesa: 2,
         dano: [
-            { nome: 'garra', dano: 5 },
+            { nome: 'garras', dano: 5 },
             { nome: 'mordida', dano: 3 },
         ],
         rota: 'montanhas',
@@ -85,8 +85,8 @@ const monstros = [
         vida: 10,
         defesa: 2,
         dano: [
-            { nome: 'garra', dano: 5 },
-            { nome: 'mordida', dano: 3 },
+            { nome: 'espada enferrujada', dano: 5 },
+            { nome: 'pancada com escudo', dano: 3 },
         ],
         rota: 'montanhas',
     },
@@ -95,8 +95,8 @@ const monstros = [
         vida: 10,
         defesa: 2,
         dano: [
-            { nome: 'garra', dano: 5 },
-            { nome: 'mordida', dano: 3 },
+            { nome: 'espadas curtas', dano: 5 },
+            { nome: 'frasco de ácido', dano: 3 },
         ],
         rota: 'cidade',
     },
@@ -409,18 +409,26 @@ do {
         if (resp == 'FLORESTA') {
             dias = 3;
             //Viagem
+            console.log(`Sem pensar muito você avança pela floresta, conforme você avança os sons de pequenos animais começa a aumentar. Olhando em volta você até consegue ver alguns coelhos e pássaros seguindo com sua vida em meio as árvores.`)
+            sleep(5)
+            console.log(`Conforme adentra na floresta, a copa das árvores vão ficando mais altas, o sol vai iluminando o caminho com pequenos feixes de luz que passam por entre as folhas, as vezes enganando sua percepção conforme o vento faz as arvores balançarem. Atento aos seus arredores você se mantém preparado para qualquer coisa.`)
+            continuar()
             for (i = 0; i < dias; i++) {
-                console.clear();
                 //PRIMEIRO DIA NA FLOESTA
                 if (i == 0) {
                     sleep(2);
-                    console.log(
-                        '\nOk, este é seu primeiro dia na Floresta Amaldiçoada, aparentemente tudo parece calmo.',
-                    );
-                    sleep(3);
+                    console.log('Conforme a noite vai caindo, você acha prudente montar um pequeno acampamento para descansar. Sem muita dificuldade você encontra uma pequena clareira, um local perfeito para passar a noite. Seu corpo trabalha mais rápido do que sua mente consegue acompanhar, quando percebe está montando o que parece ser uma armadilha de som ao redor do acampamento, apenas uma corda esticada com utensilhos barulhentos para lhe acordar. Quando percebe o que está fazendo, sua cabeça começa a doer, você fecha os olhos brevemente para suportar a dor...');
+                    continuar();
+                    console.log(`Ao abrir os seus olhos, você vê uma figura ainda meio disforme lhe explicando como fazer essa armadilha.\n- Se você fizer desta forma, mesmo que esteja dormindo você conseguirá acordar a tempo casao algum animal selvagem resolva visitar seu acampamento. Mantenha-se sempre atento, como as corujas.\nAo dizer isto a figura misteriosa lhe entrega uma pequena estátua de madeira, na forma de uma coruja.\n-Pegue isso como um amuleto de sorte, leve sempre com você e nunca será pego desprevenido.`);
+                    continuar();
+                    console.log(`Você fecha os olhos novamente com uma pontada de dor novamente. Quando abre os olhos novamente você está novamente montando a armadilha no seu acampamento. Seme ntender direito o que está acontecendo você lembra o nome dessa figura misteriosa.`)
+                    sleep(5)
+                    console.log(`Aerin`)
+                    continuar()
+                    console.log(`Você termina de montar a armadilha e re recosta contra uma arvore proximo a fogueira para tentar dormir um pouco. não demora muito para ouvir o som de uma das armadilhas, com um longo suspiro você levanta e se prepara para descobrir o que está se aproximando.`)/*
                     console.log(
                         'A noite cai, o frio desce, mas aqui dentro predomina esse amor que me aquece',
-                    );
+                    ); */
                     sleep(2);
                     mortalKombat(1, 'floresta');
                     if (gameOver == true) break;
@@ -428,19 +436,17 @@ do {
                     continuar();
                 } else if (i == 1) {
                     sleep(1);
-                    console.log(
-                        `\n${personagens.jogador.nome} você conseguiu sobreviver ao primeiro dia na floresta, mantenha os olhos atentos.`,
-                    );
+                    console.log(`Após uma noite de descanso, com um pequeno incidente, você monta acampamento e segue pela trilha floresta adentro.\nA floresta vai ficando mais densa conforme você avança. Entre as árvores você nota as vezes algumas teias de aranha enormes, talvez aranhas gigantes habitem aqui.`);
                     sleep(5);
                     let rand = random(1, 2);
                     if (rand == 1) {
-                        console.log('Parece que encontramos algo...');
+                        console.log('Sons de movimento se aproximando chamam sua atenção, parece que algo grande está vindo. Parece que a própria floresta está lhe desafiando...');
                         mortalKombat(random(1, 2), 'floresta');
 
                         if (gameOver == true) break;
 
                         sleep(1);
-                        console.log('\nVocê encontrou a \x1b[33mArmadura Mithral\x1b[0m');
+                        console.log('\nApós a batalha você percebe um certo brilho próximo a trilha. Ao se aproximar você encontra o esqueleto do que uma vez foi uma pessoa adulta vestindo uma armadura ainda polida, como se tivesse saído do ferreiro ainda hoje.\n-Mortos não precisam de armaduras - você sussurra antes que consiga pensar.\nSeguindo seu próprio comentário você veste a armadura e continua seguindo a trilha.\nVocê encontrou uma \x1b[33mArmadura de Mitral\x1b[0m');
                         vidaMAX += 5;
                         personagens.jogador.vida = vidaMAX;
                         equipamentos.armadura();
@@ -448,22 +454,23 @@ do {
                         continuar();
                     } else {
                         sleep(1);
-                        console.log('\nVocê encontrou a \x1b[33mArmadura Mithral\x1b[0m');
+                        console.log('\nConforme avança na trilha você percebe um brilho entre as arvores, um brilho metálico. Ao se aproximar você encontra o esqueleto do que uma vez foi uma pessoa adulta vestindo uma armadura ainda polida, como se tivesse saído do ferreiro ainda hoje.\n-Mortos não precisam de armaduras - você sussurra antes que consiga pensar.\nSeguindo seu próprio comentário você veste a armadura e continua seguindo a trilha.\nVocê encontrou uma \x1b[33mArmadura de Mitral\x1b[0m');
                         equipamentos.armadura();
                         statusJogador();
                         continuar();
                     }
                 } else if (i == 2) {
                     sleep(3);
-                    console.log(
-                        `\n${personagens.jogador.nome} vamos passar pela parte mais complicada da floresta, mas você está perto de chegar a cidade, não desista.`,
-                    );
+                    console.log(`\nNo terceiro dia de viagem, você começa realmente a achar que a floresta não lhe quer aqui. O som de animais pequenos correndo pela floresta agora não existe mais, aquelas teias que antes eram esparsas começam a ficar mais comuns e você começa a ouvir uivos distantes. Após algumas horas seguindo a trilha um silêncio incomodo começa a te incomodar.`);
+                    continuar();
+                    console.log(`Após um tempo quase interminável o silêncio finalmente é quebrado pelo som de algo se aproximando....`)                    
                     sleep(1);
                     console.log('Parece que encontramos algo...');
                     mortalKombat(random(1, 4), 'floresta');
                     if (gameOver == true) break;
                     continuar();
-                }
+                    console.log(`Ao final do terceiro dia avançando pela trilha, a floresta começa a ficar menos densa, os sons de animais começam a retornar aos poucos e você já consegue ver pedaços do que seria uma cidade ao longe.\n Com o sol quase se pondo você sai da floresta, a sua frente uma grande cidade murada que você reconhece como sendo a cidade de Erast.`)
+                }                
             }
 
             /*================================================================= Montanhas ====================================================================*/
