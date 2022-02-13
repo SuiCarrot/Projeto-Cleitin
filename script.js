@@ -13,63 +13,90 @@ const monstros = [
         nome: 'Aranha Gigante',
         vida: 10,
         defesa: 1,
-        dano: 5,
+        dano: [
+            { nome: 'garra', dano: 5 },
+            { nome: 'mordida', dano: 3 },
+        ],
         rota: 'floresta',
     },
     {
         nome: 'Lechen',
         vida: 14,
         defesa: 0,
-        dano: 4,
+        dano: [
+            { nome: 'garra', dano: 5 },
+            { nome: 'mordida', dano: 3 },
+        ],
         rota: 'floresta',
     },
     {
         nome: 'Lobo Atroz',
         vida: 10,
         defesa: 2,
-        dano: 4,
+        dano: [
+            { nome: 'garra', dano: 5 },
+            { nome: 'mordida', dano: 3 },
+        ],
         rota: 'floresta',
     },
     {
         nome: 'Urso Coruja',
         vida: 10,
         defesa: 3,
-        dano: 5,
+        dano: [
+            { nome: 'garra', dano: 5 },
+            { nome: 'mordida', dano: 3 },
+        ],
         rota: 'floresta',
     },
     {
         nome: 'Sleipnir',
         vida: 10,
         defesa: 2,
-        dano: 5,
+        ddano: [
+            { nome: 'garra', dano: 5 },
+            { nome: 'mordida', dano: 3 },
+        ],
         rota: 'montanhas',
     },
     {
         nome: 'Anão Bandido',
         vida: 10,
         defesa: 2,
-        dano: 5,
+        dano: [
+            { nome: 'garra', dano: 5 },
+            { nome: 'mordida', dano: 3 },
+        ],
         rota: 'montanhas',
     },
     {
         nome: 'Fenrir',
         vida: 10,
         defesa: 2,
-        dano: 5,
+        dano: [
+            { nome: 'garra', dano: 5 },
+            { nome: 'mordida', dano: 3 },
+        ],
         rota: 'montanhas',
     },
     {
         nome: 'Draugr',
         vida: 10,
         defesa: 2,
-        dano: 5,
+        dano: [
+            { nome: 'garra', dano: 5 },
+            { nome: 'mordida', dano: 3 },
+        ],
         rota: 'montanhas',
     },
     {
         nome: 'Caçador de recompensas',
         vida: 10,
         defesa: 2,
-        dano: 5,
+        dano: [
+            { nome: 'garra', dano: 5 },
+            { nome: 'mordida', dano: 3 },
+        ],
         rota: 'cidade',
     },
 ];
@@ -79,8 +106,7 @@ const personagens = {
     jogador: {
         nome: 'Jogador',
         vida: 0,
-        defesa: 3,
-        dano: 5,
+        equip: { nome: 'Ataque desarmado', dano: 5, defesa: 3 }
     },
     aerin: {
         nome: `Aerin`,
@@ -92,22 +118,25 @@ const personagens = {
 // EQUIPAMENTOS
 const equipamentos = {
     machado: function () {
-        personagens.jogador.dano += 3;
-        personagens.jogador.defesa -= 3;
+        personagens.jogador.equip.nome = 'Machado';
+        personagens.jogador.equip.dano += 3;
+        personagens.jogador.equip.defesa -= 3;
     },
     espadaEscudo: function () {
-        personagens.jogador.dano -= 1;
-        personagens.jogador.defesa += 2;
+        personagens.jogador.equip.nome = 'Espada Escudo';
+        personagens.jogador.equip.dano -= 1;
+        personagens.jogador.equip.defesa += 2;
     },
     arco: function () {
-        personagens.jogador.dano += 2;
-        personagens.jogador.defesa -= 1;
+        personagens.jogador.equip.nome = 'Arco';
+        personagens.jogador.equip.dano += 2;
+        personagens.jogador.equip.defesa -= 1;
     },
     armadura: function () {
-        personagens.jogador.defesa += 4;
+        personagens.jogador.equip.defesa += 4;
     },
     mjolnir: function () {
-        personagens.jogador.dano += 4;
+        personagens.jogador.equip.dano += 4;
     },
 };
 
@@ -158,6 +187,9 @@ function validacaoString(resposta, a, b, c, d) {
 function mortalKombat(qtd, rota) {
     const monstroLUTA = [];
     let bat;
+    let dan;
+    let danoMONSTRO = 0;
+    let danoJOGADOR = 0;
 
     for (const m of monstros) {
         if (rota == m.rota) {
@@ -174,17 +206,35 @@ function mortalKombat(qtd, rota) {
         sleep(4);
 
         while (personagens.jogador.vida > 0 && monstroLUTA[bat].vida > 0) {
-            if (monstroLUTA[bat].dano > personagens.jogador.defesa) {
-                personagens.jogador.vida -=
-                    monstroLUTA[bat].dano - personagens.jogador.defesa;
+            dan = random(0, monstroLUTA[bat].dano.length - 1);
 
+            if (monstroLUTA[bat].dano[dan].dano > personagens.jogador.equip.defesa) {
+                danoMONSTRO =
+                    monstroLUTA[bat].dano[dan].dano - personagens.jogador.equip.defesa;
+                personagens.jogador.vida -=
+                    monstroLUTA[bat].dano[dan].dano - personagens.jogador.equip.defesa;
+
+                danoJOGADOR = personagens.jogador.equip.dano - monstroLUTA[bat].defesa;
                 monstroLUTA[bat].vida -=
-                    personagens.jogador.dano - monstroLUTA[bat].defesa;
+                    personagens.jogador.equip.dano - monstroLUTA[bat].defesa;
+
+                console.log(
+                    `Você usou \x1b[33m${personagens.jogador.equip.nome}\x1b[0m e tirou \x1b[32m${danoJOGADOR}\x1b[0m de dano`,
+                );
+                console.log(
+                    `\x1b[36m${monstroLUTA[bat].nome}\x1b[0m usou \x1b[33m${monstroLUTA[bat].dano[dan].nome}\x1b[0m e tirou \x1b[31m${danoMONSTRO}\x1b[0m de dano`,
+                );
             } else {
+                danoMONSTRO = 0;
                 monstroLUTA[bat].vida -=
-                    personagens.jogador.dano - monstroLUTA[bat].defesa;
+                    personagens.jogador.equip.dano - monstroLUTA[bat].defesa;
+                console.log(
+                    `Você usou \x1b[33m${personagens.jogador.equip.nome}\x1b[0m e tirou \x1b[32m${danoJOGADOR}\x1b[0m de dano`,
+                );
+                console.log(
+                    `\x1b[36m${monstroLUTA[bat].nome}\x1b[0m usou \x1b[33m${monstroLUTA[bat].dano[dan].nome}\x1b[0m e tirou \x1b[31m${danoMONSTRO}\x1b[0m de dano`,
+                );
             }
-            console.log(`Vocês trocam ataques rapidamente....`);
             sleep(3);
             console.log(
                 `Sua vida atual: \x1b[31m${personagens.jogador.vida}\x1b[0m:\nVida do monstro: \x1b[31m${monstroLUTA[bat].vida}\x1b[0m\n`,
