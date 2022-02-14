@@ -1,5 +1,10 @@
 # PROJETO FINAL BLUE EDTECH
-## [Bruno](https://www.linkedin.com/in/bruno-de-lucca-026369220/) ["SuiCarrot"](https://github.com/SuiCarrot) [de Lucca](https://www.linkedin.com/in/bruno-de-lucca-026369220/)  || [Victor](https://www.linkedin.com/in/labupaim/) ["LabuPaim"](https://github.com/LabuPaim)  [Paim](https://www.linkedin.com/in/labupaim/) ||      [David](https://www.linkedin.com/in/david-dev-/) ["SirDav1d"](https://github.com/sirdav1d) [Diniz](https://www.linkedin.com/in/david-dev-/)
+
+
+## [Bruno](https://www.linkedin.com/in/bruno-de-lucca-026369220/{align=center}) ["SuiCarrot"](https://github.com/SuiCarrot{align=center}) [de Lucca](https://www.linkedin.com/in/bruno-de-lucca-026369220/{align=center})  || [Victor](https://www.linkedin.com/in/labupaim/{align=center}) ["LabuPaim"](https://github.com/LabuPaim{align=center})  [Paim](https://www.linkedin.com/in/labupaim/{align=center}) ||      [David](https://www.linkedin.com/in/david-dev-/{align=center}) ["SirDav1d"](https://github.com/sirdav1d{align=center}) [Diniz](https://www.linkedin.com/in/david-dev-/{align=center})
+
+ 
+ ##
 
 <div align = "justify">
 Você entra na pele de um homem desorientado e com amnésia, que acorda em uma caverna
@@ -37,6 +42,6 @@ estar sendo otimista...<br>
 
  ### Outros Projetos:
  
- [SirDav1d](https://github.com/sirdav1d/MOD01-PROJETO01-BLUEMER) || [SuiCarrot](https://github.com/SuiCarrot/JornadaDoHeroi) || [LabuPaim](https://github.com/LabuPaim/Projetos-Blue_EdTech)
+[SirDav1d](https://github.com/sirdav1d/MOD01-PROJETO01-BLUEMER) || [SuiCarrot](https://github.com/SuiCarrot/JornadaDoHeroi) || [LabuPaim](https://github.com/LabuPaim/Projetos-Blue_EdTech)
 
  ##
