@@ -15,34 +15,34 @@ const monstros = [
         vida: 10,
         defesa: 1,
         dano: [
-            { nome: 'teia', dano: 5 },
+            { nome: 'teia', dano: 6 },
             { nome: 'mordida', dano: 3 },
         ],
         rota: 'floresta',
     },
     {
         nome: 'Lechen',
-        vida: 14,
+        vida: 15,
         defesa: 0,
         dano: [
-            { nome: 'pancada', dano: 5 },
+            { nome: 'pancada', dano: 7 },
             { nome: 'armadilha de raízes', dano: 3 },
         ],
         rota: 'floresta',
     },
     {
         nome: 'Lobo Atroz',
-        vida: 10,
+        vida: 15,
         defesa: 2,
         dano: [
-            { nome: 'garras', dano: 5 },
+            { nome: 'garras', dano: 6 },
             { nome: 'mordida', dano: 3 },
         ],
         rota: 'floresta',
     },
     {
         nome: 'Urso Coruja',
-        vida: 10,
+        vida: 15,
         defesa: 3,
         dano: [
             { nome: 'garras', dano: 5 },
@@ -52,7 +52,7 @@ const monstros = [
     },
     {
         nome: 'Sleipnir',
-        vida: 10,
+        vida: 15,
         defesa: 2,
         ddano: [
             { nome: 'cascos', dano: 5 },
@@ -62,7 +62,7 @@ const monstros = [
     },
     {
         nome: 'Anão Bandido',
-        vida: 10,
+        vida: 15,
         defesa: 2,
         dano: [
             { nome: 'espada curta', dano: 5 },
@@ -106,8 +106,35 @@ const monstros = [
 const personagens = {
     jogador: {
         nome: 'Jogador',
-        vida: 0,
-        equip: { nome: 'Ataque desarmado', dano: 4, defesa: 3 },
+        vida: 20,
+        dano: 0,
+        defesa: 0,
+        equip: [
+            {
+                nome: 'ataque desarmado',
+                dano: 4,
+                defesa: 4,
+            },
+        ],
+        ataque: [
+            {
+                nome: 'ataque carregado',
+                dano: 0,
+                danoADD: () => {
+                    personagens.jogador.ataque[0].dano = personagens.jogador.equip[0].dano + 5;
+                },
+            },
+        ],
+        funcoes: [
+            {
+                nome: 'defesa',
+                defesa: 8,
+            },
+            {
+                nome: 'esquiva',
+                defesa: 100,
+            },
+        ],
     },
     aerin: {
         nome: `Aerin`,
@@ -118,26 +145,26 @@ const personagens = {
 };
 // EQUIPAMENTOS
 const equipamentos = {
-    machado: function () {
-        personagens.jogador.equip.nome = 'Machado';
-        personagens.jogador.equip.dano += 3;
-        personagens.jogador.equip.defesa -= 3;
+    machado: () => {
+        personagens.jogador.equip[0].nome = 'machado';
+        personagens.jogador.equip[0].dano += 3;
+        personagens.jogador.equip[0].defesa -= 3;
     },
-    espadaEscudo: function () {
-        personagens.jogador.equip.nome = 'Espada Escudo';
-        personagens.jogador.equip.dano -= 1;
-        personagens.jogador.equip.defesa += 2;
+    espadaEscudo: () => {
+        personagens.jogador.equip[0].nome = 'espada Escudo';
+        personagens.jogador.equip[0].dano -= 1;
+        personagens.jogador.equip[0].defesa += 2;
     },
-    arco: function () {
-        personagens.jogador.equip.nome = 'Arco';
-        personagens.jogador.equip.dano += 2;
-        personagens.jogador.equip.defesa -= 1;
+    arco: () => {
+        personagens.jogador.equip[0].nome = 'arco';
+        personagens.jogador.equip[0].dano += 2;
+        personagens.jogador.equip[0].defesa -= 1;
     },
-    armadura: function () {
-        personagens.jogador.equip.defesa += 4;
+    armadura: () => {
+        personagens.jogador.equip[0].defesa += 4;
     },
-    mjolnir: function () {
-        personagens.jogador.equip.dano += 4;
+    mjolnir: () => {
+        personagens.jogador.equip[0].dano += 4;
     },
 };
 
@@ -154,12 +181,14 @@ function sleep(segundos = 1) {
 }
 
 //FUNÇÃO PARA RETARDAR O JOGADOR
-function continuar() {
-    resp = prompt(`Pressione \x1b[33mENTER\x1b[0m para continuar...`);
-    console.clear();
-    console.log(
-        '-----------------------------------------------------------------------------------------',
-    );
+function continuar(x = 0) {
+    if (x == 0) {
+        resp = prompt(`Pressione \x1b[33mENTER\x1b[0m para continuar...`);
+        console.clear();
+        console.log('-----------------------------------------------------------------------------------------');
+    } else {
+        resp = prompt(`Pressione \x1b[33mENTER\x1b[0m para bater...`);
+    }
 }
 
 // FUNÇÃO PARA RANDOMIZAR
@@ -172,10 +201,24 @@ function random(minimo = 0, maximo) {
 }
 
 //FUNÇÃO DE VALIDAÇÃO DE STRINGS
-function validacaoString(resposta, a, b, c, d) {
+function validacaoString(resposta, a, b, c, d, e, f, g, h, i, l, m, n, o) {
     //Função de validação para prompt numérico
     while (true) {
-        if (resposta == a || resposta == b || resposta == c || resposta == d) {
+        if (
+            resposta == a ||
+            resposta == b ||
+            resposta == c ||
+            resposta == d ||
+            resposta == e ||
+            resposta == f ||
+            resposta == g ||
+            resposta == h ||
+            resposta == i ||
+            resposta == l ||
+            resposta == m ||
+            resposta == n ||
+            resposta == o
+        ) {
             return (resp = resposta);
         } else {
             console.log(`Escolha uma das opções: `);
@@ -187,12 +230,6 @@ function validacaoString(resposta, a, b, c, d) {
 //FUNÇAO DE COMBATE
 function mortalKombat(qtd, rota) {
     const monstroLUTA = [];
-    let bat;
-    let dan;
-    let bater;
-    let danoMONSTRO = 0;
-    let danoJOGADOR = 0;
-
     for (const m of monstros) {
         if (rota == m.rota) {
             monstroLUTA.push(m);
@@ -200,69 +237,129 @@ function mortalKombat(qtd, rota) {
     }
 
     for (let i = 0; i < qtd; i++) {
-        bat = random(0, monstroLUTA.length - 1);
+        let escolherMONSTRO = random(0, monstroLUTA.length - 1);
+        let bater;
+        let nomeHABILIDADE;
+        let baterMONSTRO;
+        let cooldown = 5;
+        let danoMONSTRO = random(0, monstroLUTA[escolherMONSTRO].dano.length - 1);
+
+        function ifElseFUNCTION() {
+            if (bater > monstroLUTA[escolherMONSTRO].defesa) {
+                bater -= monstroLUTA[escolherMONSTRO].defesa;
+                monstroLUTA[escolherMONSTRO].vida -= bater;
+            } else {
+                bater = 0;
+            }
+        }
+        function docooldown() {
+            if (cooldown == 5) {
+                if (resp == '2' || resp == personagens.jogador.ataque[0].nome) {
+                    cooldown--;
+                }
+            } else if (cooldown < 5 && cooldown > 0) {
+                cooldown--;
+            } else {
+                cooldown = 5;
+            }
+        }
+
         sleep(2);
-        console.log(`\nVocê encontrou um \x1b[31m${monstroLUTA[bat].nome}\x1b[0m`);
+        console.log(`\nVocê encontrou \x1b[31m${monstroLUTA[escolherMONSTRO].nome}\x1b[0m`);
         sleep(3);
-        console.log(`\nPrepare-se para a batalha`);
+        console.log(`\nPrepare-se para a batalha:`);
         sleep(4);
 
-        while (personagens.jogador.vida > 0 && monstroLUTA[bat].vida > 0) {
-            dan = random(0, monstroLUTA[bat].dano.length - 1);
-            bater = random(personagens.jogador.equip.dano - 1, personagens.jogador.equip.dano + 2)
+        while (personagens.jogador.vida > 0 && monstroLUTA[escolherMONSTRO].vida > 0) {
+            if (cooldown == 5) {
+                console.log(`O que pretende fazer?`);
+                console.log(
+                    `\n\x1b[33m1\x1b[0m - ${personagens.jogador.equip[0].nome}\n\x1b[33m2\x1b[0m - ${personagens.jogador.ataque[0].nome}\n\x1b[33m3\x1b[0m - ${personagens.jogador.funcoes[0].nome}\n\x1b[33m4\x1b[0m - ${personagens.jogador.funcoes[1].nome}\n`,
+                );
+                resp = prompt('', 'ENTER').toUpperCase().replace(/\s/g, '');
+                validacaoString(resp, '1', '2', '3', '4', 'ENTER', '');
 
-            if (bater > monstroLUTA[bat].defesa) {
-                danoJOGADOR = bater - monstroLUTA[bat].defesa;
-                monstroLUTA[bat].vida -=
-                    bater - monstroLUTA[bat].defesa;
-                console.log(
-                    `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip.nome}\x1b[0m e tirou \x1b[32m${danoJOGADOR}\x1b[0m de dano`,
-                );
+                if (resp == '1' || resp == 'ENTER' || resp == '') {
+                    bater = random(personagens.jogador.equip[0].dano - 1, personagens.jogador.equip[0].dano + 2);
+                    ifElseFUNCTION();
+                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip[0].nome}\x1b[0m e tirou \x1b[32m${bater}\x1b[0m de dano`);
+                    docooldown();
+                } else if (resp == '2') {
+                    console.log(personagens.jogador.ataque[0].dano)
+                    personagens.jogador.ataque[0].danoADD()
+                    console.log(personagens.jogador.ataque[0].dano)
+                    bater = random(personagens.jogador.ataque[0].dano - 1, personagens.jogador.ataque[0].dano + 2);
+                    ifElseFUNCTION();
+                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.ataque[0].nome}\x1b[0m e tirou \x1b[32m${bater}\x1b[0m de dano`);
+                    sleep(2);
+                    docooldown();
+                } else if (resp == '3') {
+                    personagens.jogador.funcoes[0].defesa += 5;
+                    ifElseFUNCTION();
+                    nomeHABILIDADE = console.log(
+                        `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.funcoes[0].nome}\x1b[0m e aumentou sua defesa em \x1b[32m${5}\x1b[0m de dano`,
+                    );
+                    docooldown();
+                } else if (resp == '4') {
+                    personagens.jogador.funcoes[1].defesa += 1000;
+                    ifElseFUNCTION();
+                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.funcoes[1].nome}\x1b[0m e esquivou o dano`);
+                    docooldown();
+                }
             } else {
-                danoJOGADOR = 0;
+                console.log(`O que pretende fazer?`);
                 console.log(
-                    `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip.nome}\x1b[0m e tirou \x1b[32m${danoJOGADOR}\x1b[0m de dano`,
+                    `\x1b[33m1\x1b[0m - ${personagens.jogador.equip[0].nome}\n\x1b[33m2\x1b[0m - ${personagens.jogador.funcoes[0].nome}\n\x1b[33m3\x1b[0m - ${personagens.jogador.funcoes[1].nome}\n`,
                 );
+                resp = prompt('', 'ENTER').toUpperCase().replace(/\s/g, '');
+                validacaoString(resp, '1', '2', '3', 'ENTER');
+                if (resp == '1' || resp == 'ENTER' || resp == '') {
+                    bater = random(personagens.jogador.equip[0].dano - 1, personagens.jogador.equip[0].dano + 2);
+                    ifElseFUNCTION();
+                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip[0].nome}\x1b[0m e tirou \x1b[32m${bater}\x1b[0m de dano`);
+                    docooldown();
+                } else if (resp == '2') {
+                    personagens.jogador.funcoes[0].defesa += 5;
+                    ifElseFUNCTION();
+                    nomeHABILIDADE = console.log(
+                        `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.funcoes[0].nome}\x1b[0m e aumentou sua defesa em \x1b[32m${5}\x1b[0m de dano`,
+                    );
+                    docooldown();
+                } else if (resp == '3') {
+                    personagens.jogador.funcoes[1].defesa += 1000;
+                    ifElseFUNCTION();
+                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.funcoes[1].nome}\x1b[0m e esquivou o dano`);
+                    docooldown();
+                }
             }
-            if (monstroLUTA[bat].dano[dan].dano > personagens.jogador.equip.defesa) {
-                danoMONSTRO =
-                    monstroLUTA[bat].dano[dan].dano - personagens.jogador.equip.defesa;
-                personagens.jogador.vida -=
-                    monstroLUTA[bat].dano[dan].dano - personagens.jogador.equip.defesa;
-                console.log(
-                    `\x1b[31m${monstroLUTA[bat].nome}\x1b[0m usou \x1b[31m${monstroLUTA[bat].dano[dan].nome}\x1b[0m e tirou \x1b[31m${danoMONSTRO}\x1b[0m de dano`,
-                );
+
+            if (monstroLUTA[escolherMONSTRO].dano[danoMONSTRO].dano > personagens.jogador.equip.defesa) {
+                baterMONSTRO = monstroLUTA[escolherMONSTRO].dano[danoMONSTRO].dano - personagens.jogador.equip.defesa;
+                personagens.jogador.vida -= baterMONSTRO;
             } else {
-                danoMONSTRO = 0;
-                console.log(
-                    `\x1b[31m${monstroLUTA[bat].nome}\x1b[0m usou \x1b[31m${monstroLUTA[bat].dano[dan].nome}\x1b[0m e tirou \x1b[31m${danoMONSTRO}\x1b[0m de dano`,
-                );
+                baterMONSTRO = 0;
             }
+            console.log(`\x1b[31m${monstroLUTA[escolherMONSTRO].nome}\x1b[0m usou \x1b[31m${monstroLUTA[escolherMONSTRO].dano[danoMONSTRO].nome}\x1b[0m e tirou \x1b[31m${baterMONSTRO}\x1b[0m`);
+
+            personagens.jogador.funcoes[0].defesa -= 5;
+            personagens.jogador.funcoes[1].defesa -= 1000;
 
             sleep(3);
-            console.log(
-                `Sua vida atual: \x1b[33m${personagens.jogador.vida}\x1b[0m:\nVida do monstro: \x1b[33m${monstroLUTA[bat].vida}\x1b[0m\n`,
-            );
+            console.log(`Sua vida atual: \x1b[33m${personagens.jogador.vida}\x1b[0m\nVida do monstro: \x1b[33m${monstroLUTA[escolherMONSTRO].vida}\x1b[0m\n`);
         }
         if (personagens.jogador.vida > 0) {
-            console.log(
-                `Parabéns \x1b[32m${personagens.jogador.nome}\x1b[0m, você conseguiu matar \x1b[31m${monstroLUTA[bat].nome}\x1b[0m`,
-            );
+            console.log(`Parabéns \x1b[32m${personagens.jogador.nome}\x1b[0m, você conseguiu matar \x1b[31m${monstroLUTA[escolherMONSTRO].nome}\x1b[0m`);
             gameOver = false;
         } else {
-            console.log(
-                `\x1b[32m${personagens.jogador.nome}\x1b[0m morreu para um \x1b[31m${monstroLUTA[bat].nome}\x1b[0m`,
-            );
+            console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m morreu para um \x1b[31m${monstroLUTA[escolherMONSTRO].nome}\x1b[0m`);
             gameOver = true;
             break;
         }
     }
-    if(gameOver == false){
+    if (gameOver == false) {
         console.log('\nSua vida foi restaurada após a batalha');
         if (vidaMAX > personagens.jogador.vida) personagens.jogador.vida = vidaMAX;
-
     }
-    
 }
 
 //FUNÇÃO STATUS DO JOGADOR
@@ -271,7 +368,7 @@ function statusJogador() {
     console.log(`Status de \x1b[32m${personagens.jogador.nome}\x1b[0m:`);
     console.log();
     console.log(
-        `\x1b[33mVida\x1b[0m:\t\x1b[32m${personagens.jogador.vida}\x1b[0m\n\x1b[33mDefesa\x1b[0m:\t\x1b[32m${personagens.jogador.equip.defesa}\x1b[0m\n\x1b[33mDano\x1b[0m:\t\x1b[32m${personagens.jogador.equip.dano}\x1b[0m`,
+        `\x1b[33mVida\x1b[0m:\t\x1b[32m${personagens.jogador.vida}\x1b[0m\n\x1b[33mDefesa\x1b[0m:\t\x1b[32m${personagens.jogador.equip[0].defesa}\x1b[0m\n\x1b[33mDano\x1b[0m:\t\x1b[32m${personagens.jogador.equip[0].dano}\x1b[0m`,
     );
     console.log('--------------');
 }
@@ -289,9 +386,7 @@ do {
 
     //jogar novamente
     /*============================================================== CAVERNA ==========================================================================*/
-    console.log(
-        '-----------------------------------------------------------------------------------------',
-    );
+    console.log('-----------------------------------------------------------------------------------------');
     sleep(1);
     console.log(
         `\nO gotejar na caverna te acorda subitamente. Ao abrir lentamente os olhos você sente uma dor de cabeça lancinante, com seus olhos acostumandos a luz baixa da caverna vinda de algum lugar a sua direita, seus pensamentos te levam a um local um pouco aterrorizante...Quem é você?\n`,
@@ -321,9 +416,7 @@ do {
             console.log(
                 '\nVocê avança até a fogueira e pega alguns pedaços de carnes já quase queimados, pão e um pedaço de queijo que estavam ao lado. Sentindo seu estomago roncar você devora a comida sem pensar duas vezes. Após alguns minutos você começa a sentir sua visão embaçar, a dor de cabeça piorar e logo tudo vai ficando preto, enquanto seu corpo cai em direção ao chão... \x1b[33mVOCÊ MORREU\x1b[0m',
             );
-            console.log(
-                '-----------------------------------------------------------------------------------------',
-            );
+            console.log('-----------------------------------------------------------------------------------------');
             gameOver = true;
             break;
             //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
@@ -339,9 +432,7 @@ do {
             a = 1;
         } else if (resp === 'MOCHILA' && a == 1) {
             sleep(1);
-            console.log(
-                `\nVocê abre a mochila novamente, e vê os mesmos itens e um papel com o seu nome: \x1b[33m${personagens.jogador.nome}\x1b[0m.`,
-            );
+            console.log(`\nVocê abre a mochila novamente, e vê os mesmos itens e um papel com o seu nome: \x1b[33m${personagens.jogador.nome}\x1b[0m.`);
             continuar();
             //CONDIÇÃO IPORTANTE DE SELEÇÃO DE equipamentos, MAS AINDA NÃO SAI DA CAVERNA
         } else if (resp == 'EQUIPAMENTOS') {
@@ -383,9 +474,7 @@ do {
     while (play) {
         //CONDIÇÃO DE GAME OVER
         if (gameOver == true) break;
-        console.log(
-            '-----------------------------------------------------------------------------------------',
-        );
+        console.log('-----------------------------------------------------------------------------------------');
         sleep(1);
         console.log(
             `\nAo sair da caverna, seus olhos demoram alguns segundos para se acostumarem com a luz. O sol brilha alto no céu e o som de passaros e animais rasteiros chega aos seus ouvidos. Andando pela pequena trilha que sai da caverna você chega até uma estrada maior, esta logo se divide em dois caminhos.\n`,
@@ -409,23 +498,35 @@ do {
         if (resp == 'FLORESTA') {
             dias = 3;
             //Viagem
-            console.log(`Sem pensar muito você avança pela floresta, conforme você avança os sons de pequenos animais começa a aumentar. Olhando em volta você até consegue ver alguns coelhos e pássaros seguindo com sua vida em meio as árvores.`)
-            sleep(5)
-            console.log(`Conforme adentra na floresta, a copa das árvores vão ficando mais altas, o sol vai iluminando o caminho com pequenos feixes de luz que passam por entre as folhas, as vezes enganando sua percepção conforme o vento faz as arvores balançarem. Atento aos seus arredores você se mantém preparado para qualquer coisa.`)
-            continuar()
+            console.log(
+                `Sem pensar muito você avança pela floresta, conforme você avança os sons de pequenos animais começa a aumentar. Olhando em volta você até consegue ver alguns coelhos e pássaros seguindo com sua vida em meio as árvores.`,
+            );
+            sleep(5);
+            console.log(
+                `Conforme adentra na floresta, a copa das árvores vão ficando mais altas, o sol vai iluminando o caminho com pequenos feixes de luz que passam por entre as folhas, as vezes enganando sua percepção conforme o vento faz as arvores balançarem. Atento aos seus arredores você se mantém preparado para qualquer coisa.`,
+            );
+            continuar();
             for (i = 0; i < dias; i++) {
                 //PRIMEIRO DIA NA FLOESTA
                 if (i == 0) {
                     sleep(2);
-                    console.log('Conforme a noite vai caindo, você acha prudente montar um pequeno acampamento para descansar. Sem muita dificuldade você encontra uma pequena clareira, um local perfeito para passar a noite. Seu corpo trabalha mais rápido do que sua mente consegue acompanhar, quando percebe está montando o que parece ser uma armadilha de som ao redor do acampamento, apenas uma corda esticada com utensilhos barulhentos para lhe acordar. Quando percebe o que está fazendo, sua cabeça começa a doer, você fecha os olhos brevemente para suportar a dor...');
+                    console.log(
+                        'Conforme a noite vai caindo, você acha prudente montar um pequeno acampamento para descansar. Sem muita dificuldade você encontra uma pequena clareira, um local perfeito para passar a noite. Seu corpo trabalha mais rápido do que sua mente consegue acompanhar, quando percebe está montando o que parece ser uma armadilha de som ao redor do acampamento, apenas uma corda esticada com utensilhos barulhentos para lhe acordar. Quando percebe o que está fazendo, sua cabeça começa a doer, você fecha os olhos brevemente para suportar a dor...',
+                    );
                     continuar();
-                    console.log(`Ao abrir os seus olhos, você vê uma figura ainda meio disforme lhe explicando como fazer essa armadilha.\n- Se você fizer desta forma, mesmo que esteja dormindo você conseguirá acordar a tempo casao algum animal selvagem resolva visitar seu acampamento. Mantenha-se sempre atento, como as corujas.\nAo dizer isto a figura misteriosa lhe entrega uma pequena estátua de madeira, na forma de uma coruja.\n-Pegue isso como um amuleto de sorte, leve sempre com você e nunca será pego desprevenido.`);
+                    console.log(
+                        `Ao abrir os seus olhos, você vê uma figura ainda meio disforme lhe explicando como fazer essa armadilha.\n- Se você fizer desta forma, mesmo que esteja dormindo você conseguirá acordar a tempo casao algum animal selvagem resolva visitar seu acampamento. Mantenha-se sempre atento, como as corujas.\nAo dizer isto a figura misteriosa lhe entrega uma pequena estátua de madeira, na forma de uma coruja.\n-Pegue isso como um amuleto de sorte, leve sempre com você e nunca será pego desprevenido.`,
+                    );
                     continuar();
-                    console.log(`Você fecha os olhos novamente com uma pontada de dor novamente. Quando abre os olhos novamente você está novamente montando a armadilha no seu acampamento. Seme ntender direito o que está acontecendo você lembra o nome dessa figura misteriosa.`)
-                    sleep(5)
-                    console.log(`Aerin`)
-                    continuar()
-                    console.log(`Você termina de montar a armadilha e re recosta contra uma arvore proximo a fogueira para tentar dormir um pouco. não demora muito para ouvir o som de uma das armadilhas, com um longo suspiro você levanta e se prepara para descobrir o que está se aproximando.`)/*
+                    console.log(
+                        `Você fecha os olhos novamente com uma pontada de dor novamente. Quando abre os olhos novamente você está novamente montando a armadilha no seu acampamento. Seme ntender direito o que está acontecendo você lembra o nome dessa figura misteriosa.`,
+                    );
+                    sleep(5);
+                    console.log(`Aerin`);
+                    continuar();
+                    console.log(
+                        `Você termina de montar a armadilha e re recosta contra uma arvore proximo a fogueira para tentar dormir um pouco. não demora muito para ouvir o som de uma das armadilhas, com um longo suspiro você levanta e se prepara para descobrir o que está se aproximando.`,
+                    ); /*
                     console.log(
                         'A noite cai, o frio desce, mas aqui dentro predomina esse amor que me aquece',
                     ); */
@@ -436,7 +537,9 @@ do {
                     continuar();
                 } else if (i == 1) {
                     sleep(1);
-                    console.log(`Após uma noite de descanso, com um pequeno incidente, você monta acampamento e segue pela trilha floresta adentro.\nA floresta vai ficando mais densa conforme você avança. Entre as árvores você nota as vezes algumas teias de aranha enormes, talvez aranhas gigantes habitem aqui.`);
+                    console.log(
+                        `Após uma noite de descanso, com um pequeno incidente, você monta acampamento e segue pela trilha floresta adentro.\nA floresta vai ficando mais densa conforme você avança. Entre as árvores você nota as vezes algumas teias de aranha enormes, talvez aranhas gigantes habitem aqui.`,
+                    );
                     sleep(5);
                     let rand = random(1, 2);
                     if (rand == 1) {
@@ -446,7 +549,9 @@ do {
                         if (gameOver == true) break;
 
                         sleep(1);
-                        console.log('\nApós a batalha você percebe um certo brilho próximo a trilha. Ao se aproximar você encontra o esqueleto do que uma vez foi uma pessoa adulta vestindo uma armadura ainda polida, como se tivesse saído do ferreiro ainda hoje.\n-Mortos não precisam de armaduras - você sussurra antes que consiga pensar.\nSeguindo seu próprio comentário você veste a armadura e continua seguindo a trilha.\nVocê encontrou uma \x1b[33mArmadura de Mitral\x1b[0m');
+                        console.log(
+                            '\nApós a batalha você percebe um certo brilho próximo a trilha. Ao se aproximar você encontra o esqueleto do que uma vez foi uma pessoa adulta vestindo uma armadura ainda polida, como se tivesse saído do ferreiro ainda hoje.\n-Mortos não precisam de armaduras - você sussurra antes que consiga pensar.\nSeguindo seu próprio comentário você veste a armadura e continua seguindo a trilha.\nVocê encontrou uma \x1b[33mArmadura de Mitral\x1b[0m',
+                        );
                         vidaMAX += 5;
                         personagens.jogador.vida = vidaMAX;
                         equipamentos.armadura();
@@ -454,23 +559,29 @@ do {
                         continuar();
                     } else {
                         sleep(1);
-                        console.log('\nConforme avança na trilha você percebe um brilho entre as arvores, um brilho metálico. Ao se aproximar você encontra o esqueleto do que uma vez foi uma pessoa adulta vestindo uma armadura ainda polida, como se tivesse saído do ferreiro ainda hoje.\n-Mortos não precisam de armaduras - você sussurra antes que consiga pensar.\nSeguindo seu próprio comentário você veste a armadura e continua seguindo a trilha.\nVocê encontrou uma \x1b[33mArmadura de Mitral\x1b[0m');
+                        console.log(
+                            '\nConforme avança na trilha você percebe um brilho entre as arvores, um brilho metálico. Ao se aproximar você encontra o esqueleto do que uma vez foi uma pessoa adulta vestindo uma armadura ainda polida, como se tivesse saído do ferreiro ainda hoje.\n-Mortos não precisam de armaduras - você sussurra antes que consiga pensar.\nSeguindo seu próprio comentário você veste a armadura e continua seguindo a trilha.\nVocê encontrou uma \x1b[33mArmadura de Mitral\x1b[0m',
+                        );
                         equipamentos.armadura();
                         statusJogador();
                         continuar();
                     }
                 } else if (i == 2) {
                     sleep(3);
-                    console.log(`\nNo terceiro dia de viagem, você começa realmente a achar que a floresta não lhe quer aqui. O som de animais pequenos correndo pela floresta agora não existe mais, aquelas teias que antes eram esparsas começam a ficar mais comuns e você começa a ouvir uivos distantes. Após algumas horas seguindo a trilha um silêncio incomodo começa a te incomodar.`);
+                    console.log(
+                        `\nNo terceiro dia de viagem, você começa realmente a achar que a floresta não lhe quer aqui. O som de animais pequenos correndo pela floresta agora não existe mais, aquelas teias que antes eram esparsas começam a ficar mais comuns e você começa a ouvir uivos distantes. Após algumas horas seguindo a trilha um silêncio incomodo começa a te incomodar.`,
+                    );
                     continuar();
-                    console.log(`Após um tempo quase interminável o silêncio finalmente é quebrado pelo som de algo se aproximando....`)                    
+                    console.log(`Após um tempo quase interminável o silêncio finalmente é quebrado pelo som de algo se aproximando....`);
                     sleep(1);
                     console.log('Parece que encontramos algo...');
                     mortalKombat(random(1, 4), 'floresta');
                     if (gameOver == true) break;
                     continuar();
-                    console.log(`Ao final do terceiro dia avançando pela trilha, a floresta começa a ficar menos densa, os sons de animais começam a retornar aos poucos e você já consegue ver pedaços do que seria uma cidade ao longe.\n Com o sol quase se pondo você sai da floresta, a sua frente uma grande cidade murada que você reconhece como sendo a cidade de Erast.`)
-                }                
+                    console.log(
+                        `Ao final do terceiro dia avançando pela trilha, a floresta começa a ficar menos densa, os sons de animais começam a retornar aos poucos e você já consegue ver pedaços do que seria uma cidade ao longe.\n Com o sol quase se pondo você sai da floresta, a sua frente uma grande cidade murada que você reconhece como sendo a cidade de Erast.`,
+                    );
+                }
             }
 
             /*================================================================= Montanhas ====================================================================*/
@@ -521,9 +632,7 @@ do {
                             `\nSeguindo entre as árvores você encontrou rastros de cervo. Seguir os rastros se mostrou algo fácil e rapidamente o animal é abatido, e você obtém carnes, gordura e peles, todos úteis para uma viagem pelas Montanhas Gélidas.`,
                         );
                         sleep(2);
-                        console.log(
-                            `\nVocê ganhou 1 de defesa, confira seus STATUS atualizados\n`,
-                        );
+                        console.log(`\nVocê ganhou 1 de defesa, confira seus STATUS atualizados\n`);
                         personagens.jogador.defesa += 1;
                         statusJogador();
                         continuar();
@@ -531,22 +640,20 @@ do {
                         //GANHA DANO
                     } else if (resp === 'MONSTROS') {
                         sleep(1);
-                        console.log(
-                            `\nMais preocupado com sua segurança, você procura por rastros de monstros para testar seus equipamentos e habilidade. Não demora muito até encontrar um desafio.`,
-                        );
+                        console.log(`\nMais preocupado com sua segurança, você procura por rastros de monstros para testar seus equipamentos e habilidade. Não demora muito até encontrar um desafio.`);
 
                         //PRIMEIRA BATALHA
                         mortalKombat(1, 'montanhas');
                         if (gameOver == true) break;
                         sleep(2);
-                        console.log(
-                            `\nVocê ganhou 1 de dano, confira seus STATUS atualizados: \n`,
-                        );
+                        console.log(`\nVocê ganhou 1 de dano, confira seus STATUS atualizados: \n`);
                         personagens.jogador.dano += 1;
                         personagens.jogador.vida = vidaMAX;
                         statusJogador();
                         continuar();
-                        console.log(`\nApós o combate você analisa os arredores e percebe um pequeno acampamento, agora sem dono. Sem pensar duas vezes, você recolhe os mantimentos e se prepara para seguir viagem.`)
+                        console.log(
+                            `\nApós o combate você analisa os arredores e percebe um pequeno acampamento, agora sem dono. Sem pensar duas vezes, você recolhe os mantimentos e se prepara para seguir viagem.`,
+                        );
                     }
 
                     //SEGUNDO DIA
@@ -565,41 +672,48 @@ do {
                     if (resp === 'CAVERNA') {
                         sleep(1);
                         console.log(
-                            `\nVocê procura por refugio e encontra uma pequena caverna não muito longe. A salvo da nevasca, você aproveita para descansar e se alimentar. Até que, subitamente uma dor de cabeça muito forte, faz com que você feche os olhos brevemente.\n`)
-                            continuar()
-                            console.log(`\nAo abrir os seus olhos, você vê uma figura ainda meio disforme lhe explicando os perigos de uma nevasca em meio as montanhas.\n- Sempre que estiver numa situação dessas, é prudente procurar por abrigo. Nunca se sabe o que se pode encontrar nas montanhas. Seja sábio como as corujas.\nAo dizer isto a figura misteriosa lhe entrega uma pequena estátua de madeira, na forma de uma coruja.\n- Pegue esse amuleto, leve sempre com você e a decisão mais sábia, ficará clara...\n`);
-                            continuar();
-                            console.log(`\nVocê fecha os olhos novamente, enquanto sente a mesma pontada na cabeça. Quando abre os olhos, você está sentado na caverna, terminando de organizar seus equipamentos para seguir viagem. Sem entender direito o que está acontecendo, você lembra o nome dessa figura misteriosa.`)
-                            sleep(5)
-                            console.log(`\nAerin\n`)
-                            continuar();
+                            `\nVocê procura por refugio e encontra uma pequena caverna não muito longe. A salvo da nevasca, você aproveita para descansar e se alimentar. Até que, subitamente uma dor de cabeça muito forte, faz com que você feche os olhos brevemente.\n`,
+                        );
+                        continuar();
+                        console.log(
+                            `\nAo abrir os seus olhos, você vê uma figura ainda meio disforme lhe explicando os perigos de uma nevasca em meio as montanhas.\n- Sempre que estiver numa situação dessas, é prudente procurar por abrigo. Nunca se sabe o que se pode encontrar nas montanhas. Seja sábio como as corujas.\nAo dizer isto a figura misteriosa lhe entrega uma pequena estátua de madeira, na forma de uma coruja.\n- Pegue esse amuleto, leve sempre com você e a decisão mais sábia, ficará clara...\n`,
+                        );
+                        continuar();
+                        console.log(
+                            `\nVocê fecha os olhos novamente, enquanto sente a mesma pontada na cabeça. Quando abre os olhos, você está sentado na caverna, terminando de organizar seus equipamentos para seguir viagem. Sem entender direito o que está acontecendo, você lembra o nome dessa figura misteriosa.`,
+                        );
+                        sleep(5);
+                        console.log(`\nAerin\n`);
+                        continuar();
 
                         //ENCONTRA MONSTRO E GANHA STATUS
                     } else if (resp === 'ENFRENTAR') {
                         sleep(2);
-                        console.log(
-                            `\nEm meio a nevasca uma sombra parece começar a lhe seguir. Sem saber para onde fugir, sua uníca opção é lutar!`);
+                        console.log(`\nEm meio a nevasca uma sombra parece começar a lhe seguir. Sem saber para onde fugir, sua uníca opção é lutar!`);
                         mortalKombat(1, 'montanhas');
 
                         if (gameOver == true) break;
                         sleep(1);
-                        console.log(
-                            `\nVocê ganhou 1 de defesa, confira seus STATUS atualizados: \n`,
-                        );
+                        console.log(`\nVocê ganhou 1 de defesa, confira seus STATUS atualizados: \n`);
                         personagens.jogador.vida = vidaMAX;
                         personagens.jogador.defesa += 1;
                         statusJogador();
 
                         sleep(2);
                         console.log(
-                            `\nApós derrotar seu inimigo você decide procurar uma caverna para se recompor. Sem muita dificuldade encontrou uma pequena caverna. A salvo da nevasca, você aproveita para descansar e se alimentar. Até que, Subitamente uma dor de cabeça muito forte faz com que você feche os olhos brevemente.`)
-                            continuar()
-                            console.log(`\nAo abrir os seus olhos, você vê uma figura ainda meio disforme lhe explicando os perigos de uma nevasca em meio as montanhas.\n- Sempre que estiver numa situação dessas, é prudente procurar por abrigo. Nunca se sabe o que se pode encontrar nas montanhas. Seja sábio como as corujas.\nAo dizer isto a figura misteriosa lhe entrega uma pequena estátua de madeira, na forma de uma coruja.\n- Pegue esse amuleto, leve sempre com você e a decisão mais sábia, ficará clara...`);
-                            continuar();
-                            console.log(`\nVocê fecha os olhos novamente, enquanto sente a mesma pontada na cabeça. Quando abre os olhos, você está sentado na caverna, terminando de organizar seus equipamentos para seguir viagem. Sem entender direito o que está acontecendo, você lembra o nome dessa figura misteriosa.`)
-                            sleep(5)
-                            console.log(`\nAerin\n`)
-                            continuar();
+                            `\nApós derrotar seu inimigo você decide procurar uma caverna para se recompor. Sem muita dificuldade encontrou uma pequena caverna. A salvo da nevasca, você aproveita para descansar e se alimentar. Até que, Subitamente uma dor de cabeça muito forte faz com que você feche os olhos brevemente.`,
+                        );
+                        continuar();
+                        console.log(
+                            `\nAo abrir os seus olhos, você vê uma figura ainda meio disforme lhe explicando os perigos de uma nevasca em meio as montanhas.\n- Sempre que estiver numa situação dessas, é prudente procurar por abrigo. Nunca se sabe o que se pode encontrar nas montanhas. Seja sábio como as corujas.\nAo dizer isto a figura misteriosa lhe entrega uma pequena estátua de madeira, na forma de uma coruja.\n- Pegue esse amuleto, leve sempre com você e a decisão mais sábia, ficará clara...`,
+                        );
+                        continuar();
+                        console.log(
+                            `\nVocê fecha os olhos novamente, enquanto sente a mesma pontada na cabeça. Quando abre os olhos, você está sentado na caverna, terminando de organizar seus equipamentos para seguir viagem. Sem entender direito o que está acontecendo, você lembra o nome dessa figura misteriosa.`,
+                        );
+                        sleep(5);
+                        console.log(`\nAerin\n`);
+                        continuar();
                     }
 
                     continuar();
@@ -608,9 +722,12 @@ do {
                 } else if (i == 2) {
                     sleep(1);
                     console.log(
-                        `\nO terceiro dia começa mais calmo, pelo menos é o que indica o fraco sol que não consegue vencer o frio. Após seguir pela trilha durante o dia todo você começa a sentir a fadiga da viagem. O clima das montanhas cobra um preço alto de seus visitantes.`);
+                        `\nO terceiro dia começa mais calmo, pelo menos é o que indica o fraco sol que não consegue vencer o frio. Após seguir pela trilha durante o dia todo você começa a sentir a fadiga da viagem. O clima das montanhas cobra um preço alto de seus visitantes.`,
+                    );
                     sleep(5);
-                    console.log(`\nCom o final do dia chegando, você avista uma formação de rochas que daria um bom local de descanso. Com seu corpo cansado, mas ao mesmo tempo querendo sair logo da montanha você precisa decidir entre \x1b[33mDESCANSAR\x1b[0m ou \x1b[33mSEGUIR\x1b[0m viagem por mais algumas horas.`);
+                    console.log(
+                        `\nCom o final do dia chegando, você avista uma formação de rochas que daria um bom local de descanso. Com seu corpo cansado, mas ao mesmo tempo querendo sair logo da montanha você precisa decidir entre \x1b[33mDESCANSAR\x1b[0m ou \x1b[33mSEGUIR\x1b[0m viagem por mais algumas horas.`,
+                    );
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'DESCANSAR', 'SEGUIR');
                     console.clear();
@@ -618,22 +735,21 @@ do {
                     //PERDE O BONÛS
                     if (resp === 'DESCANSAR') {
                         sleep(1);
-                        console.log(
-                            `\nAproveitando a formação rochosa para se proteger dos ventos, voce monta um pequeno acampamento e acende uma pequena fogueira para se manter aquecido.`,
-                        );
-                        continuar()
+                        console.log(`\nAproveitando a formação rochosa para se proteger dos ventos, voce monta um pequeno acampamento e acende uma pequena fogueira para se manter aquecido.`);
+                        continuar();
 
                         //BONÛS DE PERSISTÊNCIA - FACILITA PASSAR PELO DESAFIO
                     } else if (resp === 'SEGUIR') {
                         sleep(1);
                         console.log(
-                            `\nVocê continua a caminhar, quase não consegue permanecer em linha reta e mal sente suas pernas. Até que você se depara com uma grande árvore próxima da trilha, com frutas douradas e suculentas. Com seu estomago roncando você avança em direção a árvore e rapidamente come um dos frutos. Um forte calor se espalha pelo seu corpo, retirando todo o cansaço, lhe revigorando e dando mais força.`);
-                            sleep(5)
-                            console.log(`\nRepentinamente você acorda em seu acampamento, sem entender como chegou lá, você olha em volta procurando pela árvore, apenas para ver grandes rochas lhe protegendo dos ventos.`)
-                        sleep(4);
-                        console.log(
-                            `\nVocê acabou de ganhar 5 de vida máxima e 1 de defesa.\nEsses são seus STATUS atualizados:\n `,
+                            `\nVocê continua a caminhar, quase não consegue permanecer em linha reta e mal sente suas pernas. Até que você se depara com uma grande árvore próxima da trilha, com frutas douradas e suculentas. Com seu estomago roncando você avança em direção a árvore e rapidamente come um dos frutos. Um forte calor se espalha pelo seu corpo, retirando todo o cansaço, lhe revigorando e dando mais força.`,
                         );
+                        sleep(5);
+                        console.log(
+                            `\nRepentinamente você acorda em seu acampamento, sem entender como chegou lá, você olha em volta procurando pela árvore, apenas para ver grandes rochas lhe protegendo dos ventos.`,
+                        );
+                        sleep(4);
+                        console.log(`\nVocê acabou de ganhar 5 de vida máxima e 1 de defesa.\nEsses são seus STATUS atualizados:\n `);
                         vidaMAX += 5;
                         personagens.jogador.vida = vidaMAX;
                         personagens.jogador.defesa += 1;
@@ -655,9 +771,7 @@ do {
                     //DROP DE ITEM
                     if (resp === 'LUTAR') {
                         sleep(1);
-                        console.log(
-                            `\nA vontade de lutar vence e você parte para cima delas com arma em punho.`,
-                        );
+                        console.log(`\nA vontade de lutar vence e você parte para cima delas com arma em punho.`);
                         mortalKombat(2, 'montanhas');
 
                         if (gameOver == true) break;
@@ -684,7 +798,9 @@ do {
                             continuar();
                         } else if (resp === 'GUARDA-LO') {
                             sleep(2);
-                            console.log(`\nVocê segura o martelo e dá alguns golpes no ar para senti-lo, é uma arma pesada porém muito bem equilibrada. Decidindo que ela não faz muito seu estilo você a guarda para depois talvez negociá-la com algum mercador.\n`);
+                            console.log(
+                                `\nVocê segura o martelo e dá alguns golpes no ar para senti-lo, é uma arma pesada porém muito bem equilibrada. Decidindo que ela não faz muito seu estilo você a guarda para depois talvez negociá-la com algum mercador.\n`,
+                            );
                             continuar();
                         }
 
@@ -698,9 +814,12 @@ do {
 
                     sleep(2);
                     console.log(
-                        `\nCom o dia quase terminando você chega ao outro lado das montanhas e avista uma grande cidade murada, que você reconhece como sendo a cidade de Erast. Enquanto desce pela trilha você observa um acampamento recém montado, porém vazio.`)
-                        continuar()
-                        console.log(`\nOlhando em volta, você não percebe nenhum movimento estranho, a fogueira do acampamento ainda está acesa, inclusive com um pouco de comida sendo preparada. Com seu estômago roncando você decide \x1b[33mINVESTIGAR\x1b[0m o acampamento e no processo comer a comida, ou apenas \x1b[33mIGNORAR\x1b[0m e seguir pela trilha?\n`);
+                        `\nCom o dia quase terminando você chega ao outro lado das montanhas e avista uma grande cidade murada, que você reconhece como sendo a cidade de Erast. Enquanto desce pela trilha você observa um acampamento recém montado, porém vazio.`,
+                    );
+                    continuar();
+                    console.log(
+                        `\nOlhando em volta, você não percebe nenhum movimento estranho, a fogueira do acampamento ainda está acesa, inclusive com um pouco de comida sendo preparada. Com seu estômago roncando você decide \x1b[33mINVESTIGAR\x1b[0m o acampamento e no processo comer a comida, ou apenas \x1b[33mIGNORAR\x1b[0m e seguir pela trilha?\n`,
+                    );
 
                     //HISTÓRIA
                     resp = prompt().toUpperCase().replace(/\s/g, '');
@@ -710,15 +829,19 @@ do {
                     if (resp === 'INVESTIGAR') {
                         sleep(1);
                         console.log(
-                            `\nO estomago ronca uma segunda vez e seu instinto é mais rapido que a lógica. Você vai até a fogueira e começa a comer. Tendo matado sua fome, você vasculha o acampamento e encontra mais algumas rações de viagem, aparentemente o suficiente para chegar até a cidade.\n`);
-                        continuar()
-                        console.log(`\nAlgumas dezenas de metros adiante, você cruza com um grupo de aventureiros subindo pela trilha, eles estão com alguns ferimentos mas lhe convidam para se juntar a eles.`)
-                        sleep(5)
-                        console.log(`\nEntendendo que você acabou de roubar deles, você educadamente recusa o convite, dizendo que precisa chegar rápido a cidade.`)
+                            `\nO estomago ronca uma segunda vez e seu instinto é mais rapido que a lógica. Você vai até a fogueira e começa a comer. Tendo matado sua fome, você vasculha o acampamento e encontra mais algumas rações de viagem, aparentemente o suficiente para chegar até a cidade.\n`,
+                        );
+                        continuar();
+                        console.log(
+                            `\nAlgumas dezenas de metros adiante, você cruza com um grupo de aventureiros subindo pela trilha, eles estão com alguns ferimentos mas lhe convidam para se juntar a eles.`,
+                        );
+                        sleep(5);
+                        console.log(`\nEntendendo que você acabou de roubar deles, você educadamente recusa o convite, dizendo que precisa chegar rápido a cidade.`);
                     } else if (resp === 'IGNORAR') {
                         sleep(1);
                         console.log(
-                            `\nMesmo com o estômago roncando, você não se rende a algo desonroso. Engolindo em seco você segue viagem, comendo os restos dos seus suprimentos e torcendo para encontrar algo para comer no caminho. Após algumas dezenas de metros você encontra com um grupo de aventureiros. Após uma breve conversa eles lhe convidam para o acampamento e dividem seus mantimentos, suas bebidas e suas histórias.\nApós algumas horas, você segue rumo a cidade de Erast.`)
+                            `\nMesmo com o estômago roncando, você não se rende a algo desonroso. Engolindo em seco você segue viagem, comendo os restos dos seus suprimentos e torcendo para encontrar algo para comer no caminho. Após algumas dezenas de metros você encontra com um grupo de aventureiros. Após uma breve conversa eles lhe convidam para o acampamento e dividem seus mantimentos, suas bebidas e suas histórias.\nApós algumas horas, você segue rumo a cidade de Erast.`,
+                        );
                     }
 
                     continuar();
@@ -729,9 +852,9 @@ do {
                     console.log(
                         `\nAmanhece e o frio começa a dar uma trégua, talvez por você estar quase chegando ao final da montanha. Você checa seus equipamentos e segue viagem. Após algumas horas de caminhada, você ouve o som de gritos de batalha, vindos da direção do acampamento do dia anterior.\n`,
                     );
-                    continuar()
+                    continuar();
                     sleep(5);
-                    
+
                     console.log(
                         `\nmaginando que algumas criaturas tenham descido a montanha seguindo seus rastros, você se vê dividido entre, ajudar os jovens aventureiros e \x1b[33mLUTAR\x1b[0m ou ser prudente e \x1b[33mSEGUIR\x1b[0m viagem.\n`,
                     );
@@ -742,13 +865,13 @@ do {
 
                     //DESAFIO FINAL DA MONTANHA
                     if (resp == 'LUTAR') {
-                        console.log(`\nVocê decide ajudar e sobe a trilha rapidamente, apenas para ver os aventureiros sendo facilmente assassinados. Com sua arma em mãos você avança gritando para chamar atenção das criaturas.`)
+                        console.log(
+                            `\nVocê decide ajudar e sobe a trilha rapidamente, apenas para ver os aventureiros sendo facilmente assassinados. Com sua arma em mãos você avança gritando para chamar atenção das criaturas.`,
+                        );
                         mortalKombat(3, 'montanhas');
                         if (gameOver == true) break;
                         sleep(1);
-                        console.log(
-                            `\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`,
-                        );
+                        console.log(`\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`);
                         personagens.jogador.vida = vidaMAX;
                         personagens.jogador.dano += 2;
                         personagens.jogador.defesa += 2;
@@ -766,9 +889,7 @@ do {
                         if (gameOver == true) break;
                         sleep(3);
                         //RECOMPENSA COM BONUS DE STATUS
-                        console.log(
-                            `\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`,
-                        );
+                        console.log(`\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`);
                         personagens.jogador.vida = vidaMAX;
                         personagens.jogador.dano += 2;
                         personagens.jogador.defesa += 2;
@@ -809,9 +930,7 @@ do {
 
             if (resp === 'DESISTIR') {
                 sleep(1);
-                console.log(
-                    `\nAo olhar para os grandes portões da cidade e ver toda aquela vida ali dentro subitamente uma idéia passa pela sua cabeça:\n`,
-                );
+                console.log(`\nAo olhar para os grandes portões da cidade e ver toda aquela vida ali dentro subitamente uma idéia passa pela sua cabeça:\n`);
                 continuar();
                 sleep(1);
                 console.log(
@@ -840,15 +959,11 @@ do {
                         `\nNada melhor depois de uma longa viagem do que beber e comer. Principalmente quando ambos são bons como os de Erast. Enquanto sentava em sua mesa e aproveitava de sua alimentação, você ouviu rumores de um elfo misterioso que comprou uma das casas na cidade alta a pouco tempo, alguns dizem que para fazer experimentos demoníacos.`,
                     );
                     sleep(4);
-                    console.log(
-                        `\nApós comer e beber, uma bela noite de sono em uma cama de palha lhe aguarda.\n`,
-                    );
+                    console.log(`\nApós comer e beber, uma bela noite de sono em uma cama de palha lhe aguarda.\n`);
                     continuar();
                 } else {
                     sleep(1);
-                    console.log(
-                        `\nCansado de viagem, você não tem nem vontade de se alimentar e vai direto para seu quarto onde uma cama de palha extremamente confortável lhe aguarda.\n`,
-                    );
+                    console.log(`\nCansado de viagem, você não tem nem vontade de se alimentar e vai direto para seu quarto onde uma cama de palha extremamente confortável lhe aguarda.\n`);
                     continuar();
                 }
             } else if (resp === 'PROCURAR') {
@@ -872,9 +987,7 @@ do {
                             `\n- Parece que hoje é meu dia de sorte, encontrar um cara famoso como você, com uma recompensa alta e ainda com poucos equipamentos?!?! Parece que tirei a sorte grande!`,
                         );
                         sleep(10);
-                        console.log(
-                            `\nAntes que você consiga falar algo, o ladrão ataca.`,
-                        );
+                        console.log(`\nAntes que você consiga falar algo, o ladrão ataca.`);
                         mortalKombat(1, 'cidade');
                         if (gameOver == true) break;
                     } else {
@@ -914,16 +1027,12 @@ do {
 
                     if (resp === 'CORUJA') {
                         sleep(1);
-                        console.log(
-                            `\nAerin sorri levemente\n-Fico comovido por você lembrar, muito bem, próxima pergunta.\n`,
-                        );
+                        console.log(`\nAerin sorri levemente\n-Fico comovido por você lembrar, muito bem, próxima pergunta.\n`);
                         continuar();
                         respCorreta++;
                     } else {
                         sleep(1);
-                        console.log(
-                            `\nO rosto de Aerin segue sério\n-Sinceramente achei que você lembraria, bem, próxima pergunta.\n`,
-                        );
+                        console.log(`\nO rosto de Aerin segue sério\n-Sinceramente achei que você lembraria, bem, próxima pergunta.\n`);
                         continuar();
                     }
                     sleep(1);
@@ -935,9 +1044,7 @@ do {
 
                     if (resp == 'GOBLINS') {
                         sleep(1);
-                        console.log(
-                            `\nUm leve alívio aparece brevemente no rosto do elfo\n-Foi um combate complicado, ter que proteger vocês e ao mesmo tempo acabar com aquelas pestes.\n`,
-                        );
+                        console.log(`\nUm leve alívio aparece brevemente no rosto do elfo\n-Foi um combate complicado, ter que proteger vocês e ao mesmo tempo acabar com aquelas pestes.\n`);
                         continuar();
                         respCorreta++;
                     } else {
@@ -948,9 +1055,7 @@ do {
                         continuar();
                     }
                     sleep(1);
-                    console.log(
-                        `\nÚltima pergunta, e esse interrogatório acabará. Qual das poções você quer tomar, a  \x1b[33mVERMELHA\x1b[0m ou a \x1b[33mAZUL\x1b[0m?\n`,
-                    );
+                    console.log(`\nÚltima pergunta, e esse interrogatório acabará. Qual das poções você quer tomar, a  \x1b[33mVERMELHA\x1b[0m ou a \x1b[33mAZUL\x1b[0m?\n`);
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'VERMELHA', 'AZUL');
                     if (resp === 'VERMELHA') {
@@ -963,10 +1068,7 @@ do {
                         break;
                     } else {
                         sleep(1);
-                        console.log(
-                            `\nAerin senta novamente na poltrona, feliz por você ter escolhido a poção azul.`,
-                            respCorreta++,
-                        );
+                        console.log(`\nAerin senta novamente na poltrona, feliz por você ter escolhido a poção azul.`, respCorreta++);
                     }
                 }
                 continuar();
@@ -985,29 +1087,19 @@ do {
                     gameOver = true;
                     break;
                 } else {
-                    console.log(
-                        `\nAerin pega uma garrafa de vinho, bebe um longo gole e levanta da poltrona lentamente.`,
-                    );
+                    console.log(`\nAerin pega uma garrafa de vinho, bebe um longo gole e levanta da poltrona lentamente.`);
                     sleep(5);
-                    console.log(
-                        `\n-Eu não sei o que fizeram com você velho amigo, mas pelo respeito que ainda guardo por você lhe darei uma morte honrada. EM GUARDA!!!`,
-                    );
+                    console.log(`\n-Eu não sei o que fizeram com você velho amigo, mas pelo respeito que ainda guardo por você lhe darei uma morte honrada. EM GUARDA!!!`);
                     sleep(2);
-                    console.log(
-                        `\nCom um movimento fluido, Aerin saca sua espada e parte para cima de você:`,
-                    );
+                    console.log(`\nCom um movimento fluido, Aerin saca sua espada e parte para cima de você:`);
                     do {
                         if (personagens.aerin.dano > personagens.jogador.defesa) {
-                            personagens.jogador.vida -=
-                                personagens.aerin.dano + personagens.jogador.defesa;
-                            personagens.aerin.vida -=
-                                personagens.jogador.dano + personagens.aerin.defesa;
+                            personagens.jogador.vida -= personagens.aerin.dano + personagens.jogador.defesa;
+                            personagens.aerin.vida -= personagens.jogador.dano + personagens.aerin.defesa;
                         } else {
                             personagens.aerin.vida -= personagens.jogador.dano;
                         }
-                        console.log(
-                            `\nSua vida atual: \x1b[31m${personagens.jogador.vida}\x1b[0m:\nVida de Aerin: \x1b[31m${monstros[a].vida}\x1b[0m\n`,
-                        );
+                        console.log(`\nSua vida atual: \x1b[31m${personagens.jogador.vida}\x1b[0m:\nVida de Aerin: \x1b[31m${monstros[a].vida}\x1b[0m\n`);
                     } while (personagens.jogador.vida > 0 && personagens.aerin.vida > 0);
 
                     if (personagens.jogador.vida > 0) {
@@ -1034,9 +1126,7 @@ do {
                             `\nAgindo por instinto, você se defendeu e mesmo com movimentos rápidos de um aventureiro veterano você não conseguiu derrotar Aerin, ele foi mais rápido e mais forte que você. Junto com o golpe final, Aerin lhe segura e deposita gentilmente no chão:`,
                         );
                         sleep(8);
-                        console.log(
-                            `\n-Vá em paz meu amigo. Irei atrás de quem fez isso com você, e juro pelo meu nome que irei vingá-lo. Descanse agora e nos reencontraremos na outra vida....`,
-                        );
+                        console.log(`\n-Vá em paz meu amigo. Irei atrás de quem fez isso com você, e juro pelo meu nome que irei vingá-lo. Descanse agora e nos reencontraremos na outra vida....`);
                         quebra = true;
                         gameOver = true;
                         break;
