@@ -54,7 +54,7 @@ const monstros = [
         nome: 'Sleipnir',
         vida: 15,
         defesa: 2,
-        ddano: [
+        dano: [
             { nome: 'cascos', dano: 5 },
             { nome: 'mordida', dano: 3 },
         ],
@@ -121,7 +121,7 @@ const personagens = {
                 nome: 'ataque carregado',
                 dano: 0,
                 danoADD: () => {
-                    personagens.jogador.ataque[0].dano = 0
+                    personagens.jogador.ataque[0].dano = 0;
                     personagens.jogador.ataque[0].dano = personagens.jogador.equip[0].dano + 5;
                 },
             },
@@ -230,23 +230,21 @@ function validacaoString(resposta, a, b, c, d, e, f, g, h, i, l, m, n, o) {
 
 //FUNÇAO DE COMBATE
 function mortalKombat(qtd, rota) {
-    const monstroLUTA = [];
-    monstroLUTA.splice(0)
-    for (const m of monstros) {
-        if (rota == m.rota) {
-            monstroLUTA.push(m);
-        }
-    }
-
     for (let i = 0; i < qtd; i++) {
+        const monstroLUTA = [];
+        monstroLUTA.splice(0, monstroLUTA.length);
+        for (const m of monstros) {
+            if (rota == m.rota) {
+                monstroLUTA.push(Object.assign({}, m));
+            }
+        }
         let escolherMONSTRO = random(0, monstroLUTA.length - 1);
         let escolherDanoMonstro = random(0, monstroLUTA[escolherMONSTRO].dano.length - 1);
         let monstroBATE;
         let personagemBATE;
-        let nomeHABILIDADE = ''        
+        let nomeHABILIDADE = '';
         let cooldown = 5;
-        
-        
+
         function docooldown() {
             if (cooldown == 5) {
                 if (resp == '2' || resp == personagens.jogador.ataque[0].nome) {
@@ -285,13 +283,17 @@ function mortalKombat(qtd, rota) {
                 if (resp == '1' || resp == 'ENTER' || resp == '') {
                     personagemBATE = random(personagens.jogador.equip[0].dano - 1, personagens.jogador.equip[0].dano + 2);
                     ifElseFUNCTION();
-                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip[0].nome}\x1b[0m e tirou \x1b[32m${personagemBATE}\x1b[0m de dano`);
+                    nomeHABILIDADE = console.log(
+                        `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip[0].nome}\x1b[0m e tirou \x1b[32m${personagemBATE}\x1b[0m de dano`,
+                    );
                     docooldown();
                 } else if (resp == '2') {
-                    personagens.jogador.ataque[0].danoADD()
+                    personagens.jogador.ataque[0].danoADD();
                     personagemBATE = random(personagens.jogador.ataque[0].dano - 1, personagens.jogador.ataque[0].dano + 2);
                     ifElseFUNCTION();
-                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.ataque[0].nome}\x1b[0m e tirou \x1b[32m${personagemBATE}\x1b[0m de dano`);
+                    nomeHABILIDADE = console.log(
+                        `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.ataque[0].nome}\x1b[0m e tirou \x1b[32m${personagemBATE}\x1b[0m de dano`,
+                    );
                     sleep(2);
                     docooldown();
                 } else if (resp == '3') {
@@ -317,7 +319,9 @@ function mortalKombat(qtd, rota) {
                 if (resp == '1' || resp == 'ENTER' || resp == '') {
                     personagemBATE = random(personagens.jogador.equip[0].dano - 1, personagens.jogador.equip[0].dano + 2);
                     ifElseFUNCTION();
-                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip[0].nome}\x1b[0m e tirou \x1b[32m${personagemBATE}\x1b[0m de dano`);
+                    nomeHABILIDADE = console.log(
+                        `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip[0].nome}\x1b[0m e tirou \x1b[32m${personagemBATE}\x1b[0m de dano`,
+                    );
                     docooldown();
                 } else if (resp == '2') {
                     personagens.jogador.funcoes[0].defesa += 5;
@@ -360,7 +364,7 @@ function mortalKombat(qtd, rota) {
     if (gameOver == false) {
         console.log('\nSua vida foi restaurada após a batalha');
         personagens.jogador.vida = vidaMAX;
-    }    
+    }
 }
 
 //FUNÇÃO STATUS DO JOGADOR
@@ -462,7 +466,7 @@ do {
         } else if (resp == 'SAIDA') {
             sleep(1);
             console.log('\nVocê saiu da caverna');
-            continuar()
+            continuar();
             break;
         }
         //CONDIÇÃO DE GAME OVER
@@ -477,9 +481,7 @@ do {
         );
 
         sleep(4);
-        console.log(
-            `O caminho da esquerda adentra mais na \x1b[33mFLORESTA\x1b[0m que aos poucos vai ficando mais densa com as copas das arvores competindo com os raios de sol pra ver quem vence.`,
-        );
+        console.log(`O caminho da esquerda adentra mais na \x1b[33mFLORESTA\x1b[0m que aos poucos vai ficando mais densa com as copas das arvores competindo com os raios de sol pra ver quem vence.`);
 
         sleep(3);
         console.log(
@@ -523,7 +525,7 @@ do {
                     continuar();
                     console.log(
                         `Você termina de montar a armadilha e re recosta contra uma arvore proximo a fogueira para tentar dormir um pouco. não demora muito para ouvir o som de uma das armadilhas, com um longo suspiro você levanta e se prepara para descobrir o que está se aproximando.`,
-                    ); 
+                    );
                     sleep(2);
                     mortalKombat(1, 'floresta');
                     if (gameOver == true) break;
@@ -630,24 +632,23 @@ do {
                     } else if (resp == 'MONSTROS') {
                         sleep(1);
                         console.log(`Mais preocupado com sua segurança, você procura por rastros de monstros para testar seus equipamentos e habilidade. Não demora muito até encontrar um desafio.`);
-                        sleep(5)
+                        sleep(5);
                         //PRIMEIRA BATALHA
                         mortalKombat(1, 'montanhas');
                         if (gameOver == true) break;
                         sleep(2);
                         console.log(`Você ganhou 1 de dano, confira seus STATUS atualizados: \n`);
-                        personagens.jogador.equip[0].dano += 1;                        
+                        personagens.jogador.equip[0].dano += 1;
                         statusJogador();
                         continuar();
                         console.log(
                             `Após o combate você analisa os arredores e percebe um pequeno acampamento, agora sem dono. Sem pensar duas vezes, você recolhe os mantimentos e se prepara para seguir viagem.`,
                         );
-                        
                     }
                     continuar();
                     //SEGUNDO DIA
                 } else if (i == 1) {
-                    sleep(2)
+                    sleep(2);
                     console.log(
                         `Conforme você avança pela trilha, uma forte nevasca se inicia, a temperatura começa cair vertiginosamente, dificultando sua visão. O caminho segue íngreme e irregular. Pensando rapidamente no que fazer, você pensa em prucurar uma \x1b[33mCAVERNA\x1b[0m para se abrigar, ou pode \x1b[33mENFRENTAR\x1b[0m a nevasca e tentar seguir pela trilha.\n`,
                     );
@@ -678,7 +679,7 @@ do {
                         mortalKombat(1, 'montanhas');
                         if (gameOver == true) break;
                         sleep(1);
-                        console.log(`Você ganhou 1 de defesa, confira seus STATUS atualizados: \n`);                        
+                        console.log(`Você ganhou 1 de defesa, confira seus STATUS atualizados: \n`);
                         personagens.jogador.equip[0].defesa += 1;
                         statusJogador();
                         continuar();
@@ -730,13 +731,11 @@ do {
                         );
                         sleep(4);
                         console.log(`\nVocê acabou de ganhar 5 de vida máxima e 1 de defesa.\nEsses são seus STATUS atualizados:\n `);
-                        vidaMAX += 5;                        
+                        vidaMAX += 5;
                         personagens.jogador.equip[0].defesa += 1;
                         statusJogador();
                         continuar();
                     }
-
-                    
 
                     //QUARTO DIA
                 } else if (i == 3) {
@@ -745,14 +744,14 @@ do {
                     );
 
                     resp = prompt().toUpperCase().replace(/\s/g, '');
-                    validacaoString(resp, 'LUTAR', 'ESCONDIDO');                    
+                    validacaoString(resp, 'LUTAR', 'ESCONDIDO');
 
                     //DROP DE ITEM
                     if (resp === 'LUTAR') {
                         sleep(1);
                         console.log(`A vontade de lutar vence e você parte para cima delas com arma em punho.`);
                         mortalKombat(2, 'montanhas');
-                        if (gameOver == true) break;                        
+                        if (gameOver == true) break;
                         equipamentos.mjolnir();
                         sleep(1);
                         console.log(
@@ -760,7 +759,7 @@ do {
                         );
 
                         resp = prompt().toUpperCase().replace(/\s/g, '');
-                        validacaoString(resp, 'EQUIPAR', 'GUARDA-LO');                        
+                        validacaoString(resp, 'EQUIPAR', 'GUARDA-LO');
 
                         if (resp === 'EQUIPAR') {
                             sleep(2);
@@ -798,7 +797,6 @@ do {
                     //HISTÓRIA
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'INVESTIGAR', 'IGNORAR');
-                    
 
                     if (resp === 'INVESTIGAR') {
                         sleep(1);
@@ -819,8 +817,6 @@ do {
                         continuar();
                     }
 
-                    
-
                     //QUINTO DIA DA VIAGEM
                 } else if (i == 4) {
                     sleep(1);
@@ -836,7 +832,6 @@ do {
 
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'LUTAR', 'SEGUIR');
-                    
 
                     //DESAFIO FINAL DA MONTANHA
                     if (resp == 'LUTAR') {
