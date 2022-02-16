@@ -275,7 +275,7 @@ function mortalKombat(qtd, rota) {
         sleep(4);
 
         while (personagens.jogador.vida > 0 && monstroLUTA[escolherMONSTRO].vida > 0) {   // Laço para prender na batalha até apenas 1 sair vivo
-            function ifElseFUNCTION() {                                       // Função para definir o dano do personagem e do monstro
+            function ifElseFUNCTION() {                                       // Função para definir o dano do personagem
                 if (personagemBATE > monstroLUTA[escolherMONSTRO].defesa) {
                     personagemBATE -= monstroLUTA[escolherMONSTRO].defesa;
                     monstroLUTA[escolherMONSTRO].vida -= personagemBATE;
