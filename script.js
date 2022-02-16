@@ -117,14 +117,14 @@ const monstros = [
 const personagens = {
   jogador: {
     nome: "Cleitin",
-    vida: 20,
+    vida: 30,
     dano: 0,
     defesa: 0,
     equip: [
       {
         nome: "ataque desarmado",
         dano: 4,
-        defesa: 2,
+        defesa: 3,
       },
     ],
     ataque: [
@@ -192,7 +192,7 @@ function sleep(segundos = 1) {
 //FUNÇÃO QUE AGUARDA O JOGADOR PRESSIONAR ENTER PARA CONTINUAR E MANTER UM PADRÃO ESTÉTICO NO CONSOLE
 function continuar(x = 0) {
   if (x == 0) {
-    console.log()
+    console.log();
     a = prompt(`Pressione \x1b[33mENTER\x1b[0m para continuar...`);
     console.clear();
     if (position == "caverna") {
@@ -290,7 +290,7 @@ function mortalKombat(qtd, rota) {
     sleep(2);
     console.log(
       `\nVocê encontrou \x1b[31m${monstroLUTA[escolherMONSTRO].nome}\x1b[0m`
-    );
+    );//Apresentação do mosntro, já pegando o nome no array monstroLUTA.
     sleep(3);
     console.log(`\nPrepare-se para a batalha:`);
     sleep(4);
@@ -299,9 +299,9 @@ function mortalKombat(qtd, rota) {
       personagens.jogador.vida > 0 &&
       monstroLUTA[escolherMONSTRO].vida > 0
     ) {
-      // Laço para prender na batalha até apenas 1 sair vivo
+      // Laço para prender na batalha até apenas um sair vivo ("There can be only one")
       function ifElseFUNCTION() {
-        // Função para definir o dano do personagem
+        // Função para definir o dano do personagem, subtraindo a defesa do monstro. Se a defesa do monstro for maior ou igual ao dano do personagem, nessa rodada o dano será zero.
         if (personagemBATE > monstroLUTA[escolherMONSTRO].defesa) {
           personagemBATE -= monstroLUTA[escolherMONSTRO].defesa;
           monstroLUTA[escolherMONSTRO].vida -= personagemBATE;
@@ -316,11 +316,11 @@ function mortalKombat(qtd, rota) {
           `\n\x1b[33m1\x1b[0m - ${personagens.jogador.equip[0].nome}\n\x1b[33m2\x1b[0m - ${personagens.jogador.ataque[0].nome}\n`
         );
         resp = prompt("", "ENTER").toUpperCase().replace(/\s/g, ""); // Regex de Habilidade
-        validacaoString(resp, "1", "2", "3", "4", "ENTER", ""); // Validação da regex de Habilidade
+        validacaoString(resp, "1", "2", "ENTER", ""); // Validação da regex de Habilidade
 
-        if (resp == "1" || resp == "ENTER" || resp == "") {
-          // Seleção da primeira Habilidade
-          personagemBATE = random(
+        if (resp == "1" || resp == "ENTER" || resp == "") {//Seleção de ataque básico, podendo apenas pressionar enter para escolher
+          // Seleção da primeira Habilidade, considerando um valor randomizado de dano para o jogador, baseado no equipamento dele
+          personagemBATE = random( 
             personagens.jogador.equip[0].dano - 1,
             personagens.jogador.equip[0].dano + 2
           );
@@ -344,7 +344,7 @@ function mortalKombat(qtd, rota) {
           docooldown();
         }
       } else {
-        // Condição sem o ataque carregado
+        // Condição para apenas aparecer o ataque basico enquanto o ataque pesado está em cooldown/espera
         console.log(`O que pretende fazer?`);
         console.log(
           `\x1b[33m1\x1b[0m - ${personagens.jogador.equip[0].nome}\n`
@@ -363,7 +363,7 @@ function mortalKombat(qtd, rota) {
           docooldown();
         }
       }
-      // Condição para definir dano do Monstro
+      // Condição para definir dano do Monstro. Mesma lógica do dano do personagem.
       if (
         monstroLUTA[escolherMONSTRO].dano[escolherDanoMonstro].dano >
         personagens.jogador.equip[0].defesa
@@ -380,12 +380,11 @@ function mortalKombat(qtd, rota) {
       );
 
       sleep(3);
-      console.log(
+      console.log( //Exibição da vida atual do jogador e do monstro
         `Sua vida atual: \x1b[33m${personagens.jogador.vida}\x1b[0m\nVida do monstro: \x1b[33m${monstroLUTA[escolherMONSTRO].vida}\x1b[0m\n`
       );
-      /////////////////////////////// FINAL DO WHILE, FAZER O RESET
-      /* personagens.jogador.equip[0].defesa = personagens.jogador.defesa */
     }
+    //Condição para definir se o jogador está vivo ou não. Se estiver com menos de 0 de vida, encaminha para GAME OVER
     if (personagens.jogador.vida > 0) {
       console.log(
         `Parabéns \x1b[32m${personagens.jogador.nome}\x1b[0m, você conseguiu matar \x1b[31m${monstroLUTA[escolherMONSTRO].nome}\x1b[0m`
@@ -420,21 +419,21 @@ function statusJogador() {
 do {
   var play = true; //Variável utilizada para jogar novamente. Linha 1119
   gameOver = false; //Definindo a variável para false, para garantir que o jogo não saia do loop.
-  vidaMAX = 20;
+  vidaMAX = 30;
   personagens.jogador.vida = vidaMAX; //Definindo no início do jogo que a vida do jogador volta a ser o valor correto
   let a = 0; //Variável genérica utilizada para validação de escolhas repetidas
   let respCorreta = 0; // Contador de respostas corretas na última parte da aventura. Linha 1013
   position = "caverna"; // Marcador de localização do jogador na história. Sendo utilizada na function continuar()
 
   /*============================================================== CAVERNA ==========================================================================*/
-  console.clear()
+  console.clear();
   console.log(
-        "==================================================================== CAVERNA ===================================================================="
-      );
+    "==================================================================== CAVERNA ===================================================================="
+  );
   console.log(
     `\nO gotejar na caverna te acorda subitamente. Ao abrir lentamente os olhos você sente uma dor de cabeça lancinante, com seus olhos acostumados a luz baixa da caverna vinda de algum lugar a sua direita, seus pensamentos te levam a um local um pouco aterrorizante...Quem é você?`
   );
-  
+
   sleep(5);
   console.log(
     `\nEnquanto tenta vasculhar suas memórias atrás de algo, nada lhe retorna, você abre a boca e consegue falar, boas notícias. Você checa seu corpo e ele está inteiro, mais boas noticias. Ainda sem entender muita coisa você checa seus arredores, percebe que está numa caverna com estalactites acima de você.`
@@ -476,9 +475,8 @@ do {
       continuar();
     } else if (resp == "EQUIPAMENTOS") {
       //Laço para seleção de equipamentos, também opcional. Caso nenhum equipamento seja selecionado, jogador terá ataque desarmado como padrão
-      personagens.jogador.vida = vidaMAX;
       personagens.jogador.equip[0].dano = random(4, 6);
-      personagens.jogador.equip[0].defesa = 4;
+      personagens.jogador.equip[0].defesa = 3;
       sleep(1);
       console.log(
         "\nExistem 3 armas dispostas:\n\n\x1b[33mEspada escudo\x1b[0m = \x1b[31m-1\x1b[0m Ataque / \x1b[32m+2\x1b[0m Defesa\n\x1b[33mMachado\x1b[0m = \x1b[32m+3\x1b[0m Ataque / \x1b[31m-3\x1b[0m Defesa\n\x1b[33mArco\x1b[0m = \x1b[32m+2\x1b[0m Ataque / \x1b[31m-1\x1b[0m Defesa"
@@ -495,7 +493,7 @@ do {
         equipamentos.arco();
       }
       sleep(1);
-      statusJogador()
+      statusJogador();
       continuar();
     } else if (resp == "SAIDA") {
       //Opção de saída da caverna. Única forma de progredir na história
@@ -776,7 +774,7 @@ do {
               `\nVocê acabou de ganhar 5 de vida máxima.\nEsses são seus STATUS atualizados:\n `
             );
             vidaMAX += 5;
-            personagens.jogador.vida=vidaMAX
+            personagens.jogador.vida = vidaMAX;
             statusJogador();
             continuar();
           }
@@ -892,10 +890,10 @@ do {
             sleep(3);
             //RECOMPENSA COM BONUS DE STATUS
             console.log(
-              `\nVocê ganhou 3 de defesa e 3 de dano, confira seus STATUS atualizados: \n`
+              `\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`
             );
-            personagens.jogador.equip[0].dano += 3;
-            personagens.jogador.equip[0].defesa += 3;
+            personagens.jogador.equip[0].dano += 2;
+            personagens.jogador.equip[0].defesa += 2;
             statusJogador();
             continuar();
           }
@@ -936,7 +934,7 @@ do {
         console.log(
           `\nAo olhar para os grandes portões da cidade e ver toda aquela vida ali dentro subitamente uma idéia passa pela sua cabeça:`
         );
-        
+
         sleep(3);
         console.log(
           `\nSe você não lembra do seu passado, é quase como se você não tivesse um.\n- Nada melhor do que começar uma vida nova em outro lugar - você fala para si mesmo, em um sussurro.`
@@ -1005,7 +1003,7 @@ do {
             );
             continuar();
           } else {
-            let aerinEncontro = 1;
+            let aerinEncontro = 1; //Variavel para configurar o encontro com Aerin, será utilizada apenas uma vez e apenas se o jogador for para CIDADE ALTA
             sleep(1);
             console.log(
               `\nIgnorando a cidade baixa você vai para a região nobre da cidade. Casas cada vez maiores, algumas mansões e até guardas patrulhando algumas regiões. Você nao sabe o porque, mas algo lhe deixa desconfortável aqui, um embruho no estomago, como se tudo lhe deixasse enjoado. Quando você senta em um banco para retomar um ar e se recuperar da tontura uma figura se aproxima de você.`
@@ -1024,6 +1022,7 @@ do {
           }
         }
         if ((aerinEncontro = 1)) {
+          //jogador encontra Aerin e parte para a sessão de perguntas para definir 1 entre 3 finais diferentes
           continuar();
           sleep(1);
           console.log(
@@ -1032,6 +1031,7 @@ do {
           continuar();
           sleep(1);
           console.log(
+            //PRIMEIRA PERGUNTA
             `\nQuando você era criança e me encontrou na floresta pela primeira vez eu lhe dei um item. Era uma estátua de madeira de um animal, que animal era este?\n\x1b[33mURSO\x1b[0m\n\x1b[33mCORUJA\x1b[0m\n\x1b[33mVACA\x1b[0m.\n`
           );
           resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -1053,6 +1053,7 @@ do {
           }
           sleep(1);
           console.log(
+            //SEGUNDA PERGUNTA
             `\nNuma de suas primeiras batalhas, eu estava presente. Você ainda era um aventureiro iniciante, mas o seu grupo resolveu invadir um covil. O desafio se provou maior do que vocês podiam suportar e eu os resgatei. De que tipos de monstros era o covil? \x1b[33mGOBLINS\x1b[0m, \x1b[33mKOBOLDS\x1b[0m ou \x1b[33mORCS\x1b[0m?\n`
           );
           resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -1074,6 +1075,7 @@ do {
           }
           sleep(1);
           console.log(
+            //TERCEIRA PERGUNTA. Caso o jogadores selecione VERMELHA, o jogo mostrará uma mensgem no console e terminará.
             `\nÚltima pergunta, e esse interrogatório acabará. Qual das poções você quer tomar, a \x1b[33mVERMELHA\x1b[0m ou a \x1b[33mAZUL\x1b[0m?\n`
           );
           resp = prompt().toUpperCase().replace(/\s/g, "");
@@ -1081,6 +1083,7 @@ do {
           if (resp === "VERMELHA") {
             sleep(2);
             console.log(
+              /////FINAL PLOT TWIST
               `\nVocê bebe a poção vermelha, sua visão começa a ficar turva assim que você larga a poção de volta na mesa. Aos poucos sua visão fica embaçada enquanto Aerin permanece sentado na poltrona, com os dedos cruzados. Você pisca e ele subitamente é um humano negro e calvo, com óculos escuros. Você pisca novamente e ele volta a ser Aerin o elfo. Você pisca novamente e você está em sua casa, sentado em frente ao seu computador, vendo um RPG de texto se desenrolar em sua frente, talvez um pouco confuso, sem entender direito o que acabou de acontecer, mas com a certeza de que lembrará disso por algum tempo...\n`
             );
 
@@ -1110,6 +1113,7 @@ do {
           gameOver = true;
           break;
         } else {
+          /////FINAL DA LUTA COM AERIN
           console.log(
             `\nAerin pega uma garrafa de vinho, bebe um longo gole e levanta da poltrona lentamente.`
           );
@@ -1163,6 +1167,7 @@ do {
     "==================================================================== FIM ===================================================================="
   );
   console.log(
+    //JOGADOR QUESTIONADO SE QUER JOGAR NOVAMENTE. SE SIM SERÁ LEVADO PARA O INICIO DO JOGO, OS STAUS SERÃO RESETADOS E O JOGO COMEÇARÁ NOVAMENTE
     `\nDeseja jogar novamente, \x1b[33mSIM\x1b[0m ou \x1b[33mNAO\x1b[0m?\n`
   );
 
