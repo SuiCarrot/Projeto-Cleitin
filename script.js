@@ -1,26 +1,23 @@
 var prompt = require('prompt-sync')();
 
 /*=================================================== DECLARAÇÃO DE VARIAVEIS E OBJETOS ===========================================================*/
+var gameOver; //Variável para quebra dos laços caso ocorra uma morte
+let resp; // Variavel para armazenar as respostas do jogador e definir os caminhos
+let dias = 0; //Variavel de dias, que será utilizada dependendo do caminho esoclhido ao sair da caverna
+let vidaMAX; // Variavel para retornar a vida maxima do jogador após as batalhas
+let position; //Variavel utilizada na função continuar(), para fins estéticos
 
-//ARRAY DE MONSTROS PARA SER USADO NA FUNÇÃO CRIARMONSTRO
-
-var gameOver;
-let resp;
-let dias = 0;
-let vidaMAX;
-let position;
-
-// MONSTROS
+// ARRAY DE OBJETOS CONTENDO TODOS OS MONSTROS UTILIZADOS NO PROGRAMA
 const monstros = [
     {
-        nome: 'Aranha Gigante',
+        nome: 'Aranha Gigante', 
         vida: 10,
         defesa: 1,
-        dano: [
+        dano: [                // Array para sorteio do ataque dos monstros
             { nome: 'teia', dano: 6 },
             { nome: 'mordida', dano: 3 },
         ],
-        rota: 'floresta',
+        rota: 'floresta', // Rota onde o monstro pode aparecer
     },
     {
         nome: 'Lechen',
@@ -94,31 +91,41 @@ const monstros = [
     },
     {
         nome: 'Caçador de recompensas',
-        vida: 10,
-        defesa: 2,
+        vida: 15,
+        defesa: 3,
         dano: [
-            { nome: 'espadas curtas', dano: 5 },
-            { nome: 'frasco de ácido', dano: 3 },
+            { nome: 'espadas curtas', dano: 6 },
+            { nome: 'frasco de ácido', dano: 4 },
         ],
         rota: 'cidade',
     },
+    {
+        nome: `Aerin`,
+        vida: 20,
+        defesa: 6,
+        dano: [
+            { nome: 'espada longa', dano: random(7,9) },
+            { nome: 'mísseis mágicos', dano: random(6,8) },
+        ],
+        rota: `aerin`
+    },
 ];
 
-// PERSONAGENS
+// OBJETOS DE DEFINIÇÃO DOS STATUS DO PERSONAGEM
 const personagens = {
     jogador: {
         nome: 'Cleitin',
         vida: 20,
         dano: 0,
         defesa: 0,
-        equip: [
+        equip: [      
             {
                 nome: 'ataque desarmado',
                 dano: 4,
-                defesa: 4,
+                defesa: 2,
             },
         ],
-        ataque: [
+        ataque: [               //Objeto para calcular e aplicar no combate um ataque especial que causa mais dano
             {
                 nome: 'ataque carregado',
                 dano: 0,
@@ -131,22 +138,16 @@ const personagens = {
         funcoes: [
             {
                 nome: 'defesa',
-                defesa: 8,
-            },
-            {
-                nome: 'esquiva',
-                defesa: 100,
+                defesa: 0,
+                defesaADD: ()=>{
+                    personagens.jogador.funcoes[0].defesa = 0
+                    personagens.jogador.funcoes[0].defesa = personagens.jogador.equip[0].defesa + 10
+                }
             },
         ],
     },
-    aerin: {
-        nome: `Aerin`,
-        vida: 20,
-        defesa: 5,
-        dano: random(6, 8),
-    },
 };
-// EQUIPAMENTOS
+// Objetos de equipamentos com funções que alteram os status do jogador
 const equipamentos = {
     machado: () => {
         personagens.jogador.equip[0].nome = 'machado';
@@ -154,7 +155,7 @@ const equipamentos = {
         personagens.jogador.equip[0].defesa -= 3;
     },
     espadaEscudo: () => {
-        personagens.jogador.equip[0].nome = 'espada Escudo';
+        personagens.jogador.equip[0].nome = 'espada escudo';
         personagens.jogador.equip[0].dano -= 1;
         personagens.jogador.equip[0].defesa += 2;
     },
@@ -172,7 +173,7 @@ const equipamentos = {
 };
 
 /*======================================================= DECLARAÇÃO DAS FUNÇÕES ==================================================================*/
-// FUNÇÃO PARA RETARDAR A CPU
+// FUNÇÃO PARA RETARDAR O PROMPT
 function sleep(segundos = 1) {
     segundos = segundos * 1000;
     let start = new Date().getTime();
@@ -183,7 +184,7 @@ function sleep(segundos = 1) {
     }
 }
 
-//FUNÇÃO PARA RETARDAR O JOGADOR
+//FUNÇÃO QUE AGUARDA O JOGADOR PRESSIONAR ENTER PARA CONTINUAR E MANTER UM PADRÃO ESTÉTICO NO CONSOLE
 function continuar(x = 0) {
     if (x == 0) {
         a = prompt(`Pressione \x1b[33mENTER\x1b[0m para continuar...`);
@@ -213,7 +214,6 @@ function random(minimo = 0, maximo) {
 
 //FUNÇÃO DE VALIDAÇÃO DE STRINGS
 function validacaoString(resposta, a, b, c, d, e, f, g, h, i, l, m, n, o) {
-    //Função de validação para prompt numérico
     while (true) {
         if (
             resposta == a ||
@@ -240,22 +240,23 @@ function validacaoString(resposta, a, b, c, d, e, f, g, h, i, l, m, n, o) {
 
 //FUNÇAO DE COMBATE
 function mortalKombat(qtd, rota) {
-    for (let i = 0; i < qtd; i++) {
-        const monstroLUTA = [];
-        monstroLUTA.splice(0, monstroLUTA.length);
-        for (const m of monstros) {
+    
+    for (let i = 0; i < qtd; i++) {    // Laço de repetição a partir da quantidade desejada
+        const monstroLUTA = [];       // Array para adicionar apenas os montros da rota selecionada
+        monstroLUTA.splice(0, monstroLUTA.length);   // Cod para limpar o Array toda vez que chamar a função
+        for (const m of monstros) {                // Laço para verificar todos os objetos do array de monstros
             if (rota == m.rota) {
-                monstroLUTA.push(Object.assign({}, m));
+                monstroLUTA.push(Object.assign({}, m));  // Criando uma cópia do objeto para a nova array
             }
         }
-        let escolherMONSTRO = random(0, monstroLUTA.length - 1);
-        let escolherDanoMonstro = random(0, monstroLUTA[escolherMONSTRO].dano.length - 1);
-        let monstroBATE;
-        let personagemBATE;
-        let nomeHABILIDADE = '';
-        let cooldown = 5;
+        let escolherMONSTRO = random(0, monstroLUTA.length - 1);   // Variável para randomizar qual monstro irá apaecer
+        let escolherDanoMonstro = random(0, monstroLUTA[escolherMONSTRO].dano.length - 1);  // Variável para randomizar qual dano do monstro irá apaecer
+        let monstroBATE;                      // Variável para definir o dano do monstro
+        let personagemBATE;                    // Variável para definir o dano do personagem
+        let nomeHABILIDADE = '';              // Variável para definir o nome da habilidade que irá aparecer
+        let cooldown = 5;              // Variável para definir o tempo que o ataque carregado irá voltar
 
-        function docooldown() {
+        function docooldown() {                 // Função para definir quando começar e retornar do cooldown
             if (cooldown == 5) {
                 if (resp == '2' || resp == personagens.jogador.ataque[0].nome) {
                     cooldown--;
@@ -273,31 +274,32 @@ function mortalKombat(qtd, rota) {
         console.log(`\nPrepare-se para a batalha:`);
         sleep(4);
 
-        while (personagens.jogador.vida > 0 && monstroLUTA[escolherMONSTRO].vida > 0) {
-            function ifElseFUNCTION() {
+        while (personagens.jogador.vida > 0 && monstroLUTA[escolherMONSTRO].vida > 0) {   // Laço para prender na batalha até apenas 1 sair vivo
+            function ifElseFUNCTION() {                                       // Função para definir o dano do personagem e do monstro
                 if (personagemBATE > monstroLUTA[escolherMONSTRO].defesa) {
                     personagemBATE -= monstroLUTA[escolherMONSTRO].defesa;
                     monstroLUTA[escolherMONSTRO].vida -= personagemBATE;
                 } else {
                     personagemBATE = 0;
                 }
+                
             }
-            if (cooldown == 5) {
+            if (cooldown == 5) {                         //  Condição criada para saber se foi usado o ataque carregado
                 console.log(`O que pretende fazer?`);
                 console.log(
-                    `\n\x1b[33m1\x1b[0m - ${personagens.jogador.equip[0].nome}\n\x1b[33m2\x1b[0m - ${personagens.jogador.ataque[0].nome}\n\x1b[33m3\x1b[0m - ${personagens.jogador.funcoes[0].nome}\n\x1b[33m4\x1b[0m - ${personagens.jogador.funcoes[1].nome}\n`,
+                    `\n\x1b[33m1\x1b[0m - ${personagens.jogador.equip[0].nome}\n\x1b[33m2\x1b[0m - ${personagens.jogador.ataque[0].nome}\n`
                 );
-                resp = prompt('', 'ENTER').toUpperCase().replace(/\s/g, '');
-                validacaoString(resp, '1', '2', '3', '4', 'ENTER', '');
+                resp = prompt('', 'ENTER').toUpperCase().replace(/\s/g, '');        // Regex de Habilidade
+                validacaoString(resp, '1', '2', '3', '4', 'ENTER', '');           // Validação da regex de Habilidade
 
-                if (resp == '1' || resp == 'ENTER' || resp == '') {
+                if (resp == '1' || resp == 'ENTER' || resp == '') {              // Seleção da primeira Habilidade
                     personagemBATE = random(personagens.jogador.equip[0].dano - 1, personagens.jogador.equip[0].dano + 2);
                     ifElseFUNCTION();
                     nomeHABILIDADE = console.log(
                         `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip[0].nome}\x1b[0m e tirou \x1b[32m${personagemBATE}\x1b[0m de dano`,
                     );
                     docooldown();
-                } else if (resp == '2') {
+                } else if (resp == '2') {                            // Seleção da segunda Habilidade
                     personagens.jogador.ataque[0].danoADD();
                     personagemBATE = random(personagens.jogador.ataque[0].dano - 1, personagens.jogador.ataque[0].dano + 2);
                     ifElseFUNCTION();
@@ -306,61 +308,38 @@ function mortalKombat(qtd, rota) {
                     );
                     sleep(2);
                     docooldown();
-                } else if (resp == '3') {
-                    personagens.jogador.funcoes[0].defesa += 5;
-                    ifElseFUNCTION();
-                    nomeHABILIDADE = console.log(
-                        `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.funcoes[0].nome}\x1b[0m e aumentou sua defesa em \x1b[32m${5}\x1b[0m de dano`,
-                    );
-                    docooldown();
-                } else if (resp == '4') {
-                    personagens.jogador.funcoes[1].defesa += 1000;
-                    ifElseFUNCTION();
-                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.funcoes[1].nome}\x1b[0m e esquivou o dano`);
-                    docooldown();
                 }
-            } else {
+            } else {                                   // Condição sem o ataque carregado
                 console.log(`O que pretende fazer?`);
                 console.log(
-                    `\x1b[33m1\x1b[0m - ${personagens.jogador.equip[0].nome}\n\x1b[33m2\x1b[0m - ${personagens.jogador.funcoes[0].nome}\n\x1b[33m3\x1b[0m - ${personagens.jogador.funcoes[1].nome}\n`,
+                    `\x1b[33m1\x1b[0m - ${personagens.jogador.equip[0].nome}\n`,
                 );
                 resp = prompt('', 'ENTER').toUpperCase().replace(/\s/g, '');
                 validacaoString(resp, '1', '2', '3', 'ENTER');
-                if (resp == '1' || resp == 'ENTER' || resp == '') {
+                if (resp == '1' || resp == 'ENTER' || resp == '') {              // Seleção da primeira Habilidade
                     personagemBATE = random(personagens.jogador.equip[0].dano - 1, personagens.jogador.equip[0].dano + 2);
                     ifElseFUNCTION();
                     nomeHABILIDADE = console.log(
                         `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.equip[0].nome}\x1b[0m e tirou \x1b[32m${personagemBATE}\x1b[0m de dano`,
                     );
                     docooldown();
-                } else if (resp == '2') {
-                    personagens.jogador.funcoes[0].defesa += 5;
-                    ifElseFUNCTION();
-                    nomeHABILIDADE = console.log(
-                        `\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.funcoes[0].nome}\x1b[0m e aumentou sua defesa em \x1b[32m${5}\x1b[0m de dano`,
-                    );
-                    docooldown();
-                } else if (resp == '3') {
-                    personagens.jogador.funcoes[1].defesa += 1000;
-                    ifElseFUNCTION();
-                    nomeHABILIDADE = console.log(`\x1b[32m${personagens.jogador.nome}\x1b[0m usou \x1b[32m${personagens.jogador.funcoes[1].nome}\x1b[0m e esquivou o dano`);
-                    docooldown();
-                }
             }
-
-            if (monstroLUTA[escolherMONSTRO].dano[escolherDanoMonstro].dano > personagens.jogador.equip.defesa) {
-                monstroBATE = monstroLUTA[escolherMONSTRO].dano[escolherDanoMonstro].dano - personagens.jogador.equip.defesa;
+        }
+            
+            // Condição para definir dano do Monstro
+            if (monstroLUTA[escolherMONSTRO].dano[escolherDanoMonstro].dano > personagens.jogador.equip[0].defesa) {
+                monstroBATE = monstroLUTA[escolherMONSTRO].dano[escolherDanoMonstro].dano - personagens.jogador.equip[0].defesa;
                 personagens.jogador.vida -= monstroBATE;
             } else {
                 monstroBATE = 0;
-            }
+            }            
             console.log(`\x1b[31m${monstroLUTA[escolherMONSTRO].nome}\x1b[0m usou \x1b[31m${monstroLUTA[escolherMONSTRO].dano[escolherDanoMonstro].nome}\x1b[0m e tirou \x1b[31m${monstroBATE}\x1b[0m`);
 
-            personagens.jogador.funcoes[0].defesa -= 5;
-            personagens.jogador.funcoes[1].defesa -= 1000;
 
             sleep(3);
             console.log(`Sua vida atual: \x1b[33m${personagens.jogador.vida}\x1b[0m\nVida do monstro: \x1b[33m${monstroLUTA[escolherMONSTRO].vida}\x1b[0m\n`);
+            /////////////////////////////// FINAL DO WHILE, FAZER O RESET
+            /* personagens.jogador.equip[0].defesa = personagens.jogador.defesa */
         }
         if (personagens.jogador.vida > 0) {
             console.log(`Parabéns \x1b[32m${personagens.jogador.nome}\x1b[0m, você conseguiu matar \x1b[31m${monstroLUTA[escolherMONSTRO].nome}\x1b[0m`);
@@ -377,7 +356,7 @@ function mortalKombat(qtd, rota) {
     }
 }
 
-//FUNÇÃO STATUS DO JOGADOR
+//FUNÇÃO PARA MOSTRAR NA TELA OS STATUS DO JOGADOR
 function statusJogador() {
     console.log('--------------');
     console.log(`Status de \x1b[32m${personagens.jogador.nome}\x1b[0m:`);
@@ -390,15 +369,14 @@ function statusJogador() {
 
 /*================================================================= START GAME ========================================================================*/
 do {
-    var play = true;
-    gameOver = false;
-    vidaMAX = 10;
-    personagens.jogador.vida = vidaMAX;
-    let a = 0;
-    let respCorreta = 0;
-    position = 'caverna';
+    var play = true; //Variável utilizada para jogar novamente. Linha 1119
+    gameOver = false;    //Definindo a variável para false, para garantir que o jogo não saia do loop.
+    vidaMAX = 20
+    personagens.jogador.vida = vidaMAX; //Definindo no início do jogo que a vida do jogador volta a ser o valor correto
+    let a = 0; //Variável genérica utilizada para validação de escolhas repetidas
+    let respCorreta = 0; // Contador de respostas corretas na última parte da aventura. Linha 1013
+    position = 'caverna'; // Marcador de localização do jogador na história. Sendo utilizada na function continuar()
 
-    //jogar novamente
     /*============================================================== CAVERNA ==========================================================================*/
     continuar();
     console.log(
@@ -412,10 +390,8 @@ do {
     sleep(5);
     continuar();
 
-    //LAÇO PARA TRAZER OPÇÕES DA CAVERNA
+    //LAÇO PARA TRAZER OPÇÕES DA CAVERNA NOVAMENTE ATÉ O JOGADOR SAIR DELA
     do {
-        //personagem na caverna
-
         console.log(
             `\nHá uma fogueira, agora apenas em brasas, com \x1b[33mCOMIDA\x1b[0m, próximo a ela uma \x1b[33mMOCHILA\x1b[0m e alguns \x1b[33mEQUIPAMENTOS\x1b[0m espalhados. Além é claro, da \x1b[33mSAIDA\x1b[0m da caverna.`,
         );
@@ -423,30 +399,26 @@ do {
         resp = prompt().toUpperCase().replace(/\s/g, '');
         validacaoString(resp, 'COMIDA', 'MOCHILA', 'EQUIPAMENTOS', 'SAIDA');
 
-        //CONDIÇÃO GAME OVER
-        if (resp === 'COMIDA') {
+        if (resp === 'COMIDA') { ////////////////////////////////////////////////PRIMEIRO FINAL E PRIMEIRO GAME OVER
             sleep(1);
             console.log(
                 '\nVocê avança até a fogueira e pega alguns pedaços de carne já quase queimados, pão e um pedaço de queijo que estavam ao lado. Sentindo seu estomago roncar você devora a comida sem pensar duas vezes. Após alguns minutos você começa a sentir sua visão embaçar, a dor de cabeça piorar e logo tudo vai ficando preto, enquanto seu corpo cai em direção ao chão... \x1b[33mVOCÊ MORREU\x1b[0m\n',
             );
             gameOver = true;
             break;
-            //CONDIÇÃO DA MOCHILA, MOMENTO IMPORTANTE DA HISTÓRIA PORÉM NÃO FAZ NADA
-        } else if (resp === 'MOCHILA' && a == 0) {
+        } else if (resp === 'MOCHILA' && a == 0) { //Laço opcional, porém aqui terá a primeira dica do jogo e a definição do nome do personagem
             sleep(1);
             console.log(
                 `\nNa mochila há algumas roupas e equipamentos básicos de viagem. Junto de um bilhete pedindo para você o encontrar na cidade de Erast. Assinado como Aerin. Tomado por memorias de quando era criança, você lembra de algo:\n\n\x1b[33mQual o seu nome?\x1b[0m`,
             );
-
             personagens.jogador.nome = prompt();
             continuar();
-            a = 1;
+            a = 1;     //Caso o jogador abra a mochila uma segunda vez, essa variável faz com que apenas a mensagem abaixo seja exibida.
         } else if (resp === 'MOCHILA' && a == 1) {
             sleep(1);
             console.log(`\nVocê abre a mochila novamente, e vê os mesmos itens e um papel com o seu nome: \x1b[33m${personagens.jogador.nome}\x1b[0m.`);
             continuar();
-            //CONDIÇÃO IPORTANTE DE SELEÇÃO DE equipamentos, MAS AINDA NÃO SAI DA CAVERNA
-        } else if (resp == 'EQUIPAMENTOS') {
+        } else if (resp == 'EQUIPAMENTOS') { //Laço para seleção de equipamentos, também opcional. Caso nenhum equipamento seja selecionado, jogador terá ataque desarmado como padrão
             personagens.jogador.vida = vidaMAX;
             personagens.jogador.equip[0].dano = random(4, 6);
             personagens.jogador.equip[0].defesa = 4;
@@ -454,7 +426,6 @@ do {
             console.log(
                 '\nExistem 3 armas dispostas:\n\n\x1b[33mEspada escudo\x1b[0m = \x1b[31m-1\x1b[0m Ataque / \x1b[32m+2\x1b[0m Defesa\n\x1b[33mMachado\x1b[0m = \x1b[32m+3\x1b[0m Ataque / \x1b[31m-3\x1b[0m Defesa\n\x1b[33mArco\x1b[0m = \x1b[32m+2\x1b[0m Ataque / \x1b[31m-1\x1b[0m Defesa',
             );
-            //LAÇO PARA USUÁRIO ENTREGAR O VALOR C0RRETO
             console.log();
             resp = prompt().toUpperCase().replace(/\s/g, '');
             validacaoString(resp, 'ESPADAESCUDO', 'MACHADO', 'ARCO');
@@ -470,19 +441,16 @@ do {
             sleep(1);
             statusJogador();
             continuar();
-            //CONDIÇÃO PARA SAIDA DA CAVERNA
-        } else if (resp == 'SAIDA') {
+        } else if (resp == 'SAIDA') { //Opção de saída da caverna. Única forma de progredir na história
             sleep(1);
             console.log('\nVocê saiu da caverna');
             continuar();
             break;
         }
-        //CONDIÇÃO DE GAME OVER
         if (gameOver == true) break;
-    } while (play); ////// Saida da caverna
+    } while (play); ////// Final do laço de repetição da caverna e saída da mesma
 
     while (play) {
-        //CONDIÇÃO DE GAME OVER
         if (gameOver == true) break;
         console.log(
             `\nAo sair da caverna, seus olhos demoram alguns segundos para se acostumarem com a luz. O sol brilha alto no céu e o som de passaros e animais rasteiros chega aos seus ouvidos. Andando pela pequena trilha que sai da caverna você chega até uma estrada maior, esta logo se divide em dois caminhos.`,
@@ -496,7 +464,7 @@ do {
             `A segunda trilha começa a subir as \x1b[33mMONTANHAS\x1b[0m com seus picos nevados e cavernas escuras escondendo perigos. Sem conhecer direito do que é capaz, você decide ir por qual caminho?\n`,
         );
 
-        resp = prompt().toUpperCase().replace(/\s/g, '');
+        resp = prompt().toUpperCase().replace(/\s/g, ''); //Decisão do jogador sobre qual caminho seguir. A partir daqui será definida a variável dias e as opções que ele terá durante o jogo
         validacaoString(resp, 'FLORESTA', 'MONTANHAS');
 
         /*================================================================ FLORESTA =============================================================================*/
@@ -507,16 +475,16 @@ do {
             continuar();
             //Viagem
             console.log(
-                `\nSem pensar muito você avança pela floresta, conforme você avança os sons de pequenos animais começa a aumentar. Olhando em volta você até consegue ver alguns coelhos e pássaros seguindo com sua vida em meio as árvores.\n`,
+                `\nSem pensar muito você avança pela floresta, conforme você avança os sons de pequenos animais começa a aumentar. Olhando em volta você até consegue ver alguns coelhos e pássaros seguindo com sua vida em meio as árvores. Antes de avançar você para alguns minutos para checar seu equipamento:\n`,
             );
+            statusJogador()
             sleep(5);
             console.log(
                 `Conforme adentra na floresta, a copa das árvores vão ficando mais altas, o sol vai iluminando o caminho com pequenos feixes de luz que passam por entre as folhas, as vezes enganando sua percepção conforme o vento faz as arvores balançarem. Atento aos seus arredores você se mantém preparado para qualquer coisa.\n`,
             );
             continuar();
-            for (i = 0; i < dias; i++) {
-                //PRIMEIRO DIA NA FLOESTA
-                if (i == 0) {
+            for (i = 0; i < dias; i++) { //Laço de repetição com base nos dias de viagem, com condições internas para definir o que acontece em cada dia
+                if (i == 0) { //PRIMEIRO DIA
                     sleep(2);
                     console.log(
                         '\nConforme a noite vai caindo, você acha prudente montar um pequeno acampamento para descansar. Sem muita dificuldade você encontra uma pequena clareira, um local perfeito para passar a noite. Seu corpo trabalha mais rápido do que sua mente consegue acompanhar, quando percebe está montando o que parece ser uma armadilha de som ao redor do acampamento, apenas uma corda esticada com utensilhos barulhentos para lhe acordar. Quando percebe o que está fazendo, sua cabeça começa a doer, você fecha os olhos brevemente para suportar a dor...\n',
@@ -527,7 +495,7 @@ do {
                     );
                     continuar();
                     console.log(
-                        `\nVocê fecha os olhos novamente com uma pontada de dor novamente. Quando abre os olhos novamente você está novamente montando a armadilha no seu acampamento. Seme ntender direito o que está acontecendo você lembra o nome dessa figura misteriosa.`,
+                        `\nVocê fecha os olhos novamente com uma pontada de dor novamente. Quando abre os olhos novamente você está novamente montando a armadilha no seu acampamento. Sem entender direito o que está acontecendo você lembra o nome dessa figura misteriosa.`,
                     );
                     sleep(5);
                     console.log(`\x1b[36mAerin\x1b[0m\n`);
@@ -547,7 +515,7 @@ do {
                     );
                     sleep(5);
                     let rand = random(1, 2);
-                    if (rand == 1) {
+                    if (rand == 1) { //SEGUNDO DIA
                         console.log('Sons de movimento se aproximando chamam sua atenção, parece que algo grande está vindo. Parece que a própria floresta está lhe desafiando...');
                         mortalKombat(random(1, 2), 'floresta');
                         continuar()
@@ -572,7 +540,7 @@ do {
                         statusJogador();
                         continuar();
                     }
-                } else if (i == 2) {
+                } else if (i == 2) { //TERCEIRO DIA
                     sleep(3);
                     console.log(
                         `\nNo terceiro dia de viagem, você começa realmente a achar que a floresta não lhe quer aqui. O som de animais pequenos correndo pela floresta agora não existe mais, aquelas teias que antes eram esparsas começam a ficar mais comuns e você começa a ouvir uivos distantes. Após algumas horas seguindo a trilha um silêncio incomodo começa a te incomodar.\n`,
@@ -588,7 +556,7 @@ do {
                         `\nAo final do terceiro dia avançando pela trilha, a floresta começa a ficar menos densa, os sons de animais começam a retornar aos poucos e você já consegue ver pedaços do que seria uma cidade ao longe.\n Com o sol quase se pondo você sai da floresta, a sua frente uma grande cidade murada que você reconhece como sendo a cidade de Erast.`,
                     );
                 }
-            }
+            }//FIM DA FLORESTA
 
             /*================================================================= Montanhas ====================================================================*/
         } else if (resp == `MONTANHAS`) {
@@ -610,25 +578,19 @@ do {
                 `\nViajar pelas montanhas é um grande desafio, a temperatura e o terreno são inimigos por si só, além de possíveis monstros. A escassez de animais e alimentos tornam a jornada ainda mais complicada.\n`,
             );
 
-            for (i = 0; i < dias; i++) {
-                //PRIMEIRO DIA
-                if (i == 0) {
+            for (i = 0; i < dias; i++) { //Laço de repetição com base nos dias de viagem, com condições internas para definir o que acontece em cada dia
+                if (i == 0) { //PRIMEIRO DIA
                     sleep(1);
                     console.log(
                         `\nPela manhã do primeiro dia de viagem, você chega ao pé da montanha e se da conta que precisa estocar alimentos antes de continuar. Olhando em volta rapidamente você percebe algumas árvores com \x1b[33mFRUTAS\x1b[0m, além disso você vê rastros de \x1b[33mANIMAIS\x1b[0m e de pequenos \x1b[33mMONSTROS\x1b[0m, ambos dariam um belo jantar.\n`,
                     );
-
-                    //PRIMEIRA DECISÃO, PREPARAÇÃO PARA A JORNADA
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'FRUTAS', 'ANIMAIS', 'MONSTROS');
-                    //NÃO GANHA NADA
                     if (resp == 'FRUTAS') {
                         sleep(1);
                         console.log(
                             `Encontrando algumas árvores frutíferas você aproveita para consumir algumas frutas e guardar uma boa quantidade para alguns dias de viagem, tendo preparado seus mantimentos, você segue a trilha sinuosa que começa a subir a montanha.\n`,
                         );
-
-                        //GANHA DEFESA
                     } else if (resp == 'ANIMAIS') {
                         sleep(1);
                         console.log(
@@ -638,13 +600,10 @@ do {
                         console.log(`\nVocê ganhou 1 de defesa, confira seus STATUS atualizados\n`);
                         personagens.jogador.equip[0].defesa += 1;
                         statusJogador();
-
-                        //GANHA DANO
                     } else if (resp == 'MONSTROS') {
                         sleep(1);
                         console.log(`Mais preocupado com sua segurança, você procura por rastros de monstros para testar seus equipamentos e habilidade. Não demora muito até encontrar um desafio.`);
                         sleep(5);
-                        //PRIMEIRA BATALHA
                         mortalKombat(1, 'montanhas');
                         if (gameOver == true) break;
                         sleep(2);
@@ -657,8 +616,7 @@ do {
                         );
                     }
                     continuar();
-                    //SEGUNDO DIA
-                } else if (i == 1) {
+                } else if (i == 1) { //SEGUNDO DIA
                     sleep(2);
                     console.log(
                         `\nConforme você avança pela trilha, uma forte nevasca se inicia, a temperatura começa cair vertiginosamente, dificultando sua visão. O caminho segue íngreme e irregular. Pensando rapidamente no que fazer, você pensa em prucurar uma \x1b[33mCAVERNA\x1b[0m para se abrigar, ou pode \x1b[33mENFRENTAR\x1b[0m a nevasca e tentar seguir pela trilha.\n`,
@@ -666,7 +624,6 @@ do {
 
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'CAVERNA', 'ENFRENTAR');
-                    //SEM RECOMPENSA
                     if (resp === 'CAVERNA') {
                         console.log(
                             `\nVocê procura por refugio e encontra uma pequena caverna não muito longe. A salvo da nevasca, você aproveita para descansar e se alimentar. Até que, subitamente uma dor de cabeça muito forte, faz com que você feche os olhos brevemente.\n`,
@@ -682,8 +639,6 @@ do {
                         sleep(5);
                         console.log(`\n\x1b[36mAerin\x1b[0m\n`);
                         continuar();
-
-                        //ENCONTRA MONSTRO E GANHA STATUS
                     } else if (resp === 'ENFRENTAR') {
                         sleep(2);
                         console.log(`\nEm meio a nevasca uma sombra parece começar a lhe seguir. Sem saber para onde fugir, sua uníca opção é lutar!`);
@@ -711,8 +666,7 @@ do {
                         console.log(`\n\x1b[36mAerin\x1b[0m\n`);
                         continuar();
                     }
-                    //TERCEIRO DIA
-                } else if (i == 2) {
+                } else if (i == 2) {//TERCEIRO DIA
                     sleep(2);
                     console.log(
                         `\nO terceiro dia começa mais calmo, pelo menos é o que indica o fraco sol que não consegue vencer o frio. Após seguir pela trilha durante o dia todo você começa a sentir a fadiga da viagem. O clima das montanhas cobra um preço alto de seus visitantes.`,
@@ -723,14 +677,10 @@ do {
                     );
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'DESCANSAR', 'SEGUIR');
-
-                    //PERDE O BONÛS
                     if (resp === 'DESCANSAR') {
                         sleep(1);
                         console.log(`\nAproveitando a formação rochosa para se proteger dos ventos, voce monta um pequeno acampamento e acende uma pequena fogueira para se manter aquecido.`);
                         continuar();
-
-                        //BONÛS DE PERSISTÊNCIA - FACILITA PASSAR PELO DESAFIO
                     } else if (resp === 'SEGUIR') {
                         sleep(1);
                         console.log(
@@ -747,17 +697,13 @@ do {
                         statusJogador();
                         continuar();
                     }
-
-                    //QUARTO DIA
-                } else if (i == 3) {
+                } else if (i == 3) {//QUARTO DIA
                     console.log(
                         `\nDurante o quarto dia de jornada, você avista duas figuras entre as imensas pedras de gelo que haviam acima das montanhas. Eles parecem não ter lhe notado. Pensando nas suas possibilidades você pode tentar passar \x1b[33mESCONDIDO\x1b[0m ou \x1b[33mLUTAR\x1b[0m com as duas criaturas, para seguir em segurança.\n`,
                     );
 
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'LUTAR', 'ESCONDIDO');
-
-                    //DROP DE ITEM
                     if (resp === 'LUTAR') {
                         sleep(1);
                         console.log(`\nA vontade de lutar vence e você parte para cima delas com arma em punho.`);
@@ -787,15 +733,12 @@ do {
                             );
                             continuar();
                         }
-
-                        //PERDE O ITEM SAGRADO
                     } else if (resp === 'ESCONDIDO') {
                         sleep(1);
                         console.log(
                             `\nVocê passa agaichado pelas pedras a alguns metros fora de seu caminho, as duas criaturas seguem pela trilha na direção de onde você veio. Ao voltar para a trilha você verifica se não estão lhe seguindo para prosseguir.`,
                         );
                     }
-
                     sleep(2);
                     console.log(
                         `\nCom o dia quase terminando você chega ao outro lado das montanhas e avista uma grande cidade murada, que você reconhece como sendo a cidade de Erast. Enquanto desce pela trilha você observa um acampamento recém montado, porém vazio.\n`,
@@ -804,8 +747,6 @@ do {
                     console.log(
                         `\nOlhando em volta, você não percebe nenhum movimento estranho, a fogueira do acampamento ainda está acesa, inclusive com um pouco de comida sendo preparada. Com seu estômago roncando você decide \x1b[33mINVESTIGAR\x1b[0m o acampamento e no processo comer a comida, ou apenas \x1b[33mIGNORAR\x1b[0m e seguir pela trilha?\n`,
                     );
-
-                    //HISTÓRIA
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'INVESTIGAR', 'IGNORAR');
 
@@ -827,24 +768,18 @@ do {
                         );
                         continuar();
                     }
-
-                    //QUINTO DIA DA VIAGEM
-                } else if (i == 4) {
+                } else if (i == 4) {//QUINTO DIA DA VIAGEM
                     sleep(1);
                     console.log(
                         `\nAmanhece e o frio começa a dar uma trégua, talvez por você estar quase chegando ao final da montanha. Você checa seus equipamentos e segue viagem. Após algumas horas de caminhada, você ouve o som de gritos de batalha, vindos da direção do acampamento do dia anterior.\n`,
                     );
                     continuar();
                     sleep(5);
-
                     console.log(
                         `\nImaginando que algumas criaturas tenham descido a montanha seguindo seus rastros, você se vê dividido entre, ajudar os jovens aventureiros e \x1b[33mLUTAR\x1b[0m ou ser prudente e \x1b[33mSEGUIR\x1b[0m viagem.\n`,
                     );
-
                     resp = prompt().toUpperCase().replace(/\s/g, '');
                     validacaoString(resp, 'LUTAR', 'SEGUIR');
-
-                    //DESAFIO FINAL DA MONTANHA
                     if (resp == 'LUTAR') {
                         console.log(
                             `\nVocê decide ajudar e sobe a trilha rapidamente, apenas para ver os aventureiros sendo facilmente assassinados. Com sua arma em mãos você avança gritando para chamar atenção das criaturas.`,
@@ -852,34 +787,29 @@ do {
                         mortalKombat(3, 'montanhas');
                         if (gameOver == true) break;
                         sleep(1);
-                        console.log(`\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`);
-                        personagens.jogador.vida = vidaMAX;
+                        console.log(`\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`);                        
                         personagens.jogador.equip[0].dano += 2;
                         personagens.jogador.equip[0].defesa += 2;
                         statusJogador();
                         continuar();
-
-                        //DESAFIO FINAL, IMPOSSÍVEL FUGIR
                     } else if (resp === 'SEGUIR') {
                         sleep(1);
                         console.log(
                             `\nVocê segue a trilha enquanto os sons de batalha e gritos chegam aos seus ouvidos, porém, o som de galhos quebrando e criaturas se aproximando lhe fazem olhar para trás a tempo de ver algumas vindo em sua direção. Suspirando você empunha sua arma e se prepara para lutar.`,
                         );
-
                         mortalKombat(3, 'montanhas');
                         if (gameOver == true) break;
                         sleep(3);
                         //RECOMPENSA COM BONUS DE STATUS
-                        console.log(`\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`);
-                        personagens.jogador.vida = vidaMAX;
+                        console.log(`\nVocê ganhou 2 de defesa e 2 de dano, confira seus STATUS atualizados: \n`);                        
                         personagens.jogador.equip[0].dano += 2;
                         personagens.jogador.equip[0].defesa += 2;
                         statusJogador();
                         continuar();
-                    } //FIM DA MONTANHA
+                    } 
                 }
             }
-        }
+        } //FIM DA MONTANHA
 
         if (gameOver == true) break;
 
@@ -899,8 +829,7 @@ do {
         );
         continuar();
 
-        do {
-            ///CIDADE TODA
+        do { //Laço de repetição que mantém o jogador na cidade. Acaba apenas com o final do jogo
             sleep(1);
             console.log(
                 '\nApós aproveitar brevemente a cidade você começa a pensar no que fazer. \nvocê encontra uma \x1b[33mESTALAGEM\x1b[0m próxima a praça central, pelos barulhos uma das mais movimentas. Você pode \x1b[33mPROCURAR\x1b[0m por Aerin na cidade. Parando para pensar, você poderia voltar pelo portão e \x1b[33mDESISTIR\x1b[0m de encontrar a pessoa de suas memórias também.\n',
@@ -948,7 +877,7 @@ do {
                     continuar();
                 }
             } else if (resp === 'PROCURAR') {
-                while (true) {
+                while (true) {  //Looping de repetição para manter o jogador na opção de procura, continua quebrando apenas ao final do jogo
                     sleep(1);
                     console.log(
                         `\nVocê sai para procurar por Aerin, com as informações do taverneiro você possui duas opções: procurar na \x1b[33mCIDADE ALTA\x1b[0m ou na \x1b[33mCIDADE BAIXA\x1b[0m, para qual você vai?\n`,
@@ -971,19 +900,19 @@ do {
                         console.log(`\nAntes que você consiga falar algo, o ladrão ataca.`);
                         mortalKombat(1, 'cidade');
                         if (gameOver == true) break;
+                        console.log(`Após a batalha você respira aliviado e resolve sair desse lugar, é perda de tempo continuar procurando por aqui.`)
+                        continuar()
                     } else {
-                        let aerinEncontro = 1;
+                        let aerinEncontro = 1
                         sleep(1);
                         console.log(
                             `\nIgnorando a cidade baixa você vai para a região nobre da cidade. Casas cada vez maiores, algumas mansões e até guardas patrulhando algumas regiões. Você nao sabe o porque, mas algo lhe deixa desconfortável aqui, um embruho no estomago, como se tudo lhe deixasse enjoado. Quando você senta em um banco para retomar um ar e se recuperar da tontura uma figura se aproxima de você.\n`,
                         );
-                        continuar();
-                        sleep(1);
+                        sleep(7);
                         console.log(
                             `\n- Graças aos deuses você chegou, está alguns dias atrasado, comecei a ficar preocupado. Venha, vamos a minha casa para conversarmos com um pouco mais de privacidade.\n`,
                         );
-                        continuar();
-                        sleep(1);
+                        sleep(5);
                         console.log(
                             `\nAo olhar para a figura que fala com você de forma casual você vê um elfo com cabelos prateados, trajando uma armadura de couro. Seu rosto genuinamente sorridente apenas potencializa o rosto angular e as orelhas pontudas. Subitamente você o reconhece....`,
                         );
@@ -1044,7 +973,7 @@ do {
                         console.log(
                             `\nVocê bebe a poção vermelha, sua visão começa a ficar turva assim que você larga a poção de volta na mesa. Aos poucos sua visão fica embaçada enquanto Aerin permanece sentado na poltrona, com os dedos cruzados. Você pisca e ele subitamente é um humano negro e calvo, com óculos escuros. Você pisca novamente e ele volta a ser Aerin o elfo. Você pisca novamente e você está em sua casa, sentado em frente ao seu computador, vendo um RPG de texto se desenrolar em sua frente, talvez um pouco confuso, sem entender direito o que acabou de acontecer, mas com a certeza de que lembrará disso por algum tempo...\n`,
                         );
-                        continuar();
+                       
                         gameOver = true;
                         break;
                     } else {
@@ -1074,15 +1003,7 @@ do {
                     console.log(`\n-Eu não sei o que fizeram com você velho amigo, mas pelo respeito que ainda guardo por você lhe darei uma morte honrada. EM GUARDA!!!`);
                     sleep(2);
                     console.log(`\nCom um movimento fluido, Aerin saca sua espada e parte para cima de você:`);
-                    do {
-                        if (personagens.aerin.dano > personagens.jogador.equip[0].defesa) {
-                            personagens.jogador.vida -= personagens.aerin.dano + personagens.jogador.equip[0].defesa;
-                            personagens.aerin.vida -= personagens.jogador.equip[0].dano + personagens.aerin.defesa;
-                        } else {
-                            personagens.aerin.vida -= personagens.jogador.equip[0].dano;
-                        }
-                        console.log(`\nSua vida atual: \x1b[31m${personagens.jogador.vida}\x1b[0m:\nVida de Aerin: \x1b[31m${monstros[a].vida}\x1b[0m\n`);
-                    } while (personagens.jogador.vida > 0 && personagens.aerin.vida > 0);
+                    mortalKombat(1, 'aerin');
 
                     if (personagens.jogador.vida > 0) {
                         console.log(`\nRápido como começou tudo terminou.\n`);
